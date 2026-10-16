@@ -1,0 +1,1952 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Học Mã Morse</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d9480f'/%3E%3Ccircle cx='17' cy='32' r='6' fill='%23fff'/%3E%3Crect x='29' y='26' width='24' height='12' rx='6' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f6f3ec;--surface:#fffdf9;--surface2:#efeadf;--ink:#1e1c17;--muted:#6c675b;--line:#e2dccd;
+  --accent:#d9480f;--accent-ink:#fff;--accent-soft:#fde4d3;
+  --good:#2b8a3e;--good-soft:#dcf5df;--bad:#c92a2a;--bad-soft:#fde2e2;--warn:#a65800;--warn-soft:#fff1cc;
+  --lamp-off:#d6cfbf;--lamp-on:#ffb31a;
+  --shadow:0 1px 2px rgba(40,30,10,.05),0 6px 20px rgba(40,30,10,.06);
+  --r:16px;
+  --font:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Roboto,Arial,sans-serif;
+  --mono:"Cascadia Mono","Cascadia Code",Consolas,"SF Mono",Menlo,"Liberation Mono",monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#13120f;--surface:#1c1b17;--surface2:#272520;--ink:#efe9dc;--muted:#a19b8b;--line:#34312a;
+  --accent:#ff8a3d;--accent-ink:#1b0f05;--accent-soft:#3a2416;
+  --good:#5cc971;--good-soft:#173a20;--bad:#ff6b6b;--bad-soft:#3d1a1a;--warn:#ffc04d;--warn-soft:#3a2d10;
+  --lamp-off:#3a372f;--lamp-on:#ffbf3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}}
+:root[data-theme=dark]{
+  --bg:#13120f;--surface:#1c1b17;--surface2:#272520;--ink:#efe9dc;--muted:#a19b8b;--line:#34312a;
+  --accent:#ff8a3d;--accent-ink:#1b0f05;--accent-soft:#3a2416;
+  --good:#5cc971;--good-soft:#173a20;--bad:#ff6b6b;--bad-soft:#3d1a1a;--warn:#ffc04d;--warn-soft:#3a2d10;
+  --lamp-off:#3a372f;--lamp-on:#ffbf3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+h1,h2,h3{line-height:1.2;margin:0}
+.h1{font-size:30px;font-weight:800;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:6px 0 20px;max-width:680px}
+h2.sec{font-size:19px;margin:32px 0 12px}
+.muted{color:var(--muted)}.small{font-size:14px}.mono{font-family:var(--mono)}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.row.center{justify-content:center}
+.mt{margin-top:16px}
+kbd{font:600 11px/1 var(--font);padding:3px 5px;border-radius:5px;border:1px solid currentColor;opacity:.6}
+
+/* Header */
+.top{position:sticky;top:0;z-index:20;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:10px 16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:18px;white-space:nowrap}
+.brand small{font:600 12px var(--mono);color:var(--muted);letter-spacing:.1em}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.nav::-webkit-scrollbar{display:none}
+.nav a{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--surface2)}
+.nav a.active{color:var(--ink);background:var(--surface);box-shadow:var(--shadow)}
+.badge{min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--accent);color:var(--accent-ink);font-size:12px;font-weight:700;display:inline-grid;place-items:center}
+.badge:empty{display:none}
+main{max-width:1000px;margin:0 auto;padding:28px 16px 96px}
+
+/* Primitives */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer;min-height:44px;text-decoration:none;transition:background .15s,transform .05s,filter .15s;-webkit-tap-highlight-color:transparent}
+.btn:hover{background:var(--surface2)}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.good{background:var(--good);border-color:var(--good);color:var(--surface)}
+.btn.bad{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+.btn.danger{color:var(--bad)}
+.btn.ghost{background:transparent;border-color:transparent}
+.btn.ghost:hover{background:var(--surface2)}
+.btn.sm{padding:6px 12px;min-height:36px;font-size:14px;border-radius:10px}
+.btn.wide{min-width:220px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn kbd{opacity:.7}
+.iconbtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;flex:none}
+.iconbtn:hover{background:var(--surface2)}
+.iconbtn svg{width:20px;height:20px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;background:var(--surface2);font-size:13px;font-weight:600;color:var(--muted)}
+.pbtn{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:inline-grid;place-items:center;cursor:pointer;color:var(--accent);flex:none;vertical-align:middle}
+.pbtn svg{width:16px;height:16px}
+.pbtn:hover{background:var(--accent-soft)}
+.pro{text-decoration:overline}
+
+/* Morse visuals */
+.code{display:inline-flex;align-items:center;gap:.3em;vertical-align:middle}
+.code i{display:block;height:.42em;border-radius:.21em;background:currentColor}
+.code i.d{width:.42em}.code i.h{width:1.3em}
+.codes{display:inline-flex;flex-wrap:wrap;align-items:center;justify-content:center;row-gap:.35em}
+.codes .cg{display:inline-block;width:.9em}
+.codes .wg{display:inline-block;width:1.6em;text-align:center;color:var(--muted);font-size:.6em}
+.codes.xl{font-size:clamp(36px,9vw,56px);color:var(--accent)}
+.codes.lg{font-size:clamp(26px,6vw,36px);color:var(--accent)}
+.codes.sm{font-size:18px}
+.lamp{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--lamp-off);box-shadow:inset 0 1px 2px rgba(0,0,0,.2);flex:none;transition:background .03s}
+.lamp.big{width:26px;height:26px}
+body.tone .lamp{background:var(--lamp-on);box-shadow:0 0 0 4px rgba(255,179,26,.22),0 0 22px 6px rgba(255,179,26,.55)}
+.mtext{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 0;font-size:24px;color:var(--ink);padding:8px 0}
+.mtext .mc{display:inline-flex;margin-right:1em}
+.mtext .ws{display:inline-block;width:1.4em;height:1.2em;margin-right:1em;border-left:2px dashed var(--line);transform:skewX(-20deg)}
+.mtext.sm{font-size:16px;justify-content:flex-start}
+
+/* Lessons */
+.hero{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:28px}
+.eyebrow{font:700 12px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.hero h1{font-size:clamp(26px,4vw,36px);font-weight:800;letter-spacing:-.02em;margin:8px 0 10px}
+.hero p{margin:0 0 18px;color:var(--muted);max-width:540px}
+.hero-r{display:flex;flex-direction:column;align-items:center;gap:12px}
+.ring{--p:0;width:124px;height:124px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--surface2) 0);display:grid;place-items:center}
+.ring::before{content:"";grid-area:1/1;width:96px;height:96px;border-radius:50%;background:var(--surface)}
+.ring span{grid-area:1/1;z-index:1;text-align:center;font-weight:800;font-size:24px;line-height:1.1}
+.ring small{display:block;font-size:11px;color:var(--muted);font-weight:600}
+.mini-stats{display:flex;gap:16px;font-size:13px;color:var(--muted)}
+.mini-stats b{display:block;font-size:20px;color:var(--ink);text-align:center}
+.lesson-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.lcard{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);text-decoration:none;transition:transform .1s,box-shadow .15s}
+.lcard:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+.lnum{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:800;background:var(--surface2);flex:none}
+.lcard.done .lnum{background:var(--good-soft);color:var(--good)}
+.lcard.next{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.lcard.next .lnum{background:var(--accent);color:var(--accent-ink)}
+.lcard.locked{opacity:.6}
+.lbody{flex:1;min-width:0}
+.ltitle{font-weight:700}
+.lchars{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.cchip{font:700 13px var(--mono);min-width:24px;height:24px;padding:0 6px;border-radius:7px;background:var(--surface2);display:inline-grid;place-items:center;color:var(--ink)}
+.ltag{font-size:13px;color:var(--muted)}
+.lstat{font-size:13px;font-weight:700;color:var(--good);display:flex;align-items:center;gap:4px;flex:none}
+.lstat svg{width:16px;height:16px}
+.lcard.locked .lstat{color:var(--muted)}
+.tips{margin-top:24px}
+.tips summary{cursor:pointer;font-weight:700}
+.tips ul{margin:12px 0 0;padding-left:20px;color:var(--muted)}
+.tips li{margin:6px 0}
+.back{display:inline-block;margin-bottom:14px;color:var(--muted);text-decoration:none;font-weight:600}
+.back:hover{color:var(--ink)}
+.intro{padding:28px}
+.intro h1{font-size:30px;margin:6px 0 8px}
+.intro-chars{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+.ichar{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 16px;min-width:92px;border-radius:14px;border:1px solid var(--line);background:var(--bg);cursor:pointer}
+.ichar:hover{border-color:var(--accent)}
+.ichar b{font:800 30px var(--mono)}
+.ichar .codes{font-size:16px;color:var(--accent)}
+.intro ul{color:var(--muted);padding-left:20px}
+.note{padding:12px 14px;border-radius:12px;background:var(--warn-soft);color:var(--warn);margin:16px 0;display:flex;gap:10px;align-items:flex-start}
+.note svg{width:18px;height:18px;flex:none;margin-top:2px}
+
+/* Session */
+.sbar{display:flex;align-items:center;gap:12px;max-width:720px;margin:0 auto 10px}
+.pbar{flex:1;height:10px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.pbar>i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .35s}
+.scount{font:600 13px var(--mono);color:var(--muted);min-width:44px;text-align:right}
+.pop-wrap{position:relative}
+.pop{position:absolute;right:0;top:48px;width:min(320px,calc(100vw - 32px));z-index:30;padding:16px}
+.s-title{max-width:720px;margin:0 auto 16px;font-size:14px;color:var(--muted);font-weight:600}
+.retry{color:var(--warn)}
+.stage{max-width:720px;margin:0 auto;text-align:center}
+.q,.learn{padding:28px 24px}
+.prompt{font-size:21px;font-weight:700;margin-bottom:6px}
+.q-main{display:flex;flex-direction:column;align-items:center;gap:14px;margin:22px 0}
+.tag{display:inline-block;padding:4px 12px;border-radius:99px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:13px}
+.big-char{font:800 clamp(64px,16vw,104px)/1 var(--mono);margin:18px 0 10px}
+.learn .codes.xl{margin:6px 0 4px}
+.rhythm{font:600 18px var(--mono);color:var(--muted);margin:10px 0 4px;letter-spacing:.04em}
+.hint{max-width:460px;margin:12px auto 22px;color:var(--muted)}
+.playwrap{display:flex;align-items:center;gap:18px}
+.playbig{width:96px;height:96px;border-radius:50%;border:none;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px color-mix(in srgb,var(--accent) 35%,transparent);transition:transform .08s}
+.playbig:active{transform:scale(.96)}
+.playbig svg{width:40px;height:40px}
+.playbig .i-stop{display:none}
+body.playing .playbig .i-stop{display:block}
+body.playing .playbig .i-play{display:none}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;margin-top:8px}
+.opt{position:relative;padding:22px 10px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font:800 30px var(--mono);cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt kbd{position:absolute;top:7px;left:8px}
+.opt:disabled{cursor:default}
+.opt.good{border-color:var(--good);background:var(--good-soft);color:var(--good)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.answer{display:block;width:100%;font:700 28px/1.3 var(--mono);text-align:center;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:var(--ink);text-transform:uppercase;outline:none;margin:0 auto 14px}
+.answer:focus{border-color:var(--accent)}
+.answer:disabled{opacity:.7}
+textarea.answer{text-align:left;font-size:20px;min-height:112px;resize:vertical}
+.answer.morse{letter-spacing:.12em;text-transform:none}
+.answer::placeholder{text-transform:none;letter-spacing:normal;font-weight:500;color:var(--muted);opacity:.7}
+.keypad{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:-4px 0 16px}
+.keypad button{min-width:64px;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);font-weight:700;font-size:20px;cursor:pointer}
+.keypad button.txt{font-size:14px}
+.keypad button:active{background:var(--accent-soft)}
+.ime-warn{padding:10px 12px;border-radius:10px;background:var(--warn-soft);color:var(--warn);font-size:14px;margin:0 0 14px;text-align:left}
+.hint-keys{margin-top:16px;font-size:13px;color:var(--muted)}
+.fb-box{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 16px;border-radius:14px;margin-top:18px;text-align:left;animation:pop .18s ease-out}
+.fb-box.good{background:var(--good-soft);color:var(--good)}
+.fb-box.bad{background:var(--bad-soft);color:var(--bad)}
+.fb-t{font-weight:800;font-size:18px}
+.fb-a{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px;color:var(--ink)}
+.fb-item{font:800 22px var(--mono)}
+.fb-a .codes{color:var(--ink)}
+.fb-got{font-size:14px;margin-top:4px;color:var(--ink)}
+@keyframes pop{from{transform:scale(.97);opacity:0}to{transform:none;opacity:1}}
+.ptext{font:700 24px/1.5 var(--mono);word-break:break-word}
+.ptext.sm{font-size:17px}
+.pres{text-align:left;margin-top:8px}
+.pres-head{display:flex;align-items:baseline;gap:10px;margin:16px 0 10px;font-weight:700}
+.pres-head b{font-size:30px}
+.pres-head.good b{color:var(--good)}.pres-head.mid b{color:var(--warn)}.pres-head.bad b{color:var(--bad)}
+.diff{font:600 20px/1.9 var(--mono);white-space:pre-wrap;word-break:break-word;padding:14px 16px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.d-ok{color:var(--good)}
+.d-sub s{color:var(--bad);opacity:.85}.d-sub b{color:var(--good);text-decoration:underline}
+.d-del{color:var(--warn);text-decoration:underline wavy;text-underline-offset:4px}
+.d-ins s{color:var(--bad);opacity:.85}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:8px 0 0}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.legend .l1::before{background:var(--good)}.legend .l2::before{background:var(--bad)}.legend .l3::before{background:var(--warn)}
+.tks{display:flex;flex-wrap:wrap;gap:8px;padding:12px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.tk{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 9px 8px;border-radius:10px;min-width:44px;background:var(--surface);font-size:14px}
+.tk b{font:800 16px var(--mono)}
+.tk .got{position:relative;color:var(--bad);opacity:.85}
+.tk .got::after{content:"";position:absolute;left:-3px;right:-3px;top:50%;height:2px;background:var(--bad);transform:rotate(-8deg)}
+.tk .tsep{font:700 14px var(--mono)}
+.tk.ok{color:var(--good)}
+.tk.bad{background:var(--bad-soft);color:var(--good)}
+.tk.miss{background:var(--warn-soft);color:var(--warn)}
+.tk.extra{background:var(--bad-soft);color:var(--bad)}
+.tk.sep{background:none;justify-content:center;color:var(--muted);font-weight:700;min-width:16px}
+.anskey{margin-top:14px;padding:14px 16px;border-radius:12px;border:1px dashed var(--line)}
+.anskey .lbl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.result{max-width:560px;margin:20px auto;text-align:center;padding:32px 24px}
+.stars{font-size:34px;letter-spacing:6px;color:var(--lamp-on)}
+.stars .off{color:var(--surface2)}
+.result .ring{margin:14px auto}
+.result h2{font-size:26px;margin:8px 0}
+.result p{color:var(--muted)}
+.missed{margin:18px 0}
+.missed .row{justify-content:center}
+.mchip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:10px;background:var(--bad-soft);color:var(--bad);font:800 16px var(--mono);cursor:pointer;border:none}
+
+/* Practice */
+.pmodes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.pmodes a{display:block;padding:14px;border-radius:14px;border:1px solid var(--line);background:var(--surface);text-decoration:none}
+.pmodes a:hover{border-color:var(--accent)}
+.pmodes a.on{border-color:var(--accent);background:var(--accent-soft)}
+.pmodes b{display:block}
+.pmodes small{display:block;color:var(--muted);font-size:13px;line-height:1.35;margin-top:2px}
+.cfg{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.cfg-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cfg-row .lbl{width:90px;font-weight:700;font-size:14px;flex:none}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip-btn{padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:14px;font-weight:600;cursor:pointer;min-height:34px}
+.chip-btn:hover{border-color:var(--accent)}
+.chip-btn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cfg-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px}
+.field-in{padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);min-width:0;flex:1;max-width:320px;text-transform:uppercase}
+input[type=range]{accent-color:var(--accent);flex:1;min-width:120px;max-width:320px}
+input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
+.chk{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:15px}
+.drill{text-align:center;padding:24px}
+.drill-top{display:flex;align-items:center;justify-content:space-between;font:700 15px var(--mono);color:var(--muted)}
+.drill-char{font:800 96px/1 var(--mono);margin:20px 0 6px;min-height:96px;color:var(--muted)}
+.drill-char.good{color:var(--good)}.drill-char.bad{color:var(--bad)}
+.drill-code{min-height:34px;font-size:24px;color:var(--accent);margin-bottom:14px}
+.drill .answer{max-width:300px}
+.drill-hist{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:14px}
+.hchip{font:700 13px var(--mono);width:26px;height:26px;border-radius:7px;display:grid;place-items:center}
+.hchip.good{background:var(--good-soft);color:var(--good)}.hchip.bad{background:var(--bad-soft);color:var(--bad)}
+.sumgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:16px 0}
+.sumgrid div{padding:14px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.sumgrid b{display:block;font-size:26px}
+.sumgrid span{font-size:13px;color:var(--muted)}
+.keyer{text-align:center;padding:24px}
+.k-target{min-height:40px;margin-bottom:12px}
+.k-tl{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.k-tt{font:800 34px/1.3 var(--mono);margin:4px 0;word-break:break-word}
+.k-out{min-height:96px;padding:14px;border-radius:14px;background:var(--bg);border:1px solid var(--line);margin-bottom:16px;text-align:left}
+.k-text{font:700 26px/1.4 var(--mono);word-break:break-word;min-height:36px}
+.k-text .caret{display:inline-block;width:2px;height:1em;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.k-cur{font:700 22px var(--mono);color:var(--accent);min-height:30px;letter-spacing:.1em}
+.keybtn{width:100%;max-width:420px;height:150px;border-radius:24px;border:2px solid var(--line);background:var(--surface2);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin:0 auto 16px;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none}
+.keybtn b{font-size:18px;letter-spacing:.08em}
+.keybtn small{color:var(--muted)}
+.keybtn.down{background:var(--accent-soft);border-color:var(--accent);transform:translateY(2px)}
+.k-res{margin-top:12px;text-align:left}
+.k-flash{font-weight:800;font-size:18px;text-align:center;min-height:28px;margin-top:8px}
+.k-flash.good{color:var(--good)}.k-flash.bad{color:var(--bad)}
+.help{margin-top:16px}
+.help summary{cursor:pointer;font-weight:700}
+.help p,.help li{color:var(--muted)}
+
+/* Reference */
+.tr-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tr-grid label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px}
+.tr-grid textarea{min-height:110px;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font:600 18px/1.5 var(--mono);resize:vertical;outline:none}
+.tr-grid textarea:focus{border-color:var(--accent)}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.ref-cell{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;text-align:left}
+.ref-cell:hover{border-color:var(--accent)}
+.ref-cell b{font:800 22px var(--mono);min-width:26px;text-align:center}
+.ref-cell .codes{font-size:15px;color:var(--accent);justify-content:flex-start}
+.ref-cell small{display:block;font-size:11px;color:var(--muted);font-family:var(--mono);margin-top:2px}
+.ref-cell.wide b{min-width:44px}
+.tree-wrap{overflow-x:auto;border-radius:var(--r)}
+.tree{display:block;width:100%;min-width:640px;height:auto}
+.tree line{stroke-width:2}
+.tree .tl-dot{stroke:var(--accent)}
+.tree .tl-dash{stroke:var(--muted)}
+.tree .tn circle{fill:var(--surface);stroke:var(--line);stroke-width:2}
+.tree .tn[data-play]{cursor:pointer}
+.tree .tn[data-play]:hover circle{stroke:var(--accent);fill:var(--accent-soft)}
+.tree .tn.empty circle{fill:var(--line);stroke:none}
+.tree .tn-root{fill:var(--ink)}
+.tree text{fill:var(--ink);font:800 15px var(--mono);text-anchor:middle;pointer-events:none}
+.tree .tlab{font:600 12px var(--font);fill:var(--muted)}
+.timing{display:flex;height:22px;margin-top:10px}
+.timing span{position:relative;border-right:1px dashed var(--line)}
+.timing span i{position:absolute;inset:4px 1px;border-radius:4px}
+.timing .on i{background:var(--accent)}
+.timing em{position:absolute;top:26px;left:0;right:0;text-align:center;font:600 11px var(--mono);color:var(--muted);font-style:normal}
+.timing-lbl{display:flex;margin-top:22px;font:700 13px var(--mono);color:var(--ink)}
+.timing-lbl span{text-align:center;border-top:2px solid var(--line);padding-top:4px}
+.timing-lbl span:empty{border-color:transparent}
+.rules{margin:16px 0 0;padding-left:20px;color:var(--muted)}
+.rules li{margin:4px 0}
+.rules b{color:var(--ink)}
+
+/* Review */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{padding:16px}
+.stat b{display:block;font-size:30px;font-weight:800;line-height:1.1}
+.stat span{font-size:13px;color:var(--muted)}
+.stat.hl b{color:var(--accent)}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.cta p{margin:0;color:var(--muted)}
+.heat{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:6px}
+.tile{display:flex;flex-direction:column;align-items:center;padding:8px 4px;border-radius:10px;border:1px solid var(--line);background:var(--surface);cursor:pointer;line-height:1.2}
+.tile b{font:800 20px var(--mono)}
+.tile small{font-size:11px;font-weight:700}
+.tile .lv{font-size:8px;letter-spacing:1px;min-height:10px;color:currentColor;opacity:.8}
+.tile.b-good{background:var(--good-soft);color:var(--good);border-color:transparent}
+.tile.b-mid{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.tile.b-bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.tile.b-none{color:var(--muted)}
+.tile.unlearned{opacity:.4}
+.tile.due{box-shadow:0 0 0 2px var(--accent)}
+.rv-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+
+/* Settings */
+.set-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.set-grid h2{font-size:18px;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field>span{font-size:14px;font-weight:600}
+.field>span b{color:var(--accent)}
+.field select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);max-width:320px}
+.field input[type=range]{max-width:none;width:100%}
+.set-grid .chk{margin:10px 0}
+.keys{width:100%;border-collapse:collapse;font-size:14px}
+.keys td{padding:7px 4px;border-bottom:1px solid var(--line)}
+.keys td:first-child{white-space:nowrap;font-family:var(--mono);font-weight:700;width:40%}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:calc(100vw - 32px)}
+#toast.show{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:820px){
+  .pmodes{grid-template-columns:repeat(3,1fr)}
+  .set-grid{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .top-in{flex-wrap:wrap;gap:4px;padding:8px 12px}
+  .nav{margin-left:-4px;width:calc(100% + 8px)}
+  .nav a{padding:7px 10px;font-size:14px}
+  main{padding:18px 16px 80px}
+  .hero{grid-template-columns:1fr;padding:22px}
+  .hero-r{flex-direction:row;justify-content:flex-start;gap:20px}
+  .ring{width:100px;height:100px}.ring::before{width:78px;height:78px}.ring span{font-size:20px}
+  .pmodes{grid-template-columns:repeat(2,1fr)}
+  .pmodes small{display:none}
+  .tr-grid{grid-template-columns:1fr}
+  .q,.learn{padding:22px 16px}
+  .cfg-row .lbl{width:100%}
+  .btn.wide{min-width:0;width:100%}
+  .playbig{width:84px;height:84px}
+  .opt{padding:18px 8px;font-size:26px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#/lessons"><span class="lamp"></span>Học Morse <small>·− −·</small></a>
+    <nav class="nav" aria-label="Điều hướng">
+      <a href="#/lessons" data-nav="lessons">Bài học</a>
+      <a href="#/practice" data-nav="practice">Luyện tập</a>
+      <a href="#/review" data-nav="review">Ôn tập <span class="badge" id="dueBadge"></span></a>
+      <a href="#/reference" data-nav="reference">Bảng mã</a>
+      <a href="#/settings" data-nav="settings">Cài đặt</a>
+    </nav>
+  </div>
+</header>
+<main id="app"><noscript>Ứng dụng cần bật JavaScript.</noscript></main>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   TIỆN ÍCH
+   ===================================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rnd = n => Math.floor(Math.random() * n);
+const pick = a => a[rnd(a.length)];
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const once = fn => { let d = false; return (...a) => { if (!d) { d = true; fn(...a); } }; };
+const isField = t => !!t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable);
+const DAY = 86400000;
+
+const IC = {
+  play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.6v12.8a1 1 0 0 0 1.53.85l10.2-6.4a1 1 0 0 0 0-1.7L9.53 4.75A1 1 0 0 0 8 5.6z" fill="currentColor"/></svg>',
+  stop: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.5" fill="currentColor"/></svg>',
+  sliders: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h11M19 17h1"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+};
+
+/* =====================================================================
+   DỮ LIỆU MORSE
+   ===================================================================== */
+const MORSE = {
+  A:'.-',B:'-...',C:'-.-.',D:'-..',E:'.',F:'..-.',G:'--.',H:'....',I:'..',J:'.---',K:'-.-',L:'.-..',M:'--',
+  N:'-.',O:'---',P:'.--.',Q:'--.-',R:'.-.',S:'...',T:'-',U:'..-',V:'...-',W:'.--',X:'-..-',Y:'-.--',Z:'--..',
+  '1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.','0':'-----',
+  '.':'.-.-.-',',':'--..--','?':'..--..','/':'-..-.','=':'-...-','+':'.-.-.','-':'-....-',':':'---...',';':'-.-.-.',
+  '(':'-.--.',')':'-.--.-',"'":'.----.','"':'.-..-.','@':'.--.-.','!':'-.-.--','&':'.-...'
+};
+const REV = {}; for (const [k, v] of Object.entries(MORSE)) REV[v] = k;
+// Lưu ý: Object.keys luôn đưa khoá dạng số lên đầu, nên tự sắp thứ tự: chữ → số → dấu câu
+const ALL = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', ...Object.keys(MORSE).filter(k => !/[A-Z0-9]/.test(k))];
+const LETTERS = ALL.filter(c => /[A-Z]/.test(c));
+const DIGITS = [...'1234567890'];
+
+const HINTS = {
+  E:'Ký tự xuất hiện nhiều nhất trong tiếng Anh nên có mã ngắn nhất: một chấm.',
+  T:'Chữ phổ biến thứ hai: một gạch duy nhất.',
+  I:'Hai chấm — gấp đôi E.',
+  A:'Chấm rồi gạch. Ngược lại của N.',
+  N:'Gạch rồi chấm. Ngược lại của A.',
+  M:'Hai gạch — gấp đôi T.',
+  S:'Ba chấm — chữ S trong SOS.',
+  U:'Hai chấm và một gạch.',
+  R:'Chấm – gạch – chấm, đối xứng hai đầu.',
+  W:'Một chấm và hai gạch.',
+  D:'Gạch và hai chấm — ngược lại của U.',
+  K:'Gạch – chấm – gạch, đối xứng. Khi liên lạc, K nghĩa là "mời phát".',
+  G:'Hai gạch và một chấm — ngược lại của W.',
+  O:'Ba gạch — chữ O trong SOS.',
+  H:'Bốn chấm liên tiếp.',
+  V:'Ba chấm và một gạch — giống nhịp mở đầu Giao hưởng số 5 của Beethoven.',
+  F:'Hai chấm, một gạch, một chấm.',
+  L:'Chấm, gạch, hai chấm.',
+  P:'Hai gạch kẹp giữa hai chấm.',
+  J:'Một chấm và ba gạch.',
+  B:'Một gạch và ba chấm — ngược lại của V.',
+  X:'Hai chấm kẹp giữa hai gạch — ngược lại của P.',
+  C:'Gạch – chấm – gạch – chấm, nhịp xen kẽ đều đặn.',
+  Y:'Gạch, chấm, hai gạch.',
+  Z:'Hai gạch và hai chấm.',
+  Q:'Hai gạch, một chấm, một gạch.',
+  '1':'Số 1–5: số chấm ở đầu đúng bằng con số, phần còn lại là gạch (luôn đủ 5 tín hiệu).',
+  '2':'Hai chấm, ba gạch.','3':'Ba chấm, hai gạch.','4':'Bốn chấm, một gạch.','5':'Năm chấm.',
+  '6':'Số 6–9: số gạch ở đầu = con số trừ 5, phần còn lại là chấm.','7':'Hai gạch, ba chấm.','8':'Ba gạch, hai chấm.','9':'Bốn gạch, một chấm.','0':'Năm gạch.',
+  '.':'Ba lần "chấm – gạch" (giống AAA).',
+  ',':'Hai gạch, hai chấm, hai gạch — đối xứng.',
+  '?':'Hai chấm, hai gạch, hai chấm — đối xứng.',
+  '/':'Gạch, hai chấm, gạch, chấm (giống DN).',
+  '=':'Gạch, ba chấm, gạch. Cũng là prosign BT (ngắt đoạn).',
+  '+':'Chấm – gạch xen kẽ, kết thúc bằng chấm. Cũng là prosign AR (kết thúc bản tin).',
+  '-':'Gạch, bốn chấm, gạch — đối xứng.',
+  ':':'Ba gạch rồi ba chấm.',
+  ';':'"Gạch – chấm" lặp ba lần.',
+  '(':'Gạch, chấm, hai gạch, chấm (giống KN).',
+  ')':'Như ngoặc mở, thêm một gạch ở cuối.',
+  "'":'Chấm, bốn gạch, chấm.',
+  '"':'Chấm, gạch, hai chấm, gạch, chấm — đối xứng.',
+  '@':'Chấm, hai gạch, chấm, gạch, chấm (giống AC).',
+  '!':'Gạch – chấm – gạch – chấm – gạch – gạch (không thuộc chuẩn ITU).',
+  '&':'Chấm, gạch, ba chấm (giống AS — "chờ").'
+};
+
+const LESSONS = [
+  {id:'et',   kind:'chars',  title:'E và T',           chars:'ET',    desc:'Hai ký tự ngắn nhất: một chấm và một gạch. Đây là nền tảng nhịp điệu của mã Morse.'},
+  {id:'ianm', kind:'chars',  title:'I · A · N · M',     chars:'IANM',  desc:'Tất cả các chữ cái có hai tín hiệu.'},
+  {id:'surw', kind:'chars',  title:'S · U · R · W',     chars:'SURW',  desc:'Chữ cái ba tín hiệu bắt đầu bằng chấm.'},
+  {id:'dkgo', kind:'chars',  title:'D · K · G · O',     chars:'DKGO',  desc:'Chữ cái ba tín hiệu bắt đầu bằng gạch.'},
+  {id:'rv1',  kind:'review', title:'Ôn tập 1',          desc:'Củng cố 14 chữ cái đầu tiên: nghe, đọc và gõ các từ tiếng Anh.'},
+  {id:'hvfl', kind:'chars',  title:'H · V · F · L',     chars:'HVFL',  desc:'Chữ cái bốn tín hiệu — nhóm thứ nhất.'},
+  {id:'pjbx', kind:'chars',  title:'P · J · B · X',     chars:'PJBX',  desc:'Chữ cái bốn tín hiệu — nhóm thứ hai.'},
+  {id:'cyzq', kind:'chars',  title:'C · Y · Z · Q',     chars:'CYZQ',  desc:'Bốn chữ cái cuối cùng của bảng chữ cái.'},
+  {id:'rv2',  kind:'review', title:'Ôn tập 2',          desc:'Toàn bộ 26 chữ cái: nghe chép, đọc mã và gõ mã các từ tiếng Anh.'},
+  {id:'n15',  kind:'chars',  title:'Số 1 – 5',          chars:'12345', desc:'Số 1–5 bắt đầu bằng chấm; mọi chữ số đều có đúng 5 tín hiệu.'},
+  {id:'n60',  kind:'chars',  title:'Số 6 – 0',          chars:'67890', desc:'Số 6–0 bắt đầu bằng gạch.'},
+  {id:'p1',   kind:'chars',  title:'Dấu câu cơ bản',    chars:'.,?/',  desc:'Dấu chấm, dấu phẩy, dấu hỏi và gạch chéo.'},
+  {id:'p2',   kind:'chars',  title:'Dấu câu mở rộng',   chars:'=+-:;', desc:'Dấu bằng, cộng, gạch ngang, hai chấm và chấm phẩy.'},
+  {id:'p3',   kind:'chars',  title:'Ký hiệu khác',      chars:'()\'"@', desc:'Ngoặc đơn, nháy đơn, nháy kép và @.'},
+  {id:'qso',  kind:'words',  title:'Ngôn ngữ vô tuyến', desc:'Q-code và chữ viết tắt luôn xuất hiện trong các cuộc liên lạc Morse thực tế.'},
+  {id:'final',kind:'review', title:'Tổng ôn',           final:true,    desc:'Câu tiếng Anh hoàn chỉnh với chữ cái, chữ số và dấu câu.'}
+];
+
+const WORDS = [...new Set(`
+A I AN AT IN IT ME AM AS IS US SO NO ON TO DO GO UP WE HE BE BY MY OF OR IF OK
+TEN NET TIN TAN TEA EAT ATE ANT AIM MAN MEN MAT MET TEE TIME TEAM MEAT NAME MAIN MEAN MINE NINE TENT MINT ITEM NEAT MATE TAME TEEN MEET
+AMEN EMIT ANTE MANE MEANT TINT TITAN TAINT INMATE ATTAIN MAINTAIN ANIMATE INTENT
+SUN RUN WAS WAR SEA SET SIT SAT USE SAW SEW SEE NEW NOW RAW RAT STAR ARE ART EAR TRUE TREE RUST MUST REST TEST WEST EAST NEST SURE RAIN TRAIN
+WATER WINTER SISTER MASTER SUMMER MINUTE NATURE RETURN STREAM SMART START WAIT WANT WARM WISE WIRE SWIM TWIN TWIST WAIST MUSE ISSUE MISS TRUST UNIT UNTIL
+SIR STIR STEW SEAM SEAT RAM RIM ARM WARN WRIST AWARE ANSWER WAITER TOWER NURSE SMILE
+DOG GOD DIG DUG KEG KID DESK DOME GOAT GOOD GOOSE DARK DOOR ROAD WORD WORK MAKE TAKE GAME GREAT GREEN GARDEN KING SONG RING WIND MIND KIND
+ABLE ABOUT ABOVE ACT ADD AFTER AGAIN AGE AGO AIR ALL ALSO AND ANIMAL ANY AREA ASK AWAY
+BABY BACK BAD BAG BALL BANK BASE BEAR BEAT BED BEEN BEFORE BEGIN BEST BETTER BIG BIRD BLACK BLUE BOAT BODY BONE BOOK BOTH BOX BOY BRING BROWN BUILD BUS BUSY BUT BUY
+CALL CALM CAME CAN CAR CARD CARE CARRY CASE CAT CATCH CELL CENTER CHAIR CHANGE CHECK CHILD CITY CLASS CLEAN CLEAR CLOCK CLOSE COAST COLD COLOR COME COOK COOL COPY CORN COST COULD COUNT COURSE COVER CROSS CRY CUP CUT
+DANCE DATA DATE DAY DEAR DEEP DID DINNER DOCTOR DOES DONE DOWN DRAW DREAM DRESS DRINK DRIVE DROP DRY DUCK DUST
+EACH EARLY EARTH EASY EDGE EGG EIGHT EITHER ELSE END ENERGY ENOUGH ENTER EVEN EVENING EVER EVERY EXACT EXAMPLE EYE
+FACE FACT FAIR FALL FAMILY FAR FARM FAST FATHER FEAR FEED FEEL FEET FEW FIELD FIGHT FILE FILL FIND FINE FINISH FIRE FIRST FISH FIVE FIX FLAG FLOOR FLY FOLLOW FOOD FOOT FOR FORCE FOREST FORM FOUND FOUR FOX FREE FRESH FRIEND FROM FRONT FRUIT FULL FUN
+GAS GATE GAVE GET GIFT GIRL GIVE GLAD GLASS GOAL GOLD GOT GRASS GROUND GROUP GROW GUESS GUIDE
+HAD HAIR HALF HALL HAND HAPPY HARD HAS HAT HAVE HEAD HEAR HEART HEAT HEAVY HELLO HELP HER HERE HIGH HILL HIM HIS HIT HOLD HOLE HOME HOPE HORSE HOT HOTEL HOUR HOUSE HOW HUGE HUMAN HUNT
+ICE IDEA IMAGE INCH INDEX INFO INK INSIDE INTO IRON ISLAND ITS
+JAM JAR JAZZ JET JOB JOIN JOKE JOY JUDGE JUICE JUMP JUNE JUST
+KEEP KEY KICK KISS KIT KITE KNEE KNEW KNOW
+LADY LAKE LAMP LAND LANE LARGE LAST LATE LAUGH LAW LAZY LEAD LEARN LEAVE LEFT LEG LESS LET LETTER LEVEL LIFE LIFT LIGHT LIKE LINE LION LIST LISTEN LITTLE LIVE LONG LOOK LOSE LOST LOT LOUD LOVE LOW LUCK LUNCH
+MADE MAIL MANY MAP MARK MARKET MATTER MAY METAL MIDDLE MIGHT MILE MILK MIX MODEL MOMENT MONEY MONTH MOON MORE MORNING MOST MOTHER MOUNTAIN MOUTH MOVE MUCH MUSIC
+NATION NEAR NECK NEED NEVER NEWS NEXT NICE NIGHT NOISE NONE NOON NORTH NOSE NOT NOTE NOTHING NUMBER
+OAK OCEAN OFF OFFER OFFICE OFTEN OIL OLD ONCE ONE ONLY OPEN ORDER OTHER OUR OUT OVER OWN
+PACK PAGE PAIN PAINT PAIR PAPER PARK PART PARTY PASS PAST PATH PAY PEACE PEN PEOPLE PER PIECE PIG PINK PLACE PLAN PLANE PLANT PLAY PLEASE POEM POINT POOL POOR PORT POST POWER PRESS PRICE PRINT PULL PUSH PUT
+QUART QUEEN QUEST QUICK QUIET QUILT QUITE QUIZ QUOTE
+RACE RADIO RAN RATE REACH READ READY REAL RED RICE RICH RIDE RIGHT RISE RIVER ROCK ROOM ROOT ROSE ROUND ROW RULE
+SAD SAFE SAID SAIL SALT SAME SAND SAVE SAY SCHOOL SECOND SEED SEEM SELL SEND SENSE SEVEN SHALL SHE SHIP SHOE SHOP SHORT SHOW SIDE SIGN SIGNAL SILVER SIMPLE SING SIX SIZE SKY SLEEP SLOW SMALL SNOW SOFT SOME SON SOON SOUND SOUTH SPACE SPEAK SPEED SPELL SPRING STAND STATE STATION STAY STEP STILL STONE STOP STORE STORM STORY STREET STRONG STUDY SUCH SUGAR SYSTEM
+TABLE TAIL TALK TALL TEACH TELL TERM TEXT THAN THANK THAT THE THEIR THEM THEN THERE THESE THEY THING THINK THIS THOSE THREE TINY TODAY TOLD TOO TOOK TOOL TOP TOTAL TOUCH TOWN TOY TRADE TRIP TRY TUNE TURN TWO TYPE
+UNDER UPON USUAL VALLEY VALUE VAN VAST VERY VIEW VILLAGE VISIT VOICE VOTE
+WALK WALL WASH WATCH WAVE WAY WEAR WEEK WELL WENT WERE WET WHAT WHEEL WHEN WHERE WHICH WHILE WHITE WHO WHOLE WHY WIDE WILD WILL WIN WINDOW WISH WITH WOMAN WOOD WORLD WRITE WRONG
+YARD YEAR YELLOW YES YET YOU YOUNG YOUR ZEBRA ZERO ZONE ZOO
+`.trim().split(/\s+/))];
+
+const SENTENCES = [
+  'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.',
+  'PACK MY BOX WITH FIVE DOZEN LIQUOR JUGS.',
+  'SPHINX OF BLACK QUARTZ, JUDGE MY VOW.',
+  'PRACTICE MAKES PERFECT.',
+  'SLOW AND STEADY WINS THE RACE.',
+  'LEARN A LITTLE EVERY DAY.',
+  'THE SUN IS WARM AND THE SKY IS CLEAR.',
+  'WHERE IS THE NEAREST TRAIN STATION?',
+  'MEET ME AT THE PARK AT 5 PM.',
+  'THE CLASS STARTS AT 9 AM.',
+  'WE NEED 4 CHAIRS, 2 TABLES AND 1 LAMP.',
+  'ROOM 12 IS ON THE 3RD FLOOR.',
+  'THE BUS LEAVES IN 15 MINUTES.',
+  'PLEASE SEND MORE SLOWLY.',
+  'CAN YOU HEAR ME CLEARLY?',
+  'THE STORM WILL PASS TONIGHT.',
+  'KEEP CALM AND SEND CODE.',
+  'MY RADIO WORKS WELL TODAY.',
+  'THE SHIP WILL ARRIVE AT DAWN.',
+  'A GOOD OPERATOR LISTENS FIRST.',
+  'READ THE MESSAGE TWICE.',
+  'THE LIGHT IS ON IN THE TOWER.',
+  'ALL STATIONS STAND BY.',
+  'WIND FROM THE NORTH AT 20 KNOTS.',
+  'THE TEMPERATURE IS 28 DEGREES.',
+  'TIME FLIES WHEN YOU HAVE FUN.',
+  'DO YOU COPY? OVER.',
+  'THE KEY TO SPEED IS RHYTHM.',
+  'LISTEN TO THE SOUND, NOT THE DOTS.',
+  'COFFEE OR TEA?',
+  'THE BOOK IS ON THE TABLE.',
+  'THE RATIO IS 3/4.',
+  'SEND THE FILE TO INFO@MAIL.COM.',
+  'THE PRICE IS 50 + 25 = 75.',
+  'MEET AT GATE B-12.',
+  'HE SAID: "WAIT FOR ME."',
+  "IT'S A NICE DAY (FOR NOW).",
+  'BRING WATER, FOOD AND A MAP.',
+  'ARE WE THERE YET?',
+  'THE TRAIN IS LATE AGAIN.',
+  'GOOD MORNING, HOW ARE YOU?',
+  'SEE YOU TOMORROW.',
+  'THANK YOU VERY MUCH.',
+  'WHAT TIME IS IT NOW?',
+  'OPEN THE WINDOW, PLEASE.',
+  'THE MEETING IS AT 10:30.',
+  'CALL ME BACK IN 2 HOURS.',
+  'NOTE: BRING YOUR OWN PEN; PAPER IS FREE.'
+];
+
+const QSO = [
+  'CQ CQ CQ DE VN2XYZ VN2XYZ K',
+  'VN2XYZ DE K1ABC K1ABC K',
+  'K1ABC DE VN2XYZ GM OM TNX FER CALL',
+  'UR RST 599 599 NAME HR IS AN',
+  'QTH IS HANOI HANOI HW CPY? K',
+  'R R TNX AN UR RST 579',
+  'NAME HR IS TOM QTH BOSTON',
+  'RIG HR IS 100W ES ANT IS DIPOLE',
+  'WX HR IS SUNNY ES WARM 30C',
+  'FB OM TNX FER QSO',
+  '73 ES CUL <SK>',
+  'QRZ? DE VN2XYZ',
+  'PSE QRS PSE QRS',
+  'QSL VIA BUREAU',
+  'AGN PSE NAME?',
+  'GE OM UR SIG IS FB',
+  'SOS SOS SOS DE SHIP'
+];
+
+const GLOSSARY = [
+  {t:'CQ',  d:'Gọi chung — mời bất kỳ trạm nào trả lời'},
+  {t:'DE',  d:'"Từ" — đây là trạm… (CQ DE K1ABC)'},
+  {t:'K',   d:'Mời phát — hết lượt của tôi'},
+  {t:'R',   d:'Đã nhận đầy đủ (roger)'},
+  {t:'73',  d:'Chúc mọi điều tốt đẹp — lời chào kết thúc'},
+  {t:'88',  d:'Thân ái'},
+  {t:'SOS', d:'Tín hiệu cầu cứu khẩn cấp'},
+  {t:'QTH', d:'Vị trí của tôi là…'},
+  {t:'QRZ', d:'Ai đang gọi tôi?'},
+  {t:'QSL', d:'Xác nhận đã nhận được'},
+  {t:'QSO', d:'Một cuộc liên lạc hai chiều'},
+  {t:'QRS', d:'Xin phát chậm lại'},
+  {t:'QRQ', d:'Xin phát nhanh hơn'},
+  {t:'QRM', d:'Bị nhiễu bởi trạm khác'},
+  {t:'QRN', d:'Bị nhiễu khí quyển'},
+  {t:'RST', d:'Báo cáo tín hiệu: độ rõ – cường độ – âm sắc (vd 599)'},
+  {t:'UR',  d:'Của bạn (your)'},
+  {t:'TNX', d:'Cảm ơn (thanks)'},
+  {t:'TU',  d:'Cảm ơn (thank you)'},
+  {t:'FB',  d:'Tuyệt vời (fine business)'},
+  {t:'OM',  d:'Ông bạn (old man) — cách gọi thân mật'},
+  {t:'GM',  d:'Chào buổi sáng'},
+  {t:'GA',  d:'Chào buổi chiều'},
+  {t:'GE',  d:'Chào buổi tối'},
+  {t:'PSE', d:'Làm ơn (please)'},
+  {t:'AGN', d:'Lần nữa (again)'},
+  {t:'HR',  d:'Ở đây (here)'},
+  {t:'HW',  d:'Thế nào (how) — HW CPY? = nghe rõ không?'},
+  {t:'CPY', d:'Nghe, chép được (copy)'},
+  {t:'ES',  d:'Và (and)'},
+  {t:'WX',  d:'Thời tiết'},
+  {t:'RIG', d:'Máy thu phát'},
+  {t:'ANT', d:'Ăng-ten'},
+  {t:'CUL', d:'Hẹn gặp lại (see you later)'},
+  {t:'FER', d:'Cho / vì (for)'},
+  {t:'<AR>', d:'Prosign: kết thúc bản tin', pro:true},
+  {t:'<SK>', d:'Prosign: kết thúc liên lạc', pro:true},
+  {t:'<BT>', d:'Prosign: ngắt đoạn (giống dấu =)', pro:true},
+  {t:'<KN>', d:'Prosign: chỉ trạm đang liên lạc được phát', pro:true}
+];
+
+const PROSIGNS = [
+  {t:'<AR>', d:'Kết thúc bản tin'}, {t:'<SK>', d:'Kết thúc liên lạc'}, {t:'<BT>', d:'Ngắt đoạn'},
+  {t:'<KN>', d:'Mời đúng trạm đang liên lạc'}, {t:'<AS>', d:'Chờ'}, {t:'<CT>', d:'Bắt đầu liên lạc'},
+  {t:'<HH>', d:'Lỗi — phát lại'}, {t:'<SOS>', d:'Cầu cứu (phát liền)'}
+];
+
+const PRAISE = ['Chính xác!', 'Tuyệt vời!', 'Đúng rồi!', 'Rất tốt!', 'Xuất sắc!'];
+
+/* =====================================================================
+   LƯU TRỮ
+   ===================================================================== */
+const STORE_KEY = 'morse-trainer-v1';
+const DEFAULT_SETTINGS = {wpm:18, fwpm:10, freq:600, vol:60, wave:'sine', flash:true, autoplay:true, unlockAll:false, theme:'auto', keyWpm:12, keyAdapt:true};
+const DEFAULT_PRACTICE = {mode:'listen', src:'words', set:'learned', custom:'', len:5, drillN:20, kt:'char', kHint:true};
+
+function normalizeDB(d) {
+  d = d && typeof d === 'object' ? d : {};
+  const prefs = d.prefs && typeof d.prefs === 'object' ? d.prefs : {};
+  return {
+    settings: {...DEFAULT_SETTINGS, ...(d.settings || {})},
+    prefs: {practice: {...DEFAULT_PRACTICE, ...(prefs.practice || {})}},
+    lessons: d.lessons && typeof d.lessons === 'object' ? d.lessons : {},
+    stats: d.stats && typeof d.stats === 'object' ? d.stats : {},
+    days: Array.isArray(d.days) ? d.days : [],
+    totals: {q:0, sessions:0, ...(d.totals || {})}
+  };
+}
+function loadDB() { let d = null; try { d = JSON.parse(localStorage.getItem(STORE_KEY)); } catch (e) {} return normalizeDB(d); }
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(DB)); } catch (e) {} }
+let DB = loadDB();
+
+const dayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const dayStart = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); };
+function markDay() { const k = dayKey(); if (!DB.days.includes(k)) { DB.days.push(k); if (DB.days.length > 400) DB.days = DB.days.slice(-400); } }
+function streak() {
+  const set = new Set(DB.days); const d = new Date();
+  if (!set.has(dayKey(d))) d.setDate(d.getDate() - 1);
+  let n = 0; while (set.has(dayKey(d))) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+
+/* ---------- Thống kê ký tự + lặp lại ngắt quãng (Leitner) ---------- */
+const INTERVALS = [0, 1, 2, 4, 7, 15, 30]; // ngày, theo cấp độ
+function record(ch, ok) {
+  if (!MORSE[ch]) return;
+  const s = DB.stats[ch] || (DB.stats[ch] = {n:0, c:0, box:0, due:0, h:''});
+  const now = Date.now(), today = dayKey();
+  s.n++; if (ok) s.c++;
+  s.h = ((s.h || '') + (ok ? '1' : '0')).slice(-20);
+  s.last = now;
+  if (ok) {
+    if ((s.due || 0) <= now) {
+      if (s.lapse !== today) s.box = Math.min((s.box || 0) + 1, INTERVALS.length - 1);
+      s.box = Math.max(s.box, 1);
+      s.due = dayStart() + INTERVALS[s.box] * DAY;
+    }
+  } else {
+    s.box = 1; s.due = now; s.lapse = today;
+  }
+  DB.totals.q++;
+  markDay();
+  if (SES && !ok) SES.missed[ch] = (SES.missed[ch] || 0) + 1;
+}
+function recordItem(item, ok) {
+  textToSeq(item).flat().forEach(u => { if (u.c.length === 1) record(u.c, ok); });
+  save();
+}
+function accOf(ch) { const s = DB.stats[ch]; if (!s || !s.h) return null; return [...s.h].filter(x => x === '1').length / s.h.length; }
+function isDue(ch) { const s = DB.stats[ch]; return !s || (s.due || 0) <= Date.now(); }
+function learnedChars() {
+  const set = new Set();
+  LESSONS.forEach(L => { if (L.chars && DB.lessons[L.id] && DB.lessons[L.id].done) [...L.chars].forEach(c => set.add(c)); });
+  return ALL.filter(c => set.has(c));
+}
+const dueChars = () => learnedChars().filter(isDue);
+const weakW = c => { const a = accOf(c); return 1 + 3 * (1 - (a == null ? .6 : a)) + (isDue(c) ? 1.5 : 0); };
+function weightedPick(pool, wfn) {
+  const ws = pool.map(wfn); let t = ws.reduce((a, b) => a + b, 0) * Math.random();
+  for (let i = 0; i < pool.length; i++) { t -= ws[i]; if (t <= 0) return pool[i]; }
+  return pool[pool.length - 1];
+}
+function isUnlocked(i) { return i === 0 || DB.settings.unlockAll || !!(DB.lessons[LESSONS[i - 1].id] && DB.lessons[LESSONS[i - 1].id].done); }
+
+/* =====================================================================
+   CHUYỂN ĐỔI MORSE
+   ===================================================================== */
+// Văn bản → mảng từ, mỗi từ là mảng {c: nhãn, k: mã}. Hỗ trợ prosign dạng <AR>.
+function textToSeq(text) {
+  const out = [];
+  String(text).toUpperCase().trim().split(/\s+/).forEach(w => {
+    const units = []; const re = /<([A-Z]+)>|[\s\S]/g; let m;
+    while ((m = re.exec(w))) {
+      if (m[1]) { const k = [...m[1]].map(c => MORSE[c] || '').join(''); if (k) units.push({c: '<' + m[1] + '>', k}); }
+      else if (MORSE[m[0]]) units.push({c: m[0], k: MORSE[m[0]]});
+    }
+    if (units.length) out.push(units);
+  });
+  return out;
+}
+function seqTokens(seq) {
+  const toks = [], labels = [];
+  seq.forEach((w, i) => { if (i) { toks.push('/'); labels.push('/'); } w.forEach(u => { toks.push(u.k); labels.push(u.c); }); });
+  return {toks, labels};
+}
+const textToMorse = t => textToSeq(t).map(w => w.map(u => u.k).join(' ')).join(' / ');
+function parseMorse(v) {
+  const s = String(v).replace(/[·•∙⋅*]/g, '.').replace(/[−–—_]/g, '-').replace(/[|\\]/g, '/').replace(/\//g, ' / ');
+  const out = [];
+  s.trim().split(/\s+/).filter(Boolean).forEach(t => {
+    if (!/^[.\-/]+$/.test(t)) t = '?';
+    if (t === '/' && (!out.length || out[out.length - 1] === '/')) return;
+    out.push(t);
+  });
+  while (out[out.length - 1] === '/') out.pop();
+  return out;
+}
+const morseToText = v => parseMorse(v).map(t => t === '/' ? ' ' : (REV[t] || '✱')).join('');
+const pretty = k => String(k).replace(/\./g, '·').replace(/-/g, '−');
+const rhythm = k => [...k].map((e, i) => e === '-' ? 'dah' : (i === k.length - 1 ? 'dit' : 'di')).join('-');
+function normText(s) {
+  return String(s).toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/Đ/g, 'D')
+    .replace(/[“”„]/g, '"').replace(/[‘’`]/g, "'").replace(/[<>]/g, '').replace(/\s+/g, ' ').trim();
+}
+const fmt = t => esc(t).replace(/&lt;([A-Z]+)&gt;/g, '<span class="pro">$1</span>');
+const codeVis = k => `<span class="code" aria-label="${esc(pretty(k))}">${[...k].map(e => e === '.' ? '<i class="d"></i>' : '<i class="h"></i>').join('')}</span>`;
+const itemVis = item => textToSeq(item).map(w => w.map(u => codeVis(u.k)).join('<span class="cg"></span>')).join('<span class="wg">/</span>');
+const morseHTML = seq => seq.map(w => w.map(u => `<span class="mc">${codeVis(u.k)}</span>`).join('')).join('<span class="ws" aria-label="cách từ"></span>');
+const codeLen = item => textToMorse(item).length;
+
+// Căn chỉnh Levenshtein, trả về danh sách thao tác (ok/sub/del/ins) theo chỉ số
+function align(a, b) {
+  const n = a.length, m = b.length;
+  const D = Array.from({length: n + 1}, (_, i) => { const r = new Array(m + 1).fill(0); r[0] = i; return r; });
+  for (let j = 0; j <= m; j++) D[0][j] = j;
+  for (let i = 1; i <= n; i++) for (let j = 1; j <= m; j++)
+    D[i][j] = Math.min(D[i - 1][j] + 1, D[i][j - 1] + 1, D[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  const ops = []; let i = n, j = m;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && D[i][j] === D[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)) { ops.push({op: a[i - 1] === b[j - 1] ? 'ok' : 'sub', i: i - 1, j: j - 1}); i--; j--; }
+    else if (i > 0 && D[i][j] === D[i - 1][j] + 1) { ops.push({op: 'del', i: i - 1}); i--; }
+    else { ops.push({op: 'ins', j: j - 1}); j--; }
+  }
+  return {ops: ops.reverse(), dist: D[n][m]};
+}
+
+/* =====================================================================
+   ÂM THANH (Web Audio — hoạt động offline)
+   ===================================================================== */
+const Snd = {
+  ctx: null, cur: null, kOsc: null, kGain: null, raf: 0,
+  init() {
+    if (!this.ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      try { this.ctx = new AC(); } catch (e) { return null; }
+    }
+    if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
+    return this.ctx;
+  },
+  vol() { return Math.pow(DB.settings.vol / 100, 2) * 0.6; },
+  // Thời gian theo chuẩn PARIS; Farnsworth giãn khoảng cách giữa ký tự/từ
+  timing() {
+    const c = DB.settings.wpm, s = Math.min(DB.settings.fwpm, c), dot = 1.2 / c;
+    let cg = 3 * dot, wg = 7 * dot;
+    if (s < c) { const ta = (60 * c - 37.2 * s) / (s * c); cg = 3 * ta / 19; wg = 7 * ta / 19; }
+    return {dot, cg, wg};
+  },
+  playText(t) { return this.play(textToSeq(t)); },
+  play(seq) {
+    this.stop();
+    const ctx = this.init();
+    if (!ctx || !seq.length) return Promise.resolve();
+    const T = this.timing(), v = this.vol(), r = Math.min(0.005, T.dot / 4);
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.type = DB.settings.wave; osc.frequency.value = DB.settings.freq;
+    g.gain.setValueAtTime(0, ctx.currentTime);
+    osc.connect(g); g.connect(ctx.destination);
+    let t = ctx.currentTime + 0.06; const t0 = t, tones = [];
+    seq.forEach((w, wi) => {
+      if (wi) t += T.wg;
+      w.forEach((u, ci) => {
+        if (ci) t += T.cg;
+        [...u.k].forEach((el, ei) => {
+          if (ei) t += T.dot;
+          const d = el === '-' ? 3 * T.dot : T.dot;
+          g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + r);
+          g.gain.setValueAtTime(v, t + d - r); g.gain.linearRampToValueAtTime(0, t + d);
+          tones.push([t, t + d]); t += d;
+        });
+      });
+    });
+    osc.start(t0 - 0.03); osc.stop(t + 0.05);
+    return new Promise(res => {
+      const cur = {osc, g, tones, ti: 0, res, done: false};
+      this.cur = cur;
+      osc.onended = () => this._end(cur);
+      document.body.classList.add('playing');
+      this._loop();
+    });
+  },
+  _end(cur) {
+    if (cur.done) return; cur.done = true;
+    try { cur.g.disconnect(); } catch (e) {}
+    if (this.cur === cur) { this.cur = null; document.body.classList.remove('playing', 'tone'); }
+    cur.res();
+  },
+  stop() {
+    const c = this.cur; if (!c) return;
+    try { c.osc.onended = null; c.g.gain.cancelScheduledValues(0); c.g.gain.setValueAtTime(0, this.ctx.currentTime); c.osc.stop(); } catch (e) {}
+    this._end(c);
+  },
+  _loop() {
+    cancelAnimationFrame(this.raf);
+    const step = () => {
+      const c = this.cur; if (!c) return;
+      const now = this.ctx.currentTime;
+      while (c.ti < c.tones.length && c.tones[c.ti][1] <= now) c.ti++;
+      const on = c.ti < c.tones.length && c.tones[c.ti][0] <= now;
+      document.body.classList.toggle('tone', on && DB.settings.flash);
+      this.raf = requestAnimationFrame(step);
+    };
+    this.raf = requestAnimationFrame(step);
+  },
+  // Âm phản hồi khi tự gõ phím telegraph
+  toneOn() {
+    const ctx = this.init(); if (!ctx) return;
+    if (!this.kOsc) {
+      this.kOsc = ctx.createOscillator(); this.kGain = ctx.createGain();
+      this.kGain.gain.value = 0; this.kOsc.connect(this.kGain); this.kGain.connect(ctx.destination); this.kOsc.start();
+    }
+    this.kOsc.type = DB.settings.wave; this.kOsc.frequency.value = DB.settings.freq;
+    const t = ctx.currentTime, g = this.kGain.gain;
+    g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(this.vol(), t + 0.005);
+    if (DB.settings.flash) document.body.classList.add('tone');
+  },
+  toneOff() {
+    if (this.kGain) { const t = this.ctx.currentTime, g = this.kGain.gain; g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0, t + 0.005); }
+    document.body.classList.remove('tone');
+  }
+};
+function speedLabel() { const s = DB.settings; return `${s.wpm} WPM` + (s.fwpm < s.wpm ? ` · Farnsworth ${s.fwpm}` : ''); }
+
+/* =====================================================================
+   SINH NỘI DUNG BÀI TẬP
+   ===================================================================== */
+const _wcache = {};
+function wordsFor(pool, maxLen = 7) {
+  const key = [...pool].sort().join('') + '|' + maxLen;
+  if (!_wcache[key]) { const set = new Set(pool); _wcache[key] = WORDS.filter(w => w.length <= maxLen && [...w].every(c => set.has(c))); }
+  return _wcache[key];
+}
+function randGroup(pool, focus, len) {
+  len = len || 2 + rnd(4); let s = '';
+  for (let i = 0; i < len; i++) s += (focus && focus.length && Math.random() < .5) ? pick(focus) : pick(pool);
+  return s;
+}
+const SHORTW = WORDS.filter(w => w.length >= 2 && w.length <= 5);
+function punctToken(p) {
+  const w = () => pick(SHORTW), n = () => String(1 + rnd(99));
+  switch (p) {
+    case '/': return Math.random() < .5 ? `${n()}/${n()}` : `${w()}/${w()}`;
+    case '=': { const a = 1 + rnd(50), b = 1 + rnd(50); return `${a}+${b}=${a + b}`; }
+    case '+': return `${n()}+${n()}`;
+    case '-': return Math.random() < .5 ? `${w()}-${w()}` : `${n()}-${n()}`;
+    case '(': case ')': return `(${w()})`;
+    case '"': return `"${w()}"`;
+    case "'": return `${w()}'S`;
+    case '@': return `${w()}@${w()}`;
+    case '&': return `${w()}&${w()}`;
+    default: return w() + p;
+  }
+}
+// Sinh đoạn văn ngẫu nhiên từ bộ ký tự, ưu tiên ký tự trọng tâm (focus)
+function genText(pool, o = {}) {
+  const n = o.words || 4;
+  const focus = (o.focus || []).filter(c => pool.includes(c));
+  const fp = focus.filter(c => !/[A-Z0-9]/.test(c));
+  const fd = focus.filter(c => /[0-9]/.test(c));
+  const fl = focus.filter(c => /[A-Z]/.test(c));
+  const digits = pool.filter(c => /[0-9]/.test(c));
+  const letters = pool.filter(c => /[A-Z]/.test(c));
+  const cand = wordsFor(letters, o.maxLen || 7);
+  const fw = fl.length ? cand.filter(w => [...w].some(c => fl.includes(c))) : cand;
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    if (fp.length && (fp.length === focus.length || Math.random() < .5)) out.push(punctToken(pick(fp)));
+    else if (fd.length && (i % 2 === 0 || !cand.length)) out.push(randGroup(digits, fd, 2 + rnd(3)));
+    else if (cand.length >= 6 && Math.random() < .75) out.push(pick(fw.length >= 3 ? fw : cand));
+    else out.push(randGroup(letters.length ? letters : pool, fl, o.maxLen ? Math.min(o.maxLen, 2 + rnd(3)) : 0));
+  }
+  return out.join(' ');
+}
+function callsign() {
+  const L = () => pick(LETTERS);
+  return pick(['K','W','N','AA','VE','G','F','DL','I','EA','JA','VK','ZL','VN','XV','HS','9V','BV','DS','PY','LU','ON','PA','OH','SM']) + rnd(10) + L() + L() + (Math.random() < .5 ? L() : '');
+}
+function callToken() {
+  const r = Math.random();
+  if (r < .45) return callsign();
+  if (r < .6) return '5' + (5 + rnd(5)) + '9';
+  if (r < .75) return String(rnd(24)).padStart(2, '0') + String(rnd(60)).padStart(2, '0') + 'Z';
+  if (r < .9) return String(1 + rnd(999));
+  return pick(['QTH', 'RST', 'QSL', 'QRZ', 'DE', '73', 'TNX', 'UR', 'NR']);
+}
+function genContent(src, cs, len) {
+  const set = new Set(cs);
+  const fits = s => [...s.replace(/\s|<[A-Z]+>/g, '')].every(c => set.has(c));
+  if (src === 'groups') return Array.from({length: len}, () => randGroup(cs, null, 5)).join(' ');
+  if (src === 'words') {
+    const w = wordsFor(cs.filter(c => /[A-Z]/.test(c)), 8);
+    if (w.length < 5) return genContent('groups', cs, len);
+    return Array.from({length: len}, () => pick(w)).join(' ');
+  }
+  if (src === 'calls') return Array.from({length: len}, callToken).join(' ');
+  // Bỏ các dấu câu nằm ngoài bộ ký tự đã chọn, rồi chỉ giữ câu viết được hoàn toàn bằng bộ đó
+  const strip = s => s.replace(/<[A-Z]+>|[^A-Z0-9\s]/g, m => (m.length > 1 || set.has(m)) ? m : '').replace(/\s+/g, ' ').trim();
+  const base = (src === 'qso' ? QSO : SENTENCES).map(strip);
+  let pool = base.filter(fits); if (pool.length < 2) pool = base;
+  const out = []; let words = 0, guard = 0;
+  while (words < len && guard++ < 30) {
+    const s = pick(pool);
+    if (out.includes(s) && out.length < pool.length) continue;
+    out.push(s); words += s.split(' ').length;
+  }
+  return out.join(' ');
+}
+
+/* ---------- Xây dựng các bước của bài học ---------- */
+function lessonPool(idx) { const s = new Set(); for (let i = 0; i <= idx; i++) if (LESSONS[i].chars) [...LESSONS[i].chars].forEach(c => s.add(c)); return ALL.filter(c => s.has(c)); }
+function makeOpts(item, pool, k = 4) {
+  const len = codeLen(item);
+  const others = shuffle(pool.filter(c => c !== item)).map(c => ({c, s: Math.abs(codeLen(c) - len) + Math.random() * 2}));
+  others.sort((a, b) => a.s - b.s);
+  return shuffle([item, ...others.slice(0, k - 1).map(o => o.c)]);
+}
+const Q = (qt, item, pool) => ({t: 'q', qt, item, opts: qt.startsWith('mc') ? makeOpts(item, pool) : null});
+
+function buildCharsLesson(i) {
+  const L = LESSONS[i], nw = [...L.chars], pool = lessonPool(i), old = pool.filter(c => !nw.includes(c));
+  const steps = nw.map(c => ({t: 'learn', item: c}));
+  const A = [], B = [];
+  nw.forEach(c => { A.push(Q('mc-see', c, pool)); A.push(Q('mc-listen', c, pool)); });
+  nw.forEach(c => { B.push(Q('type-listen', c)); B.push(Q('type-see', c)); B.push(Q('encode', c)); });
+  if (nw.length <= 2) nw.forEach(c => { B.push(Q('type-listen', c)); B.push(Q('mc-listen', c, pool)); });
+  shuffle(old).slice(0, 4).forEach(c => B.push(Q('type-listen', c)));
+  steps.push(...shuffle(A), ...shuffle(B));
+  steps.push({t: 'passage', mode: 'decode', text: genText(pool, {words: 3, focus: nw})});
+  steps.push({t: 'passage', mode: 'listen', text: genText(pool, {words: 4, focus: nw})});
+  steps.push({t: 'passage', mode: 'encode', text: genText(pool, {words: 2, focus: nw, maxLen: 4})});
+  return steps;
+}
+function buildReviewSteps(pool, o = {}) {
+  const focus = o.focus && o.focus.length ? o.focus : null, n = o.n || 16, steps = [];
+  const types = ['type-listen', 'type-listen', 'type-listen', 'mc-listen', 'type-see', 'encode'];
+  let last = null;
+  for (let k = 0; k < n; k++) {
+    let c, g = 0;
+    do { c = focus && Math.random() < .7 ? pick(focus) : weightedPick(pool, weakW); } while (c === last && pool.length > 1 && g++ < 6);
+    last = c;
+    steps.push(Q(pick(types), c, pool));
+  }
+  if (o.final) {
+    const set = new Set(pool), fits = s => [...s.replace(/\s/g, '')].every(ch => set.has(ch));
+    const ss = shuffle(SENTENCES.filter(fits)), short = ss.filter(s => s.length <= 26);
+    steps.push({t: 'passage', mode: 'decode', text: ss[0]});
+    steps.push({t: 'passage', mode: 'listen', text: ss[1]});
+    steps.push({t: 'passage', mode: 'listen', text: ss[2]});
+    steps.push({t: 'passage', mode: 'encode', text: short.length ? pick(short) : ss[3]});
+  } else {
+    const f = focus || undefined;
+    steps.push({t: 'passage', mode: 'decode', text: genText(pool, {words: 4, focus: f})});
+    steps.push({t: 'passage', mode: 'listen', text: genText(pool, {words: 5, focus: f})});
+    steps.push({t: 'passage', mode: 'listen', text: genText(pool, {words: 5, focus: f})});
+    steps.push({t: 'passage', mode: 'encode', text: genText(pool, {words: 2, focus: f, maxLen: 5})});
+  }
+  return steps;
+}
+function buildWordsLesson() {
+  const terms = GLOSSARY.filter(g => !g.pro).map(g => g.t);
+  const steps = [{t: 'glossary'}];
+  shuffle(terms).slice(0, 6).forEach(t => steps.push(Q('mc-see', t, terms)));
+  shuffle(terms).slice(0, 8).forEach(t => steps.push(Q('mc-listen', t, terms)));
+  shuffle(terms).slice(0, 8).forEach(t => steps.push(Q('type-listen', t)));
+  const q = shuffle(QSO.filter(s => !s.includes('<')));
+  steps.push({t: 'passage', mode: 'decode', text: q[0]});
+  steps.push({t: 'passage', mode: 'listen', text: q[1]});
+  steps.push({t: 'passage', mode: 'encode', text: pick(['CQ DE VN2XYZ', 'TNX 73', 'QTH HANOI', 'UR RST 599', 'PSE QRS', 'QRZ?'])});
+  return steps;
+}
+function buildLesson(i) {
+  const L = LESSONS[i];
+  if (L.kind === 'chars') return buildCharsLesson(i);
+  if (L.kind === 'words') return buildWordsLesson();
+  return buildReviewSteps(lessonPool(i), {n: L.final ? 18 : 16, final: !!L.final});
+}
+
+/* =====================================================================
+   KHUNG ỨNG DỤNG: định tuyến, phím tắt, dọn dẹp
+   ===================================================================== */
+const app = $('#app');
+let keyHandler = null, keyUpHandler = null, stepTok = 0, SES = null;
+function later(fn, ms) { const t = stepTok; setTimeout(() => { if (t === stepTok) fn(); }, ms); }
+function freshStep() { stepTok++; keyHandler = null; keyUpHandler = null; Snd.stop(); Snd.toneOff(); }
+document.addEventListener('keydown', e => { if (keyHandler) keyHandler(e); });
+document.addEventListener('keyup', e => { if (keyUpHandler) keyUpHandler(e); });
+document.addEventListener('click', e => {
+  const p = e.target.closest('[data-play]');
+  if (p) { e.preventDefault(); Snd.playText(p.dataset.play); return; }
+  const a = e.target.closest('a[href^="#/"]');
+  if (a) {
+    if (SES && SES.i > 0 && !confirm('Rời khỏi bài đang làm? Kết quả của lượt này sẽ không được lưu.')) { e.preventDefault(); return; }
+    if (a.getAttribute('href') === location.hash) { e.preventDefault(); route(); }
+  }
+  const pop = $('#sPop');
+  if (pop && !pop.hidden && !e.target.closest('.pop-wrap')) pop.hidden = true;
+});
+window.addEventListener('hashchange', route);
+window.addEventListener('beforeunload', e => { if (SES && SES.i > 0) { e.preventDefault(); e.returnValue = ''; } });
+
+function route() {
+  freshStep(); SES = null;
+  const [view, arg] = location.hash.replace(/^#\/?/, '').split('/');
+  const v = view || 'lessons';
+  $$('.nav a').forEach(a => a.classList.toggle('active', a.dataset.nav === (v === 'lesson' ? 'lessons' : v)));
+  if (v === 'lesson') viewLessonIntro(+arg || 0);
+  else if (v === 'practice') viewPractice(arg);
+  else if (v === 'review') viewReview();
+  else if (v === 'reference') viewReference();
+  else if (v === 'settings') viewSettings();
+  else viewLessons();
+  updateBadge();
+  window.scrollTo(0, 0);
+}
+function updateBadge() { const n = dueChars().length; $('#dueBadge').textContent = n ? String(n) : ''; }
+function applyTheme() { const t = DB.settings.theme; if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t); }
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2400); }
+
+/* =====================================================================
+   TRANG: DANH SÁCH BÀI HỌC
+   ===================================================================== */
+function lessonChips(L) {
+  if (L.kind === 'chars') return [...L.chars].map(c => `<span class="cchip">${esc(c)}</span>`).join('');
+  if (L.kind === 'words') return '<span class="ltag">CQ · DE · 73 · QTH · RST …</span>';
+  return `<span class="ltag">${L.final ? 'Câu hoàn chỉnh · chữ, số, dấu câu' : 'Ôn tập tổng hợp'}</span>`;
+}
+function viewLessons() {
+  const done = LESSONS.filter(l => DB.lessons[l.id] && DB.lessons[l.id].done).length;
+  let nextIdx = LESSONS.findIndex(l => !(DB.lessons[l.id] && DB.lessons[l.id].done));
+  const allDone = nextIdx < 0; if (allDone) nextIdx = LESSONS.length - 1;
+  const due = dueChars().length, learned = learnedChars().length;
+  const pct = Math.round(done / LESSONS.length * 100);
+  const accs = learnedChars().map(accOf).filter(a => a != null);
+  const acc = accs.length ? Math.round(accs.reduce((a, b) => a + b, 0) / accs.length * 100) : null;
+  app.innerHTML = `
+  <section class="card hero">
+    <div>
+      <div class="eyebrow">Mã Morse quốc tế · bộ ký tự tiếng Anh</div>
+      <h1>${done ? (allDone ? 'Bạn đã hoàn thành toàn bộ giáo trình!' : 'Tiếp tục hành trình Morse của bạn') : 'Học Morse bằng tai, từng bước một'}</h1>
+      <p>${done ? `Đã hoàn thành ${done}/${LESSONS.length} bài, thuộc ${learned} ký tự.` : `${LESSONS.length} bài học từ hai ký tự đầu tiên đến câu hoàn chỉnh. Mỗi bài gồm làm quen ký tự, bài tập nghe – đọc – gõ và bài đoạn văn.`}
+      ${due ? ` Có <b>${due}</b> ký tự đến hạn ôn hôm nay.` : ''}</p>
+      <div class="row">
+        <a class="btn primary" href="#/lesson/${nextIdx}">${allDone ? 'Học lại Tổng ôn' : (done ? 'Học tiếp' : 'Bắt đầu')}: Bài ${nextIdx + 1}</a>
+        ${due ? `<a class="btn" href="#/review">Ôn ${due} ký tự</a>` : `<a class="btn ghost" href="#/practice">Luyện tập tự do</a>`}
+      </div>
+    </div>
+    <div class="hero-r">
+      <div class="ring" style="--p:${pct}"><span>${pct}%<small>giáo trình</small></span></div>
+      <div class="mini-stats"><div><b>${streak()}</b>ngày liên tiếp</div><div><b>${acc == null ? '—' : acc + '%'}</b>chính xác</div></div>
+    </div>
+  </section>
+  <h2 class="sec">Giáo trình</h2>
+  <div class="lesson-grid">${LESSONS.map((L, i) => {
+    const r = DB.lessons[L.id], isDone = r && r.done, locked = !isUnlocked(i), isNext = i === nextIdx && !allDone;
+    return `<a class="lcard ${isDone ? 'done' : ''} ${locked ? 'locked' : ''} ${isNext ? 'next' : ''}" href="#/lesson/${i}">
+      <div class="lnum">${isDone ? IC.check : i + 1}</div>
+      <div class="lbody"><div class="ltitle">${esc(L.title)}</div><div class="lchars">${lessonChips(L)}</div></div>
+      <div class="lstat">${isDone ? `${r.best}%` : locked ? IC.lock : (r ? `<span class="muted">${r.best}%</span>` : '')}</div></a>`;
+  }).join('')}</div>
+  <details class="card tips">
+    <summary>Mẹo học hiệu quả</summary>
+    <ul>
+      <li><b>Học bằng tai:</b> nhớ nhịp "di-dah" của cả ký tự như một âm thanh, đừng đếm từng chấm gạch.</li>
+      <li><b>Tốc độ:</b> giữ tốc độ ký tự 15–20 WPM và dùng Farnsworth thấp (8–10) để có thời gian nghĩ. Khi đã quen, tăng dần tốc độ hiệu dụng.</li>
+      <li><b>Đều đặn:</b> 15–20 phút mỗi ngày hiệu quả hơn nhiều so với học dồn. Vào mục <i>Ôn tập</i> mỗi ngày để giữ trí nhớ.</li>
+      <li><b>Hoàn thành bài:</b> cần đạt từ 80% điểm. Câu sai sẽ được hỏi lại ở cuối bài.</li>
+      <li><b>Bộ gõ:</b> hãy tắt bộ gõ tiếng Việt (Unikey/EVKey: Ctrl+Shift hoặc Alt+Z) khi làm bài để gõ chính xác.</li>
+      <li><b>Offline:</b> toàn bộ ứng dụng nằm trong một file HTML. Tiến độ lưu trong trình duyệt — xuất file tiến độ ở mục Cài đặt khi đổi máy.</li>
+    </ul>
+  </details>`;
+}
+
+/* ---------- Trang giới thiệu bài học ---------- */
+function viewLessonIntro(i) {
+  const L = LESSONS[i]; if (!L) return viewLessons();
+  const r = DB.lessons[L.id], locked = !isUnlocked(i), pool = lessonPool(i);
+  let content = '', steps = '';
+  if (L.kind === 'chars') {
+    content = [...L.chars].map(c => `<button class="ichar" data-play="${esc(c)}" title="Bấm để nghe"><b>${esc(c)}</b><span class="codes">${codeVis(MORSE[c])}</span></button>`).join('');
+    steps = `<li>Làm quen ${L.chars.length} ký tự mới: nghe âm thanh, xem mã và mẹo ghi nhớ</li><li>Nhận diện bằng mắt và bằng tai (trắc nghiệm)</li><li>Gõ ký tự khi nghe, khi đọc mã và chuyển ký tự sang mã</li><li>Đoạn văn: đọc mã, nghe chép và gõ mã</li>`;
+  } else if (L.kind === 'words') {
+    content = GLOSSARY.filter(g => !g.pro).slice(0, 12).map(g => `<button class="ichar" data-play="${esc(g.t)}"><b style="font-size:20px">${fmt(g.t)}</b></button>`).join('');
+    steps = `<li>Bảng thuật ngữ vô tuyến có âm thanh</li><li>Nhận diện và nghe chép các chữ viết tắt</li><li>Đọc mã, nghe chép và gõ mã một đoạn hội thoại</li>`;
+  } else {
+    content = pool.map(c => `<span class="cchip" data-play="${esc(c)}" style="cursor:pointer">${esc(c)}</span>`).join('');
+    steps = `<li>${L.final ? 18 : 16} câu hỏi trộn ngẫu nhiên, ưu tiên ký tự bạn hay sai</li><li>${L.final ? 'Đọc mã, nghe chép và gõ mã các câu tiếng Anh hoàn chỉnh' : 'Đọc mã, nghe chép 2 đoạn và gõ mã'}</li>`;
+  }
+  app.innerHTML = `
+  <a class="back" href="#/lessons">← Tất cả bài học</a>
+  <div class="card intro">
+    <div class="eyebrow">Bài ${i + 1} / ${LESSONS.length}${L.kind === 'review' ? ' · Ôn tập' : ''}</div>
+    <h1>${esc(L.title)}</h1>
+    <p class="muted">${esc(L.desc)}</p>
+    <div class="intro-chars" style="${L.kind === 'review' ? 'gap:6px' : ''}">${content}</div>
+    <div class="small muted" style="font-weight:700">Nội dung bài</div>
+    <ul>${steps}</ul>
+    ${r ? `<p>Điểm cao nhất: <b>${r.best}%</b> · đã học ${r.n} lần${r.done ? ' · <b style="color:var(--good)">Đã hoàn thành</b>' : ''}</p>` : ''}
+    ${locked ? `<div class="note">${IC.lock}<div>Bài này đang khoá — hãy hoàn thành <a href="#/lesson/${i - 1}">bài ${i}</a> trước. Nếu đã biết các ký tự trước đó, bạn vẫn có thể học ngay.</div></div>` : ''}
+    <div class="row">
+      <button class="btn primary" id="start">${locked ? 'Vẫn học bài này' : r ? 'Học lại' : 'Bắt đầu học'}</button>
+      <span class="chip">${speedLabel()}</span>
+      <span style="flex:1"></span>
+      ${i > 0 ? `<a class="btn ghost sm" href="#/lesson/${i - 1}">← Bài trước</a>` : ''}
+      ${i < LESSONS.length - 1 ? `<a class="btn ghost sm" href="#/lesson/${i + 1}">Bài sau →</a>` : ''}
+    </div>
+  </div>`;
+  $('#start').onclick = () => startLesson(i);
+}
+function startLesson(i) {
+  const L = LESSONS[i];
+  startSession({title: `Bài ${i + 1}: ${L.title}`, steps: buildLesson(i), lessonIdx: i, restart: () => startLesson(i)});
+}
+
+/* =====================================================================
+   PHIÊN HỌC (chuỗi các bước)
+   ===================================================================== */
+function startSession(cfg) { SES = {...cfg, i: 0, pts: 0, max: 0, missed: {}}; renderSession(); }
+function renderSession() {
+  if (!SES) return;
+  const st = SES.steps[SES.i];
+  if (!st) return finishSession();
+  freshStep();
+  const total = SES.steps.length;
+  app.innerHTML = `
+  <div class="sbar">
+    <button class="iconbtn" id="sExit" title="Thoát" aria-label="Thoát">${IC.close}</button>
+    <div class="pbar"><i style="width:${(SES.i / total * 100).toFixed(1)}%"></i></div>
+    <span class="scount">${SES.i + 1}/${total}</span>
+    <div class="pop-wrap"><button class="iconbtn" id="sSpeed" title="Tốc độ & âm thanh" aria-label="Tốc độ & âm thanh">${IC.sliders}</button>
+      <div class="pop card" id="sPop" hidden>${speedControlsHTML()}</div></div>
+  </div>
+  <div class="s-title">${esc(SES.title)}${st.retry ? ' · <span class="retry">Làm lại câu sai</span>' : ''}</div>
+  <div class="stage" id="stage"></div>`;
+  $('#sExit').onclick = () => {
+    if (SES.i === 0 || confirm('Thoát bài đang làm? Kết quả của lượt này sẽ không được lưu.')) { const back = SES.lessonIdx != null ? `#/lesson/${SES.lessonIdx}` : '#/review'; SES = null; if (location.hash === back) route(); else location.hash = back; }
+  };
+  $('#sSpeed').onclick = () => { $('#sPop').hidden = !$('#sPop').hidden; };
+  bindSettings($('#sPop'));
+  renderStep($('#stage'), st, (pts = 0, max = 0, ok = true) => {
+    if (st.retry) { pts = 0; max = 0; }
+    SES.pts += pts; SES.max += max;
+    if (st.t === 'q' && !ok && !st.retry) SES.steps.push({...st, retry: true, opts: st.opts ? shuffle(st.opts) : null});
+    SES.i++; renderSession();
+  });
+}
+function renderStep(el, st, done) {
+  if (st.t === 'learn') return renderLearn(el, st, done);
+  if (st.t === 'glossary') return renderGlossary(el, st, done);
+  if (st.t === 'passage') return renderPassage(el, st, done);
+  return st.qt.startsWith('mc') ? renderMC(el, st, done) : renderType(el, st, done);
+}
+function finishSession() {
+  const s = SES; SES = null; freshStep();
+  const pct = s.max ? s.pts / s.max : 1, p = Math.round(pct * 100), passed = pct >= .8;
+  let nextIdx = null;
+  DB.totals.sessions++; markDay();
+  if (s.lessonIdx != null) {
+    const L = LESSONS[s.lessonIdx];
+    const r = DB.lessons[L.id] || (DB.lessons[L.id] = {best: 0, done: false, n: 0});
+    r.n++; r.best = Math.max(r.best, p); r.last = Date.now(); if (passed) r.done = true;
+    if (passed && s.lessonIdx + 1 < LESSONS.length) nextIdx = s.lessonIdx + 1;
+  }
+  save(); updateBadge();
+  const stars = pct >= .95 ? 3 : pct >= .8 ? 2 : pct >= .6 ? 1 : 0;
+  const missed = Object.entries(s.missed).sort((a, b) => b[1] - a[1]).slice(0, 14);
+  const isLesson = s.lessonIdx != null;
+  app.innerHTML = `
+  <div class="card result">
+    <div class="stars">${[0, 1, 2].map(k => `<span class="${k < stars ? '' : 'off'}">★</span>`).join('')}</div>
+    <div class="ring" style="--p:${p}"><span>${p}%<small>điểm</small></span></div>
+    <h2>${isLesson ? (passed ? 'Hoàn thành bài học!' : 'Gần được rồi!') : 'Xong phiên ôn tập!'}</h2>
+    <p>${isLesson ? (passed ? 'Bạn đã vượt qua bài này. Các ký tự mới đã được thêm vào lịch ôn tập.' : 'Cần đạt từ 80% để hoàn thành bài. Nghe lại các ký tự bên dưới rồi thử lại nhé.') : 'Lịch ôn của từng ký tự đã được cập nhật theo kết quả của bạn.'}</p>
+    ${missed.length ? `<div class="missed"><div class="small muted" style="font-weight:700;margin-bottom:8px">Ký tự cần chú ý — bấm để nghe</div><div class="row">${missed.map(([c, n]) => `<button class="mchip" data-play="${esc(c)}">${esc(c)} <span class="codes" style="font-size:12px">${codeVis(MORSE[c])}</span>${n > 1 ? `<small>×${n}</small>` : ''}</button>`).join('')}</div></div>` : ''}
+    <div class="row center mt">
+      ${nextIdx != null ? `<a class="btn primary" href="#/lesson/${nextIdx}">Bài tiếp theo →</a>` : ''}
+      <button class="btn ${nextIdx == null && !passed ? 'primary' : ''}" id="again">${isLesson ? 'Làm lại' : 'Ôn thêm'}</button>
+      <a class="btn ghost" href="${isLesson ? '#/lessons' : '#/review'}">${isLesson ? 'Danh sách bài' : 'Trang ôn tập'}</a>
+    </div>
+  </div>`;
+  $('#again').onclick = s.restart;
+}
+
+/* ---------- Các loại bước ---------- */
+const bigPlay = () => `<div class="playwrap"><button class="playbig" type="button" aria-label="Phát / dừng"><span class="i-play">${IC.play}</span><span class="i-stop">${IC.stop}</span></button><span class="lamp big"></span></div>`;
+function bindBigPlay(el, play) { $('.playbig', el).onclick = () => Snd.cur ? Snd.stop() : play(); }
+const IME_MSG = 'Có vẻ bộ gõ tiếng Việt đang bật (xuất hiện ký tự có dấu). Hãy tắt Unikey/EVKey (Ctrl+Shift hoặc Alt+Z) hoặc chuyển sang bàn phím tiếng Anh để gõ chính xác.';
+function imeCheck(inp, root) { const w = $('.ime-warn', root); if (w) { w.hidden = !/[^\x00-\x7F·−–—•]/.test(inp.value); w.textContent = IME_MSG; } }
+function keypad(withWord) {
+  return `<div class="keypad" aria-label="Bàn phím Morse">
+    <button type="button" data-k="." aria-label="chấm">·</button><button type="button" data-k="-" aria-label="gạch">−</button>
+    <button type="button" class="txt" data-k=" ">cách</button>${withWord ? '<button type="button" class="txt" data-k=" / ">/ từ</button>' : ''}
+    <button type="button" data-k="bk" aria-label="xoá">⌫</button></div>`;
+}
+function bindKeypad(root, inp) {
+  $$('.keypad [data-k]', root).forEach(b => {
+    b.addEventListener('mousedown', e => e.preventDefault());
+    b.addEventListener('click', () => {
+      if (inp.disabled) return;
+      const k = b.dataset.k, v = inp.value;
+      let s = inp.selectionStart == null ? v.length : inp.selectionStart, en = inp.selectionEnd == null ? s : inp.selectionEnd;
+      if (k === 'bk') { if (s === en && s > 0) s--; inp.value = v.slice(0, s) + v.slice(en); inp.setSelectionRange(s, s); }
+      else { inp.value = v.slice(0, s) + k + v.slice(en); inp.setSelectionRange(s + k.length, s + k.length); }
+      if (k === '.' || k === '-') Snd.play([[{c: '', k}]]);
+      inp.dispatchEvent(new Event('input'));
+    });
+  });
+}
+function showFb(box, ok, item, next, o = {}) {
+  const go = once(next);
+  box.innerHTML = `<div class="fb-box ${ok ? 'good' : 'bad'}">
+    <div><div class="fb-t">${ok ? pick(PRAISE) : 'Chưa đúng'}</div>
+      <div class="fb-a"><b class="fb-item">${fmt(item)}</b><span class="codes sm">${itemVis(item)}</span><button class="pbtn" data-play="${esc(item)}" aria-label="Nghe">${IC.play}</button></div>
+      ${o.extra || ''}</div>
+    <button class="btn ${ok ? 'good' : 'bad'}" data-cont>Tiếp tục <kbd>Enter</kbd></button></div>`;
+  $('[data-cont]', box).onclick = go;
+  keyHandler = e => {
+    if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); go(); }
+    else if (e.key === ' ' && !isField(e.target)) { e.preventDefault(); Snd.playText(item); }
+  };
+  if (ok) { if (o.playOnOk) Snd.playText(item).then(() => later(go, 300)); else later(go, 700); }
+  else later(() => Snd.playText(item), 200);
+}
+
+function renderLearn(el, st, done) {
+  const ch = st.item, code = MORSE[ch];
+  el.innerHTML = `<div class="card learn">
+    <span class="tag">Ký tự mới</span>
+    <div class="big-char">${esc(ch)}</div>
+    <div class="codes xl">${codeVis(code)}</div>
+    <div class="rhythm">${rhythm(code)}</div>
+    <p class="hint">${esc(HINTS[ch] || '')}</p>
+    <div class="row center" style="margin-bottom:18px"><button class="btn" id="lPlay">${IC.play} Nghe lại <kbd>Space</kbd></button><span class="lamp big"></span></div>
+    <button class="btn primary wide" id="lNext">Tiếp tục <kbd>Enter</kbd></button>
+  </div>`;
+  const play = () => Snd.playText(ch), next = once(() => done(0, 0, true));
+  $('#lPlay').onclick = play; $('#lNext').onclick = next;
+  keyHandler = e => { if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); next(); } else if (e.key === ' ') { e.preventDefault(); play(); } };
+  later(play, 300);
+}
+function renderGlossary(el, st, done) {
+  el.innerHTML = `<div class="card learn" style="text-align:left">
+    <span class="tag">Từ vựng vô tuyến</span>
+    <p class="muted">Bấm vào từng mục để nghe. Những chữ viết tắt này xuất hiện trong hầu hết các cuộc liên lạc Morse.</p>
+    <div class="ref-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr));margin-bottom:20px">${GLOSSARY.map(g => `<button class="ref-cell wide" data-play="${esc(g.t)}"><b style="font-size:17px">${fmt(g.t)}</b><span style="font-size:13px">${esc(g.d)}</span></button>`).join('')}</div>
+    <div class="row center"><button class="btn primary wide" id="lNext">Bắt đầu luyện <kbd>Enter</kbd></button></div>
+  </div>`;
+  const next = once(() => done(0, 0, true));
+  $('#lNext').onclick = next;
+  keyHandler = e => { if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); next(); } };
+}
+function renderMC(el, st, done) {
+  const listen = st.qt === 'mc-listen', item = st.item, isWord = item.length > 1;
+  el.innerHTML = `<div class="card q">
+    <div class="prompt">${listen ? (isWord ? 'Nghe và chọn từ đúng' : 'Nghe và chọn ký tự đúng') : (isWord ? 'Mã này là từ nào?' : 'Mã này là ký tự nào?')}</div>
+    <div class="q-main">${listen ? bigPlay() : `<div class="codes ${isWord ? 'lg' : 'xl'}">${itemVis(item)}</div>`}</div>
+    <div class="opts">${st.opts.map((o, i) => `<button class="opt" data-i="${i}"><kbd>${i + 1}</kbd>${fmt(o)}</button>`).join('')}</div>
+    <div class="fb"></div>
+    <div class="hint-keys">${listen ? 'Space: nghe lại · ' : ''}Phím 1–${st.opts.length}: chọn đáp án</div>
+  </div>`;
+  const play = () => Snd.playText(item);
+  if (listen) { bindBigPlay(el, play); if (DB.settings.autoplay) later(play, 250); }
+  let answered = false;
+  const btns = $$('.opt', el);
+  const choose = i => {
+    if (answered) return; answered = true;
+    const ok = st.opts[i] === item;
+    btns.forEach((b, j) => { b.disabled = true; if (st.opts[j] === item) b.classList.add('good'); });
+    if (!ok) btns[i].classList.add('bad');
+    recordItem(item, ok);
+    showFb($('.fb', el), ok, item, () => done(ok ? 1 : 0, 1, ok), {playOnOk: !listen});
+  };
+  btns.forEach((b, i) => b.onclick = () => choose(i));
+  keyHandler = e => {
+    if (/^[1-9]$/.test(e.key) && +e.key <= st.opts.length) { e.preventDefault(); choose(+e.key - 1); }
+    else if (e.key === ' ' && listen) { e.preventDefault(); play(); }
+  };
+}
+function renderType(el, st, done) {
+  const item = st.item, qt = st.qt, enc = qt === 'encode', listen = qt === 'type-listen', isWord = item.length > 1;
+  const prompt = {'type-listen': isWord ? 'Nghe và gõ lại từ' : 'Nghe và gõ ký tự', 'type-see': isWord ? 'Gõ từ tương ứng với mã' : 'Gõ ký tự tương ứng với mã', 'encode': 'Gõ mã Morse của'}[qt];
+  el.innerHTML = `<div class="card q">
+    <div class="prompt">${prompt}</div>
+    <div class="q-main">${listen ? bigPlay() : enc ? `<div class="big-char" style="margin:0">${fmt(item)}</div>` : `<div class="codes ${isWord ? 'lg' : 'xl'}">${itemVis(item)}</div>`}</div>
+    <input class="answer ${enc ? 'morse' : ''}" id="ans" autocomplete="off" autocorrect="off" autocapitalize="${enc ? 'off' : 'characters'}" spellcheck="false" ${!enc && !isWord ? 'maxlength="1"' : ''}
+      placeholder="${enc ? 'dùng . và -' : isWord ? 'Gõ đáp án…' : '?'}" aria-label="Đáp án">
+    ${enc ? keypad(isWord) : ''}
+    <div class="ime-warn" hidden></div>
+    <button class="btn primary wide" id="chk">Kiểm tra <kbd>Enter</kbd></button>
+    <div class="fb"></div>
+    <div class="hint-keys">${listen ? 'Ctrl+Space: nghe lại · ' : ''}${!enc && !isWord ? 'Gõ 1 ký tự là tự kiểm tra' : 'Enter: kiểm tra'}</div>
+  </div>`;
+  const inp = $('#ans', el), play = () => Snd.playText(item);
+  if (listen) { bindBigPlay(el, play); if (DB.settings.autoplay) later(play, 250); }
+  if (enc) bindKeypad(el, inp);
+  setTimeout(() => inp.focus(), 30);
+  let answered = false;
+  const submit = () => {
+    if (answered) return;
+    const v = inp.value;
+    if (!v.trim()) { inp.focus(); return; }
+    answered = true; inp.disabled = true; $('#chk', el).hidden = true;
+    const kp = $('.keypad', el); if (kp) kp.hidden = true;
+    let ok, extra = '';
+    if (enc) {
+      const got = parseMorse(v), exp = seqTokens(textToSeq(item)).toks;
+      ok = got.join(' ') === exp.join(' ');
+      if (!ok) extra = `<div class="fb-got">Bạn gõ: <span class="codes sm">${got.map(tokVis).join('<span class="cg"></span>')}</span></div>`;
+    } else {
+      ok = normText(v) === normText(item);
+      if (!ok) extra = `<div class="fb-got">Bạn gõ: <b class="mono">${esc(v.toUpperCase())}</b></div>`;
+    }
+    recordItem(item, ok);
+    showFb($('.fb', el), ok, item, () => done(ok ? 1 : 0, 1, ok), {playOnOk: !listen, extra});
+  };
+  $('#chk', el).onclick = submit;
+  inp.addEventListener('input', () => { imeCheck(inp, el); if (!enc && !isWord && inp.value.trim().length >= 1) submit(); });
+  keyHandler = e => {
+    if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); submit(); }
+    else if (e.code === 'Space' && e.ctrlKey && listen) { e.preventDefault(); play(); }
+  };
+}
+
+function textDiffHTML(al, a, b) {
+  const vis = c => c === ' ' ? '␣' : esc(c);
+  return al.ops.map(o => {
+    if (o.op === 'ok') return `<span class="d-ok">${esc(a[o.i])}</span>`;
+    if (o.op === 'sub') return `<span class="d-sub" title="Bạn gõ ${esc(b[o.j])}, đúng là ${esc(a[o.i])}"><s>${vis(b[o.j])}</s><b>${vis(a[o.i])}</b></span>`;
+    if (o.op === 'del') return `<span class="d-del" title="Thiếu ${esc(a[o.i])}">${vis(a[o.i])}</span>`;
+    return `<span class="d-ins" title="Thừa ${esc(b[o.j])}"><s>${vis(b[o.j])}</s></span>`;
+  }).join('');
+}
+// Hiển thị một token người dùng gõ: mã hợp lệ → hình chấm/gạch, "/" → vạch chéo, còn lại → "?"
+const tokVis = t => t === '/' ? '<span class="tsep">/</span>' : /^[.-]+$/.test(t) ? codeVis(t) : '<span class="tsep">?</span>';
+function encDiffHTML(al, exp, got, labels) {
+  return al.ops.map(o => {
+    if (o.op === 'ok') return exp[o.i] === '/' ? '<span class="tk sep">/</span>' : `<span class="tk ok"><b>${fmt(labels[o.i])}</b>${codeVis(exp[o.i])}</span>`;
+    if (o.op === 'sub') return `<span class="tk bad" title="Bạn gõ ${esc(pretty(got[o.j]))}"><b>${fmt(labels[o.i])}</b><span class="got">${tokVis(got[o.j])}</span>${tokVis(exp[o.i])}</span>`;
+    if (o.op === 'del') return `<span class="tk miss" title="Thiếu"><b>${fmt(labels[o.i])}</b>${tokVis(exp[o.i])}</span>`;
+    return `<span class="tk extra" title="Thừa"><b>+</b><span class="got">${tokVis(got[o.j])}</span></span>`;
+  }).join('');
+}
+function renderPassage(el, st, done, o = {}) {
+  const mode = st.mode, text = st.text, seq = textToSeq(text);
+  const title = {listen: 'Nghe và chép lại đoạn văn', decode: 'Dịch đoạn mã Morse sang chữ', encode: 'Chuyển đoạn văn sang mã Morse'}[mode];
+  const sub = {listen: 'Phát lại bao nhiêu lần cũng được. Gõ những gì bạn nghe, cách nhau bằng dấu cách.', decode: 'Mỗi cụm là một ký tự, vạch chéo ngăn cách các từ.', encode: 'Dùng . và -, một dấu cách giữa các ký tự và dấu / giữa các từ.'}[mode];
+  el.innerHTML = `<div class="card q passage">
+    <div class="prompt">${title}</div>
+    <div class="muted small">${sub}</div>
+    <div class="q-main">${
+      mode === 'listen' ? `${bigPlay()}<div class="row center"><span class="chip">${speedLabel()}</span><button class="btn sm ghost" id="hintBtn">Hiện mã (gợi ý, −50% điểm)</button></div><div class="mtext" id="hintBox" hidden>${morseHTML(seq)}</div>`
+      : mode === 'decode' ? `<div class="mtext">${morseHTML(seq)}</div><button class="btn sm" id="pPlay">${IC.play} Nghe đoạn mã</button>`
+      : `<div class="ptext">${fmt(text)}</div>`}</div>
+    <textarea class="answer ${mode === 'encode' ? 'morse' : ''}" id="ans" rows="3" autocomplete="off" autocorrect="off" autocapitalize="${mode === 'encode' ? 'off' : 'characters'}" spellcheck="false"
+      placeholder="${mode === 'encode' ? 'vd: .- -... / -.-.' : 'Gõ đoạn văn…'}" aria-label="Đáp án"></textarea>
+    ${mode === 'encode' ? keypad(true) : ''}
+    <div class="ime-warn" hidden></div>
+    <button class="btn primary wide" id="chk">Kiểm tra <kbd>Enter</kbd></button>
+    <div class="pres"></div>
+    <div class="hint-keys">${mode === 'listen' ? 'Ctrl+Space: phát / dừng · ' : ''}Enter: kiểm tra · Shift+Enter: xuống dòng</div>
+  </div>`;
+  const inp = $('#ans', el), play = () => Snd.cur ? Snd.stop() : Snd.play(seq);
+  let hintUsed = false;
+  if (mode === 'listen') {
+    bindBigPlay(el, () => Snd.play(seq));
+    if (DB.settings.autoplay && !o.noAutoplay) later(() => Snd.play(seq), 350);
+    $('#hintBtn', el).onclick = () => { hintUsed = true; $('#hintBox', el).hidden = false; $('#hintBtn', el).remove(); };
+  }
+  if (mode === 'decode') $('#pPlay', el).onclick = () => Snd.play(seq);
+  if (mode === 'encode') bindKeypad(el, inp);
+  setTimeout(() => inp.focus({preventScroll: true}), 30);
+  inp.addEventListener('input', () => imeCheck(inp, el));
+  let answered = false;
+  const submit = () => {
+    if (answered) return;
+    if (!inp.value.trim()) { inp.focus(); return; }
+    answered = true; inp.disabled = true; $('#chk', el).hidden = true; Snd.stop();
+    const kp = $('.keypad', el); if (kp) kp.hidden = true;
+    const hb = $('#hintBtn', el); if (hb) hb.remove();
+    let acc, diff;
+    if (mode === 'encode') {
+      const {toks, labels} = seqTokens(seq), got = parseMorse(inp.value), al = align(toks, got);
+      acc = Math.max(0, 1 - al.dist / toks.length);
+      al.ops.forEach(op => { if (op.op !== 'ins' && toks[op.i] !== '/' && labels[op.i].length === 1) record(labels[op.i], op.op === 'ok'); });
+      diff = `<div class="tks">${encDiffHTML(al, toks, got, labels)}</div>`;
+    } else {
+      const a = [...normText(text)], b = [...normText(inp.value)], al = align(a, b);
+      acc = Math.max(0, 1 - al.dist / a.length);
+      al.ops.forEach(op => { if (op.op !== 'ins' && a[op.i] !== ' ') record(a[op.i], op.op === 'ok'); });
+      diff = `<div class="diff">${textDiffHTML(al, a, b)}</div><div class="legend"><span class="l1">đúng</span><span class="l2">sai / thừa (gạch ngang)</span><span class="l3">thiếu (gạch dưới)</span></div>`;
+    }
+    save();
+    const pct = Math.round(acc * 100), cls = pct >= 90 ? 'good' : pct >= 70 ? 'mid' : 'bad';
+    $('.pres', el).innerHTML = `
+      <div class="pres-head ${cls}"><b>${pct}%</b><span>chính xác${hintUsed ? ' · đã xem gợi ý' : ''}</span></div>
+      ${diff}
+      <div class="anskey"><div class="lbl">Đáp án</div><div class="ptext sm">${fmt(text)}</div><div class="mtext sm">${morseHTML(seq)}</div></div>
+      <div class="row center mt"><button class="btn" id="rPlay">${IC.play} Nghe đáp án</button><button class="btn primary" id="cont">${o.nextLabel || 'Tiếp tục'} <kbd>Enter</kbd></button></div>`;
+    const go = once(() => done(3 * acc * (hintUsed ? .5 : 1), 3, acc >= .8));
+    $('#rPlay', el).onclick = () => Snd.play(seq);
+    $('#cont', el).onclick = go;
+    keyHandler = e => { if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); go(); } };
+    $('.pres', el).scrollIntoView({behavior: 'smooth', block: 'nearest'});
+  };
+  $('#chk', el).onclick = submit;
+  keyHandler = e => {
+    if (e.key === 'Enter' && !e.shiftKey && !e.repeat) { e.preventDefault(); submit(); }
+    else if (e.code === 'Space' && e.ctrlKey && mode !== 'encode') { e.preventDefault(); play(); }
+  };
+}
+
+/* =====================================================================
+   TRANG: LUYỆN TẬP
+   ===================================================================== */
+const PMODES = [
+  {id: 'listen', n: 'Nghe & chép', s: 'Nghe audio rồi gõ lại đoạn văn'},
+  {id: 'decode', n: 'Đọc mã', s: 'Dịch mã Morse sang chữ'},
+  {id: 'encode', n: 'Gõ mã', s: 'Chuyển đoạn văn ngẫu nhiên sang Morse'},
+  {id: 'drill', n: 'Phản xạ', s: 'Nhận diện từng ký tự thật nhanh'},
+  {id: 'key', n: 'Telegraph', s: 'Tự phát Morse bằng phím, máy tự giải mã'}
+];
+const SRC = [{id: 'groups', n: 'Nhóm ngẫu nhiên'}, {id: 'words', n: 'Từ tiếng Anh'}, {id: 'sentences', n: 'Câu'}, {id: 'qso', n: 'Hội thoại vô tuyến'}, {id: 'calls', n: 'Hô hiệu & số'}];
+const SETS = [{id: 'learned', n: 'Đã học'}, {id: 'letters', n: 'Chữ cái'}, {id: 'alnum', n: 'Chữ + số'}, {id: 'all', n: 'Tất cả'}, {id: 'custom', n: 'Tự chọn'}];
+function charset(id, custom) {
+  if (id === 'learned') { const l = learnedChars(); return l.length >= 2 ? l : [...'ETIANM']; }
+  if (id === 'letters') return LETTERS;
+  if (id === 'alnum') return [...LETTERS, ...DIGITS];
+  if (id === 'all') return ALL;
+  const s = [...new Set([...String(custom || '').toUpperCase()].filter(c => MORSE[c]))];
+  return s.length ? s : LETTERS;
+}
+const cfgRow = (label, key, opts, cur) => `<div class="cfg-row"><span class="lbl">${label}</span><div class="chips">${opts.map(o => `<button class="chip-btn ${String(o.id) === String(cur) ? 'on' : ''}" data-k="${key}" data-v="${o.id}">${o.n}</button>`).join('')}</div></div>`;
+function customRow(P) { return `<div class="cfg-row" ${P.set === 'custom' ? '' : 'hidden'}><span class="lbl"></span><input class="field-in mono" id="customIn" value="${esc(P.custom)}" placeholder="Nhập các ký tự, vd: KMRSU5?" spellcheck="false"></div>`; }
+function bindCfg(root, P, rerender) {
+  $$('[data-k]', root).forEach(b => b.onclick = () => { const v = b.dataset.v; P[b.dataset.k] = isNaN(+v) ? v : +v; save(); rerender(); });
+  const ci = $('#customIn', root); if (ci) ci.onchange = () => { P.custom = ci.value; save(); rerender(); };
+}
+function setInfo(cs, P, src) {
+  const note = src && ['sentences', 'qso', 'calls'].includes(src) ? ' · nội dung này có thể dùng ký tự ngoài bộ đã chọn' : '';
+  const l = P.set === 'learned' && learnedChars().length < 2 ? ' (chưa hoàn thành bài nào — dùng tạm E T I A N M)' : '';
+  return `Bộ ký tự (${cs.length})${l}: <span class="mono">${esc(cs.join(' '))}</span>${note}`;
+}
+function viewPractice(arg) {
+  const P = DB.prefs.practice;
+  const mode = PMODES.some(m => m.id === arg) ? arg : P.mode;
+  P.mode = mode; save();
+  app.innerHTML = `
+  <h1 class="h1">Luyện tập</h1>
+  <p class="sub">Luyện tự do không giới hạn. Mọi câu trả lời đều được ghi vào thống kê và lịch ôn tập của từng ký tự.</p>
+  <div class="pmodes">${PMODES.map(m => `<a href="#/practice/${m.id}" class="${m.id === mode ? 'on' : ''}"><b>${m.n}</b><small>${m.s}</small></a>`).join('')}</div>
+  <div id="pbody"></div>`;
+  const body = $('#pbody');
+  if (mode === 'drill') practiceDrill(body);
+  else if (mode === 'key') practiceKey(body);
+  else practicePassage(body, mode);
+}
+function practicePassage(el, mode) {
+  const P = DB.prefs.practice;
+  const render = () => {
+    const cs = charset(P.set, P.custom);
+    el.innerHTML = `<div class="card cfg">
+      ${cfgRow('Nội dung', 'src', SRC, P.src)}
+      ${cfgRow('Bộ ký tự', 'set', SETS, P.set)}
+      ${customRow(P)}
+      <div class="cfg-row"><span class="lbl">Độ dài</span><input type="range" min="1" max="20" value="${P.len}" id="lenIn" aria-label="Độ dài"><b id="lenOut">${P.len}</b><span class="muted small">từ / nhóm</span></div>
+      <div class="cfg-foot"><span class="muted small">${setInfo(cs, P, P.src)}</span><button class="btn primary" id="gen">Bài mới</button></div>
+    </div><div id="ex"></div>`;
+    bindCfg(el, P, render);
+    const li = $('#lenIn', el);
+    li.oninput = () => { $('#lenOut', el).textContent = li.value; };
+    li.onchange = () => { P.len = +li.value; save(); gen(); };
+    const gen = () => {
+      freshStep();
+      const text = genContent(P.src, cs, P.len);
+      renderPassage($('#ex', el), {t: 'passage', mode, text}, () => gen(), {nextLabel: 'Bài mới', noAutoplay: false});
+    };
+    $('#gen', el).onclick = gen;
+    gen();
+  };
+  render();
+}
+
+/* ---------- Phản xạ ký tự ---------- */
+function practiceDrill(el) {
+  const P = DB.prefs.practice;
+  const render = () => {
+    freshStep();
+    const cs = charset(P.set, P.custom);
+    el.innerHTML = `<div class="card cfg">
+      ${cfgRow('Bộ ký tự', 'set', SETS, P.set)}
+      ${customRow(P)}
+      ${cfgRow('Số lượng', 'drillN', [{id: 20, n: '20'}, {id: 30, n: '30'}, {id: 50, n: '50'}], P.drillN)}
+      <div class="cfg-foot"><span class="muted small">${setInfo(cs, P)}</span><button class="btn primary" id="go">Bắt đầu</button></div>
+    </div><div id="ex"><div class="card muted" style="text-align:center">Máy sẽ phát từng ký tự — hãy gõ ngay ký tự bạn nghe được. Ký tự bạn hay sai sẽ xuất hiện nhiều hơn.</div></div>`;
+    bindCfg(el, P, render);
+    $('#go', el).onclick = () => runDrill($('#ex', el), cs, P.drillN, render);
+  };
+  render();
+}
+async function runDrill(box, cs, N, again) {
+  freshStep();
+  const tok = stepTok, alive = () => tok === stepTok;
+  box.innerHTML = `<div class="card drill">
+    <div class="drill-top"><span id="dCount">0/${N}</span><span class="lamp big"></span><span id="dScore">✓ 0</span></div>
+    <div class="drill-char" id="dChar">?</div>
+    <div class="drill-code" id="dCode"></div>
+    <input class="answer" id="dIn" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="Gõ ký tự" aria-label="Ký tự bạn nghe">
+    <div class="ime-warn" hidden></div>
+    <div class="hint-keys">Space: nghe lại · Esc: dừng</div>
+    <div class="drill-hist" id="dHist"></div>
+  </div>`;
+  const inp = $('#dIn', box), cEl = $('#dChar', box), codeEl = $('#dCode', box);
+  inp.focus();
+  let resolver = null, cur = null, stopped = false;
+  inp.addEventListener('input', () => {
+    imeCheck(inp, box);
+    const v = inp.value; inp.value = '';
+    if (!v) return;
+    const ch = v.slice(-1);
+    if (ch === ' ') { if (cur) Snd.playText(cur); return; }
+    if (resolver) { const r = resolver; resolver = null; r(ch); }
+  });
+  keyHandler = e => { if (e.key === 'Escape') { stopped = true; if (resolver) { const r = resolver; resolver = null; r(null); } } };
+  const res = []; let last = null, score = 0;
+  for (let i = 0; i < N && !stopped; i++) {
+    if (!alive()) return;
+    let item, g = 0;
+    do { item = weightedPick(cs, weakW); } while (item === last && cs.length > 1 && g++ < 8);
+    last = cur = item;
+    $('#dCount', box).textContent = `${i + 1}/${N}`;
+    cEl.className = 'drill-char'; cEl.textContent = '?'; codeEl.innerHTML = '';
+    let audioEnd = 0;
+    Snd.playText(item).then(() => { if (!audioEnd) audioEnd = performance.now(); });
+    const ans = await new Promise(r => resolver = r);
+    if (!alive()) return;
+    if (ans == null) break;
+    const tAns = performance.now();
+    if (!audioEnd) { audioEnd = tAns; Snd.stop(); }
+    const rt = tAns - audioEnd, ok = normText(ans) === item;
+    record(item, ok); if (ok) score++;
+    res.push({item, ok, rt, ans});
+    cEl.className = 'drill-char ' + (ok ? 'good' : 'bad'); cEl.textContent = item;
+    codeEl.innerHTML = `<span class="codes">${codeVis(MORSE[item])}</span>${ok ? '' : ` <span class="small muted">(bạn gõ ${esc(ans.toUpperCase())})</span>`}`;
+    $('#dScore', box).textContent = `✓ ${score}`;
+    $('#dHist', box).insertAdjacentHTML('beforeend', `<span class="hchip ${ok ? 'good' : 'bad'}">${esc(item)}</span>`);
+    if (ok) await sleep(350); else { await sleep(200); if (!alive()) return; await Snd.playText(item); await sleep(500); }
+  }
+  if (!alive()) return;
+  save(); keyHandler = null;
+  if (!res.length) { again(); return; }
+  const okR = res.filter(r => r.ok), acc = Math.round(okR.length / res.length * 100);
+  const avg = okR.length ? Math.round(okR.reduce((a, r) => a + r.rt, 0) / okR.length) : null;
+  const per = {}; res.forEach(r => { (per[r.item] = per[r.item] || {n: 0, bad: 0, rt: []}).n++; if (!r.ok) per[r.item].bad++; else per[r.item].rt.push(r.rt); });
+  const missed = Object.entries(per).filter(([, v]) => v.bad).sort((a, b) => b[1].bad - a[1].bad);
+  const slow = Object.entries(per).filter(([, v]) => v.rt.length).map(([c, v]) => [c, v.rt.reduce((a, b) => a + b, 0) / v.rt.length]).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  box.innerHTML = `<div class="card">
+    <h2 style="font-size:20px">Kết quả phản xạ</h2>
+    <div class="sumgrid"><div><b>${acc}%</b><span>chính xác (${okR.length}/${res.length})</span></div><div><b>${avg == null ? '—' : avg + ' ms'}</b><span>thời gian phản ứng TB</span></div></div>
+    ${missed.length ? `<div class="small muted" style="font-weight:700;margin:6px 0">Ký tự gõ sai</div><div class="row">${missed.map(([c, v]) => `<button class="mchip" data-play="${esc(c)}">${esc(c)} <span class="codes" style="font-size:12px">${codeVis(MORSE[c])}</span><small>×${v.bad}</small></button>`).join('')}</div>` : ''}
+    ${slow.length ? `<div class="small muted" style="font-weight:700;margin:14px 0 6px">Phản ứng chậm nhất</div><div class="row">${slow.map(([c, t]) => `<button class="chip" data-play="${esc(c)}" style="border:none;cursor:pointer"><b class="mono">${esc(c)}</b> ${Math.round(t)} ms</button>`).join('')}</div>` : ''}
+    <div class="row mt"><button class="btn primary" id="dAgain">Làm lại</button></div></div>`;
+  $('#dAgain', box).onclick = () => runDrill(box, cs, N, again);
+}
+
+/* ---------- Telegraph (tự phát bằng phím) ---------- */
+function practiceKey(el) {
+  const P = DB.prefs.practice;
+  const K = {down: false, t0: 0, buf: '', out: '', dot: 1200 / DB.settings.keyWpm, timers: [], target: ''};
+  const clearT = () => { K.timers.forEach(clearTimeout); K.timers = []; };
+  const render = () => {
+    freshStep(); clearT();
+    el.innerHTML = `<div class="card cfg">
+      ${cfgRow('Mục tiêu', 'kt', [{id: 'free', n: 'Tự do'}, {id: 'char', n: 'Từng ký tự'}, {id: 'word', n: 'Từ'}, {id: 'sentence', n: 'Câu'}], P.kt)}
+      <div class="cfg-row"><span class="lbl">Tốc độ gõ</span><input type="range" min="5" max="30" id="kw" value="${DB.settings.keyWpm}" aria-label="Tốc độ gõ"><b id="kwOut">${DB.settings.keyWpm}</b><span class="muted small">WPM</span></div>
+      <div class="cfg-row"><span class="lbl">Tuỳ chọn</span><label class="chk"><input type="checkbox" id="kAdapt" ${DB.settings.keyAdapt ? 'checked' : ''}> Tự thích nghi theo nhịp gõ</label><label class="chk"><input type="checkbox" id="kHint" ${P.kHint ? 'checked' : ''}> Hiện mã gợi ý</label></div>
+    </div>
+    <div class="card keyer">
+      <div class="k-target" id="kT"></div>
+      <div class="k-out"><div class="k-text" id="kOut"></div><div class="k-cur" id="kCur"></div></div>
+      <button class="keybtn" id="kBtn" type="button"><span class="lamp big"></span><b>GIỮ ĐỂ PHÁT</b><small>hoặc nhấn giữ phím Space</small></button>
+      <div class="row center"><span class="chip" id="kWpm"></span><button class="btn sm" id="kBk">⌫ Xoá ký tự</button><button class="btn sm" id="kClr">Xoá hết</button>
+        ${P.kt !== 'free' ? '<button class="btn sm" id="kNew">Mục tiêu mới</button>' : ''}${P.kt === 'word' || P.kt === 'sentence' ? '<button class="btn sm primary" id="kChk">Kiểm tra</button>' : ''}</div>
+      <div class="k-flash" id="kFlash"></div>
+      <div class="k-res" id="kRes"></div>
+    </div>
+    <details class="card help"><summary>Cách phát Morse bằng phím</summary>
+      <ul><li>Nhấn <b>ngắn</b> = chấm (1 đơn vị), nhấn <b>dài</b> = gạch (3 đơn vị).</li>
+      <li>Nghỉ khoảng 3 đơn vị để kết thúc một ký tự, khoảng 7 đơn vị để cách từ.</li>
+      <li>Ở ${DB.settings.keyWpm} WPM, 1 đơn vị ≈ ${Math.round(1200 / DB.settings.keyWpm)} ms. Bật "tự thích nghi" để máy tự theo nhịp của bạn.</li>
+      <li>Trên điện thoại: chạm và giữ vào nút lớn.</li></ul></details>`;
+    bindCfg(el, P, render);
+    const kw = $('#kw', el);
+    kw.oninput = () => { DB.settings.keyWpm = +kw.value; $('#kwOut', el).textContent = kw.value; K.dot = 1200 / DB.settings.keyWpm; save(); show(); };
+    $('#kAdapt', el).onchange = e => { DB.settings.keyAdapt = e.target.checked; save(); };
+    $('#kHint', el).onchange = e => { P.kHint = e.target.checked; save(); showTarget(); };
+    const btn = $('#kBtn', el);
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} press(); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => btn.addEventListener(t, release));
+    btn.addEventListener('contextmenu', e => e.preventDefault());
+    $('#kBk', el).onclick = () => { if (K.buf) K.buf = ''; else K.out = K.out.replace(/\s+$/, '').slice(0, -1); show(); };
+    $('#kClr', el).onclick = () => { K.buf = ''; K.out = ''; $('#kRes', el).innerHTML = ''; show(); };
+    if ($('#kNew', el)) $('#kNew', el).onclick = newTarget;
+    if ($('#kChk', el)) $('#kChk', el).onclick = check;
+    keyHandler = e => {
+      if (e.code !== 'Space' || isField(e.target)) return;
+      e.preventDefault();
+      if (document.activeElement && document.activeElement.tagName === 'BUTTON') document.activeElement.blur();
+      if (!e.repeat) press();
+    };
+    keyUpHandler = e => { if (e.code === 'Space' && !isField(e.target)) { e.preventDefault(); release(); } };
+    newTarget();
+  };
+  const show = () => {
+    const o = $('#kOut', el); if (!o) return;
+    o.innerHTML = `${esc(K.out)}<span class="caret"></span>`;
+    $('#kCur', el).textContent = K.buf ? pretty(K.buf) : '';
+    $('#kWpm', el).textContent = `≈ ${Math.round(1200 / K.dot)} WPM`;
+    $('#kBtn', el).classList.toggle('down', K.down);
+  };
+  const showTarget = () => {
+    const t = $('#kT', el); if (!t) return;
+    t.innerHTML = P.kt === 'free' ? '<div class="k-tl">Chế độ tự do — phát bất cứ gì bạn muốn</div>'
+      : `<div class="k-tl">Hãy phát</div><div class="k-tt">${fmt(K.target)}</div>${P.kHint ? `<div class="mtext" style="font-size:18px">${morseHTML(textToSeq(K.target))}</div>` : ''}`;
+  };
+  function newTarget() {
+    const learned = charset('learned');
+    if (P.kt === 'char') K.target = weightedPick(learned, weakW);
+    else if (P.kt === 'word') { const w = wordsFor(learned.filter(c => /[A-Z]/.test(c)), 6); K.target = w.length >= 5 ? pick(w) : randGroup(learned, null, 3); }
+    else if (P.kt === 'sentence') K.target = pick(SENTENCES.filter(s => s.length <= 30));
+    else K.target = '';
+    K.buf = ''; K.out = ''; clearT();
+    const r = $('#kRes', el); if (r) r.innerHTML = '';
+    const f = $('#kFlash', el); if (f) { f.textContent = ''; f.className = 'k-flash'; }
+    showTarget(); show();
+  }
+  function press() {
+    if (K.down) return;
+    K.down = true; clearT(); K.t0 = performance.now(); Snd.toneOn(); show();
+  }
+  function release() {
+    if (!K.down) return;
+    K.down = false; Snd.toneOff();
+    const d = performance.now() - K.t0;
+    if (d < 15) { show(); return; }
+    const sym = d < K.dot * 2 ? '.' : '-';
+    if (DB.settings.keyAdapt) K.dot = clamp(sym === '.' ? K.dot * .8 + d * .2 : K.dot * .8 + d / 3 * .2, 30, 400);
+    K.buf += sym; show();
+    K.timers.push(setTimeout(commitChar, K.dot * 2.5));
+  }
+  function commitChar() {
+    if (!K.buf) return;
+    const code = K.buf, ch = REV[code] || '✱';
+    K.buf = ''; K.out += ch; show();
+    onChar(ch, code);
+    K.timers.push(setTimeout(() => {
+      if (K.out && !K.out.endsWith(' ')) { K.out += ' '; show(); if (P.kt === 'word' || P.kt === 'sentence') autoCheck(); }
+    }, K.dot * 3));
+  }
+  function onChar(ch, code) {
+    if (P.kt !== 'char') return;
+    const f = $('#kFlash', el), ok = ch === K.target;
+    record(K.target, ok); save();
+    if (ok) { f.className = 'k-flash good'; f.textContent = `✓ ${K.target} — chính xác!`; setTimeout(() => { if ($('#kFlash', el) === f) newTarget(); }, 650); }
+    else { f.className = 'k-flash bad'; f.innerHTML = `✗ Bạn phát ${esc(ch)} (${pretty(code)}), cần ${esc(K.target)} (${pretty(MORSE[K.target])})`; setTimeout(() => { if ($('#kFlash', el) === f) { K.out = ''; show(); } }, 900); }
+  }
+  function autoCheck() { if (normText(K.out).replace(/ /g, '').length >= normText(K.target).replace(/ /g, '').length) check(); }
+  function check() {
+    const a = [...normText(K.target)], b = [...normText(K.out)];
+    if (!b.length) return;
+    const al = align(a, b), acc = Math.round(Math.max(0, 1 - al.dist / a.length) * 100);
+    al.ops.forEach(op => { if (op.op !== 'ins' && a[op.i] !== ' ') record(a[op.i], op.op === 'ok'); });
+    save();
+    $('#kRes', el).innerHTML = `<div class="pres-head ${acc >= 90 ? 'good' : acc >= 70 ? 'mid' : 'bad'}"><b>${acc}%</b><span>chính xác</span></div><div class="diff">${textDiffHTML(al, a, b)}</div>
+      <div class="row mt"><button class="btn primary sm" id="kNext">Mục tiêu mới</button></div>`;
+    $('#kNext', el).onclick = newTarget;
+  }
+  render();
+}
+
+/* =====================================================================
+   TRANG: ÔN TẬP
+   ===================================================================== */
+function viewReview() {
+  const learned = learnedChars(), due = dueChars();
+  const accs = learned.map(accOf).filter(a => a != null);
+  const acc = accs.length ? Math.round(accs.reduce((a, b) => a + b, 0) / accs.length * 100) : null;
+  const doneLessons = LESSONS.map((L, i) => ({L, i})).filter(x => DB.lessons[x.L.id] && DB.lessons[x.L.id].done);
+  const lset = new Set(learned);
+  app.innerHTML = `
+  <h1 class="h1">Ôn tập</h1>
+  <p class="sub">Lặp lại ngắt quãng (hệ thống Leitner): ký tự bạn hay sai được hỏi thường xuyên hơn, ký tự đã thuộc sẽ giãn dần lịch ôn — 1, 2, 4, 7, 15 rồi 30 ngày.</p>
+  <div class="stat-row">
+    <div class="card stat hl"><b>${due.length}</b><span>ký tự đến hạn ôn</span></div>
+    <div class="card stat"><b>${streak()}</b><span>ngày học liên tiếp</span></div>
+    <div class="card stat"><b>${acc == null ? '—' : acc + '%'}</b><span>độ chính xác gần đây</span></div>
+    <div class="card stat"><b>${learned.length}</b><span>ký tự đã học / ${ALL.length - 2}</span></div>
+  </div>
+  <div class="card cta">
+    ${learned.length ? `<p>${due.length ? `Hôm nay cần ôn: <b class="mono">${esc(due.join(' '))}</b>` : 'Không có ký tự nào đến hạn — bạn có thể luyện các ký tự yếu nhất.'}</p>
+      <div class="row"><button class="btn primary" id="rvStart">${due.length ? `Ôn ${due.length} ký tự đến hạn` : 'Ôn tập tổng hợp'}</button><button class="btn" id="rvWeak">Luyện ký tự yếu</button></div>`
+      : `<p>Hoàn thành <a href="#/lesson/0">Bài 1</a> để bắt đầu ôn tập.</p>`}
+  </div>
+  <h2 class="sec">Bản đồ ký tự</h2>
+  <p class="muted small" style="margin-top:-6px">Màu thể hiện độ chính xác 20 lần gần nhất · chấm nhỏ là cấp độ ghi nhớ · viền cam: đến hạn ôn · bấm để nghe.</p>
+  <div class="heat">${ALL.filter(c => c !== '!' && c !== '&').map(c => {
+    const a = accOf(c), s = DB.stats[c], b = a == null ? 'b-none' : a >= .9 ? 'b-good' : a >= .7 ? 'b-mid' : 'b-bad';
+    return `<button class="tile ${b} ${lset.has(c) ? '' : 'unlearned'} ${lset.has(c) && isDue(c) ? 'due' : ''}" data-play="${esc(c)}" title="${esc(c)} ${esc(pretty(MORSE[c]))}${s ? ` · ${s.c}/${s.n} đúng` : ''}"><b>${esc(c)}</b><small>${a == null ? '—' : Math.round(a * 100) + '%'}</small><span class="lv">${'●'.repeat(s ? s.box || 0 : 0)}</span></button>`;
+  }).join('')}</div>
+  <h2 class="sec">Ôn lại bài đã học</h2>
+  ${doneLessons.length ? `<div class="rv-list">${doneLessons.map(({L, i}) => `<a class="lcard done" href="#/lesson/${i}"><div class="lnum">${i + 1}</div><div class="lbody"><div class="ltitle">${esc(L.title)}</div><div class="lchars">${lessonChips(L)}</div></div><div class="lstat">${DB.lessons[L.id].best}%</div></a>`).join('')}</div>` : '<p class="muted">Chưa có bài nào hoàn thành.</p>'}`;
+  const startReview = weak => {
+    const pool = learnedChars();
+    let focus;
+    if (weak) focus = [...pool].sort((a, b) => (accOf(a) ?? .6) - (accOf(b) ?? .6)).slice(0, Math.min(6, pool.length));
+    else { focus = dueChars(); if (!focus.length) focus = null; }
+    startSession({title: weak ? 'Luyện ký tự yếu' : 'Ôn tập hằng ngày', steps: buildReviewSteps(pool, {focus, n: focus ? clamp(focus.length * 3, 12, 24) : 16}), restart: () => startReview(weak)});
+  };
+  if ($('#rvStart')) { $('#rvStart').onclick = () => startReview(false); $('#rvWeak').onclick = () => startReview(true); }
+}
+
+/* =====================================================================
+   TRANG: BẢNG MÃ
+   ===================================================================== */
+function refCell(c) { return `<button class="ref-cell" data-play="${esc(c)}"><b>${esc(c)}</b><div><span class="codes">${codeVis(MORSE[c])}</span><small>${rhythm(MORSE[c])}</small></div></button>`; }
+function treeSVG() {
+  const W = 800, top = 30, rowH = 66, H = top + 4 * rowH + 26;
+  let lines = '', nodes = '';
+  (function walk(code, x0, x1, d) {
+    const x = (x0 + x1) / 2, y = top + d * rowH;
+    if (d < 4) [['.', x0, x], ['-', x, x1]].forEach(([e, a, b]) => {
+      lines += `<line x1="${x}" y1="${y}" x2="${(a + b) / 2}" y2="${y + rowH}" class="${e === '.' ? 'tl-dot' : 'tl-dash'}"/>`;
+      walk(code + e, a, b, d + 1);
+    });
+    if (d === 0) { nodes += `<circle cx="${x}" cy="${y}" r="9" class="tn-root"/>`; return; }
+    const ch = REV[code];
+    nodes += `<g class="tn ${ch ? '' : 'empty'}" ${ch ? `data-play="${esc(ch)}"` : ''}><title>${esc(pretty(code))}</title><circle cx="${x}" cy="${y}" r="${ch ? 16 : 5}"/>${ch ? `<text x="${x}" y="${y}" dy=".35em">${esc(ch)}</text>` : ''}</g>`;
+  })('', 0, W, 0);
+  return `<svg viewBox="0 0 ${W} ${H}" class="tree" role="img" aria-label="Cây nhị phân mã Morse">
+    <text x="${W / 2 - 24}" y="${top + 4}" class="tlab" style="text-anchor:end">← chấm ·</text><text x="${W / 2 + 24}" y="${top + 4}" class="tlab" style="text-anchor:start">gạch − →</text>
+    ${lines}${nodes}</svg>`;
+}
+function viewReference() {
+  const s = DB.settings, unit = Math.round(1200 / s.wpm);
+  const parts = [['on', 1, '1'], ['off', 1, ''], ['on', 3, '3'], ['gap', 3, '3'], ['on', 3, '3'], ['off', 1, ''], ['on', 1, '1'], ['gap', 7, '7'], ['on', 3, '3']];
+  app.innerHTML = `
+  <h1 class="h1">Bảng mã Morse</h1>
+  <p class="sub">Bấm vào bất kỳ ký tự nào để nghe. Bộ chuyển đổi bên dưới hoạt động hai chiều.</p>
+  <div class="card">
+    <div class="tr-grid">
+      <label>Văn bản<textarea id="trText" spellcheck="false" placeholder="Nhập chữ tiếng Anh…">SOS</textarea></label>
+      <label>Mã Morse<textarea id="trMorse" spellcheck="false" placeholder="... --- ..."></textarea></label>
+    </div>
+    <div class="row mt"><button class="btn primary" id="trPlay">${IC.play} Phát</button><button class="btn" id="trStop">${IC.stop} Dừng</button><span class="lamp big"></span><span class="chip">${speedLabel()}</span></div>
+  </div>
+  <h2 class="sec">Chữ cái</h2><div class="ref-grid">${LETTERS.map(refCell).join('')}</div>
+  <h2 class="sec">Chữ số</h2><div class="ref-grid">${DIGITS.map(refCell).join('')}</div>
+  <h2 class="sec">Dấu câu & ký hiệu</h2><div class="ref-grid">${ALL.filter(c => !/[A-Z0-9]/.test(c)).map(refCell).join('')}</div>
+  <h2 class="sec">Prosign — tín hiệu thủ tục (phát liền, không ngắt)</h2>
+  <div class="ref-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">${PROSIGNS.map(p => { const k = textToSeq(p.t)[0][0].k; return `<button class="ref-cell wide" data-play="${esc(p.t)}"><b style="font-size:17px">${fmt(p.t)}</b><div><span class="codes">${codeVis(k)}</span><small>${esc(p.d)}</small></div></button>`; }).join('')}</div>
+  <h2 class="sec">Cây nhị phân Morse</h2>
+  <div class="card"><p class="muted small" style="margin-top:0">Bắt đầu từ gốc: mỗi <b style="color:var(--accent)">chấm</b> rẽ trái, mỗi <b>gạch</b> rẽ phải. Ký tự nằm càng cao thì mã càng ngắn.</p><div class="tree-wrap">${treeSVG()}</div></div>
+  <h2 class="sec">Quy tắc thời gian</h2>
+  <div class="card">
+    <div class="small muted" style="font-weight:700">Ví dụ "AN T" — mỗi ô là 1 đơn vị thời gian</div>
+    <div class="timing">${parts.map(([t, u, l]) => `<span class="${t}" style="flex:${u}"><i></i>${l ? `<em>${l}</em>` : ''}</span>`).join('')}</div>
+    <div class="timing-lbl"><span style="flex:5">A</span><span style="flex:3"></span><span style="flex:5">N</span><span style="flex:7"></span><span style="flex:3">T</span></div>
+    <ul class="rules">
+      <li><b>Chấm</b> = 1 đơn vị · <b>Gạch</b> = 3 đơn vị</li>
+      <li>Khoảng nghỉ <b>trong một ký tự</b> = 1 · <b>giữa các ký tự</b> = 3 · <b>giữa các từ</b> = 7</li>
+      <li>Tốc độ đo bằng WPM theo từ chuẩn "PARIS" (50 đơn vị). Ở ${s.wpm} WPM, 1 đơn vị ≈ <b>${unit} ms</b>.</li>
+      <li><b>Farnsworth:</b> ký tự vẫn phát ở tốc độ cao nhưng khoảng nghỉ giữa ký tự và từ được kéo dài — giúp bạn học âm thanh của ký tự mà vẫn có thời gian suy nghĩ.</li>
+    </ul>
+  </div>`;
+  const tt = $('#trText'), tm = $('#trMorse');
+  tt.oninput = () => { tm.value = pretty(textToMorse(tt.value)); };
+  tm.oninput = () => { tt.value = morseToText(tm.value); };
+  tt.oninput();
+  $('#trPlay').onclick = () => Snd.playText(tt.value);
+  $('#trStop').onclick = () => Snd.stop();
+}
+
+/* =====================================================================
+   TRANG: CÀI ĐẶT
+   ===================================================================== */
+function speedControlsHTML() {
+  const s = DB.settings;
+  return `
+  <label class="field"><span>Tốc độ ký tự: <b data-out="wpm">${s.wpm}</b> WPM</span><input type="range" min="5" max="40" data-set="wpm" value="${s.wpm}"></label>
+  <label class="field"><span>Tốc độ hiệu dụng (Farnsworth): <b data-out="fwpm">${s.fwpm}</b> WPM</span><input type="range" min="3" max="40" data-set="fwpm" value="${s.fwpm}"></label>
+  <label class="field"><span>Tần số âm: <b data-out="freq">${s.freq}</b> Hz</span><input type="range" min="300" max="1000" step="10" data-set="freq" value="${s.freq}"></label>
+  <label class="field"><span>Âm lượng: <b data-out="vol">${s.vol}</b>%</span><input type="range" min="0" max="100" data-set="vol" value="${s.vol}"></label>`;
+}
+function bindSettings(root) {
+  $$('[data-set]', root).forEach(inp => {
+    const h = () => {
+      const k = inp.dataset.set, s = DB.settings;
+      s[k] = inp.type === 'checkbox' ? inp.checked : inp.type === 'range' ? +inp.value : inp.value;
+      if (k === 'wpm' && s.fwpm > s.wpm) s.fwpm = s.wpm;
+      if (k === 'fwpm' && s.fwpm > s.wpm) s.fwpm = s.wpm;
+      $$('[data-out]', root).forEach(o => { o.textContent = s[o.dataset.out]; });
+      const f = $('[data-set="fwpm"]', root); if (f) f.value = s.fwpm;
+      save();
+    };
+    inp.addEventListener(inp.type === 'range' ? 'input' : 'change', h);
+  });
+}
+function viewSettings() {
+  const s = DB.settings;
+  app.innerHTML = `
+  <h1 class="h1">Cài đặt</h1>
+  <p class="sub">Mọi thay đổi được lưu tự động.</p>
+  <div class="set-grid">
+    <section class="card" id="sndSec"><h2>Âm thanh & tốc độ</h2>
+      ${speedControlsHTML()}
+      <label class="field"><span>Dạng sóng</span><select data-set="wave">${[['sine', 'Sine — êm'], ['triangle', 'Triangle — vừa'], ['square', 'Square — gắt, giống máy cũ']].map(([v, n]) => `<option value="${v}" ${s.wave === v ? 'selected' : ''}>${n}</option>`).join('')}</select></label>
+      <div class="row"><button class="btn" data-play="PARIS">${IC.play} Thử: PARIS</button><span class="lamp big"></span></div>
+      <p class="muted small">Gợi ý: đặt tốc độ ký tự 15–20 WPM ngay từ đầu để nhớ "âm thanh" của cả ký tự, và Farnsworth 5–10 WPM để có thêm thời gian nghĩ giữa các ký tự.</p>
+    </section>
+    <section class="card" id="uiSec"><h2>Giao diện & học tập</h2>
+      <div class="field"><span>Giao diện</span><div class="chips">${[['auto', 'Theo hệ thống'], ['light', 'Sáng'], ['dark', 'Tối']].map(([v, n]) => `<button class="chip-btn ${s.theme === v ? 'on' : ''}" data-theme-set="${v}">${n}</button>`).join('')}</div></div>
+      <label class="chk"><input type="checkbox" data-set="flash" ${s.flash ? 'checked' : ''}> Đèn tín hiệu nháy theo âm thanh</label>
+      <label class="chk"><input type="checkbox" data-set="autoplay" ${s.autoplay ? 'checked' : ''}> Tự động phát âm khi hiện câu hỏi nghe</label>
+      <label class="chk"><input type="checkbox" data-set="unlockAll" ${s.unlockAll ? 'checked' : ''}> Mở khoá tất cả bài học</label>
+    </section>
+    <section class="card"><h2>Dữ liệu học tập</h2>
+      <p class="muted small" style="margin-top:0">Tiến độ được lưu ngay trong trình duyệt này (localStorage) và hoạt động hoàn toàn offline. Khi đổi máy hoặc trình duyệt, hãy xuất file tiến độ rồi nhập lại ở nơi mới.</p>
+      <div class="row"><button class="btn" id="exp">Xuất tiến độ</button><label class="btn" tabindex="0">Nhập tiến độ<input type="file" accept=".json,application/json" id="imp" hidden></label><button class="btn danger" id="rst">Xoá toàn bộ</button></div>
+      <p class="small muted">Đã trả lời <b>${DB.totals.q}</b> câu · <b>${DB.totals.sessions}</b> phiên học · <b>${DB.days.length}</b> ngày có học.</p>
+    </section>
+    <section class="card"><h2>Phím tắt</h2>
+      <table class="keys">
+        <tr><td>Enter</td><td>Kiểm tra / tiếp tục</td></tr>
+        <tr><td>1 – 4</td><td>Chọn đáp án trắc nghiệm</td></tr>
+        <tr><td>Space</td><td>Nghe lại (thẻ học, câu trắc nghiệm)</td></tr>
+        <tr><td>Ctrl + Space</td><td>Nghe lại khi đang gõ đáp án</td></tr>
+        <tr><td>Shift + Enter</td><td>Xuống dòng trong ô đoạn văn</td></tr>
+        <tr><td>Space (giữ)</td><td>Phát tín hiệu ở chế độ Telegraph</td></tr>
+        <tr><td>Esc</td><td>Dừng bài Phản xạ</td></tr>
+      </table>
+    </section>
+  </div>`;
+  bindSettings(app);
+  $$('[data-theme-set]').forEach(b => b.onclick = () => { s.theme = b.dataset.themeSet; save(); applyTheme(); $$('[data-theme-set]').forEach(x => x.classList.toggle('on', x === b)); });
+  $('#exp').onclick = () => {
+    const blob = new Blob([JSON.stringify({app: 'morse-trainer', v: 1, exported: new Date().toISOString(), data: DB}, null, 2)], {type: 'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `morse-tien-do-${dayKey()}.json`;
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    toast('Đã xuất file tiến độ');
+  };
+  $('#imp').onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => {
+      try {
+        const o = JSON.parse(rd.result), d = o && o.data ? o.data : o;
+        if (!d || typeof d !== 'object' || !(d.lessons || d.stats || d.settings)) throw new Error('bad');
+        DB = normalizeDB(d); save(); applyTheme(); route(); toast('Đã nhập tiến độ');
+      } catch (x) { toast('File không hợp lệ'); }
+    };
+    rd.readAsText(f);
+  };
+  $('#rst').onclick = () => {
+    if (!confirm('Xoá toàn bộ tiến độ, thống kê và cài đặt? Không thể hoàn tác.')) return;
+    DB = normalizeDB({}); save(); applyTheme(); route(); toast('Đã xoá toàn bộ dữ liệu');
+  };
+}
+
+/* =====================================================================
+   KHỞI ĐỘNG
+   ===================================================================== */
+applyTheme();
+route();
+</script>
+</body>
+</html>
