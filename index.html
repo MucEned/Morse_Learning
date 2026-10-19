@@ -404,6 +404,119 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
 .rg-counts{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font:700 13px var(--mono)}
 .rg-counts .good{color:var(--good)}.rg-counts .mid{color:var(--warn)}.rg-counts .bad{color:var(--bad)}
 
+/* Thanh điều kiện sóng ở trang Luyện tập */
+.sndbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-4px 0 16px;padding:10px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.sndbar .lbl{font-weight:700;font-size:14px}
+.pmodes.gm{grid-template-columns:repeat(3,1fr)}
+.opts.two{grid-template-columns:1fr 1fr;max-width:420px;margin:12px auto}
+.hchip.wide{width:auto;padding:0 8px}
+.drill-char.word{font-size:56px;min-height:64px}
+.lamp.on{background:var(--lamp-on);box-shadow:0 0 0 4px rgba(255,179,26,.22),0 0 22px 6px rgba(255,179,26,.55)}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.shake{animation:shake .3s;border-color:var(--bad)!important}
+
+/* Chép liên tục */
+.copy-prog{display:flex;align-items:center;gap:12px;margin:16px 0}
+.copy-prog .pbar{flex:1}
+
+/* Cặp dễ nhầm */
+.pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.pair{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;border:1px solid var(--line);background:var(--bg)}
+.pair.on{border-color:var(--accent);background:var(--accent-soft)}
+.pair label{display:flex;align-items:center;gap:8px;flex:1;cursor:pointer;min-width:0}
+.pair b{font:800 18px var(--mono)}
+.pair .codes{font-size:13px;color:var(--accent)}
+.pair .vs{color:var(--muted)}
+
+/* QSO */
+.qso{padding:20px}
+.qso-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:18px;margin-bottom:12px}
+.qlog{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow:auto;padding:4px 2px;margin-bottom:12px}
+.qlog:empty{display:none}
+.qmsg{max-width:85%;padding:8px 12px;border-radius:12px;background:var(--surface2);word-break:break-word}
+.qmsg.me{align-self:flex-end;background:var(--accent-soft)}
+.qmsg.warn{box-shadow:inset 0 0 0 1px var(--warn)}
+.qwho{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.qturn{border-top:1px solid var(--line);padding-top:14px;text-align:center}
+.qt-title{font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap}
+.tag.dx{background:var(--surface2);color:var(--ink)}
+.qt-sug{padding:10px 12px;border-radius:12px;border:1px dashed var(--line);margin:0 0 12px;text-align:left;word-break:break-word}
+.qt-sug .lbl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.qfields{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0;text-align:left}
+.qf{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:700}
+.qf .field-in{max-width:none}
+.field-in.good{border-color:var(--good);background:var(--good-soft)}
+.field-in.bad{border-color:var(--bad);background:var(--bad-soft)}
+.qans{font-weight:500;color:var(--muted)}
+.qturn .rg-res{text-align:left}
+
+/* Giải mã micro */
+.mic{text-align:center}
+.mic-status{margin:12px 0}
+.meter{position:relative;height:14px;border-radius:99px;background:var(--surface2);overflow:hidden;margin:6px 0 10px}
+.meter i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:99px;transition:width .06s}
+.meter b{position:absolute;top:0;bottom:0;width:2px;background:var(--ink)}
+.mic .k-out{margin-top:12px}
+
+/* Phân tích tay gõ */
+.fist h3{font-size:17px}
+.fist-meta{color:var(--muted);margin-bottom:8px}
+.fist-row,.wk-row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.fl{width:130px;font-size:14px;font-weight:600;flex:none}
+.fbar{position:relative;flex:1;height:10px;border-radius:99px;background:var(--surface2);min-width:60px}
+.fbar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--accent)}
+.fbar i.ok{background:var(--good)}
+.fbar b{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
+.fv{width:68px;text-align:right;font-weight:700;flex:none}
+.fv small{color:var(--muted);font-weight:500}
+.fsub{font-size:12px;color:var(--muted);margin-left:140px}
+.fist-tips{margin:12px 0 0;padding-left:20px}
+.fist-tips li{margin:4px 0}
+
+/* Trò chơi: Mưa chữ */
+.rain-wrap{padding:16px}
+.rain-hud{display:flex;gap:18px;align-items:center;font-size:14px;color:var(--muted);margin-bottom:10px}
+.rain-hud b{font:800 20px var(--mono);color:var(--ink)}
+.lives{margin-left:auto;color:var(--bad);font-size:20px;letter-spacing:2px}
+.rain{position:relative;height:420px;border-radius:14px;background:var(--bg);border:1px solid var(--line);overflow:hidden;margin-bottom:12px;border-bottom:3px solid var(--bad)}
+.rain-msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted)}
+.drop{position:absolute;top:0;padding:8px 10px;border-radius:10px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);color:var(--accent);display:flex;align-items:center;gap:8px;will-change:transform}
+.drop .codes{font-size:16px}
+.drop.hear{cursor:pointer}
+.drop.hear b{font:800 20px var(--mono);color:var(--ink);padding:0 4px}
+.drop.hit{background:var(--good-soft);border-color:var(--good);color:var(--good);transition:opacity .4s,scale .4s;opacity:0;scale:1.5}
+.drop.hit b,.drop.miss b{font:800 20px var(--mono)}
+.drop.miss{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);transition:opacity .4s .2s;opacity:0}
+.rain-over{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:color-mix(in srgb,var(--bg) 88%,transparent);text-align:center;padding:16px}
+.rain-in{max-width:280px}
+.blitz .pbar{margin:10px 0 0}
+
+/* Biểu đồ */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.chart{padding:16px}
+.ch-t{font-weight:700}
+.ch-s{font-size:12px;color:var(--muted);margin-bottom:8px}
+.cg{display:block;width:100%;height:auto;overflow:visible}
+.cg-l{stroke:var(--line);stroke-width:1}
+.cg-t{fill:var(--muted);font:500 11px var(--font)}
+.cg-bar{fill:var(--accent)}
+.cg-line{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.cg-dot{fill:var(--accent);stroke:var(--surface);stroke-width:2}
+.cg-hit{fill:transparent}
+.cg-hit:hover{fill:var(--ink);fill-opacity:.06}
+.cal{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px;margin-top:6px}
+.cal i,.cal-leg i{display:block;aspect-ratio:1;border-radius:3px;background:var(--surface2)}
+.cal .c1,.cal-leg .c1{background:color-mix(in srgb,var(--accent) 30%,var(--surface2))}
+.cal .c2,.cal-leg .c2{background:color-mix(in srgb,var(--accent) 55%,var(--surface2))}
+.cal .c3,.cal-leg .c3{background:color-mix(in srgb,var(--accent) 78%,var(--surface2))}
+.cal .c4,.cal-leg .c4{background:var(--accent)}
+.cal .cx{background:transparent}
+.cal-leg{display:flex;align-items:center;gap:4px;justify-content:flex-end;font-size:11px;color:var(--muted);margin-top:8px}
+.cal-leg i{width:11px}
+.tbl summary{cursor:pointer;font-weight:700}
+.tbl table{margin-top:10px}
+#ctip{position:fixed;z-index:60;pointer-events:none;opacity:0;padding:6px 10px;border-radius:8px;background:var(--ink);color:var(--bg);font-size:12px;font-weight:600;transition:opacity .1s;white-space:nowrap}
+
 @media (max-width:900px){
   .top-in{flex-wrap:wrap;gap:4px;padding:8px 12px}
   .nav{margin-left:-4px;width:calc(100% + 8px);order:3}
@@ -422,8 +535,11 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
   .hero{grid-template-columns:1fr;padding:22px}
   .hero-r{flex-direction:row;justify-content:flex-start;gap:20px}
   .ring{width:100px;height:100px}.ring::before{width:78px;height:78px}.ring span{font-size:20px}
-  .pmodes{grid-template-columns:repeat(2,1fr)}
+  .pmodes,.pmodes.gm{grid-template-columns:repeat(2,1fr)}
   .pmodes small{display:none}
+  .charts{grid-template-columns:1fr}
+  .fl{width:96px;font-size:13px}.fsub{margin-left:106px}
+  .rain{height:360px}
   .tr-grid{grid-template-columns:1fr}
   .q,.learn{padding:22px 16px}
   .cfg-row .lbl{width:100%}
@@ -440,7 +556,7 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
     <nav class="nav" aria-label="Điều hướng">
       <a href="#/lessons" data-nav="lessons">Bài học</a>
       <a href="#/practice" data-nav="practice">Luyện tập</a>
-      <a href="#/rhythm" data-nav="rhythm">Rhythm game</a>
+      <a href="#/games" data-nav="games">Trò chơi</a>
       <a href="#/review" data-nav="review">Ôn tập <span class="badge" id="dueBadge"></span></a>
       <a href="#/reference" data-nav="reference">Bảng mã</a>
       <a href="#/settings" data-nav="settings">Cài đặt</a>
@@ -720,7 +836,12 @@ const PRAISE = ['Chính xác!', 'Tuyệt vời!', 'Đúng rồi!', 'Rất tốt!
    LƯU TRỮ
    ===================================================================== */
 const STORE_KEY = 'morse-trainer-v1';
-const DEFAULT_SETTINGS = {wpm:18, fwpm:10, freq:600, vol:60, wave:'sine', flash:true, autoplay:true, unlockAll:false, theme:'auto', keyWpm:12, keyAdapt:true, output:'sound', answerMode:'text'};
+const DEFAULT_SETTINGS = {wpm:18, fwpm:10, freq:600, vol:60, wave:'sine', flash:true, autoplay:true, unlockAll:false, theme:'auto', keyWpm:12, keyAdapt:true, output:'sound', answerMode:'text', autoSpeed:true, band:'clean'};
+const DEFAULT_COPY = {min:2, src:'words', set:'learned', custom:''};
+const DEFAULT_WORDS = {wpm:20, set:'common', n:20};
+const DEFAULT_QSO = {call:'VN0XYZ', name:'AN', qth:'HANOI', hint:false};
+const DEFAULT_GAMES = {mode:'rhythm', set:'learned', custom:'', rainMode:'see', best:{}};
+const DEFAULT_MIC = {auto:true, freq:600, sens:50, wpm:15};
 const DEFAULT_PRACTICE = {mode:'listen', src:'words', set:'learned', custom:'', len:5, drillN:20, kt:'char', kHint:true};
 const DEFAULT_RHYTHM = {wpm:10, gap:1.5, src:'words', set:'learned', custom:'', len:4, guide:true, labels:true, best:{}};
 
@@ -731,10 +852,19 @@ function normalizeDB(d) {
     settings: {...DEFAULT_SETTINGS, ...(d.settings || {})},
     prefs: {
       practice: {...DEFAULT_PRACTICE, ...(prefs.practice || {})},
-      rhythm: {...DEFAULT_RHYTHM, ...(prefs.rhythm || {}), best: {...((prefs.rhythm || {}).best || {})}}
+      rhythm: {...DEFAULT_RHYTHM, ...(prefs.rhythm || {}), best: {...((prefs.rhythm || {}).best || {})}},
+      copy: {...DEFAULT_COPY, ...(prefs.copy || {})},
+      words: {...DEFAULT_WORDS, ...(prefs.words || {})},
+      qso: {...DEFAULT_QSO, ...(prefs.qso || {})},
+      games: {...DEFAULT_GAMES, ...(prefs.games || {}), best: {...((prefs.games || {}).best || {})}},
+      mic: {...DEFAULT_MIC, ...(prefs.mic || {})}
     },
     lessons: d.lessons && typeof d.lessons === 'object' ? d.lessons : {},
     stats: d.stats && typeof d.stats === 'object' ? d.stats : {},
+    daily: d.daily && typeof d.daily === 'object' ? d.daily : {},   // {ngày: {n, c}}
+    log: Array.isArray(d.log) ? d.log : [],                          // nhật ký các bài nghe
+    conf: d.conf && typeof d.conf === 'object' ? d.conf : {},        // {"đúng"+"gõ nhầm": số lần}
+    auto: {up:0, down:0, ...(d.auto || {})},
     days: Array.isArray(d.days) ? d.days : [],
     totals: {q:0, sessions:0, ...(d.totals || {})}
   };
@@ -772,8 +902,38 @@ function record(ch, ok) {
     s.box = 1; s.due = now; s.lapse = today;
   }
   DB.totals.q++;
+  const dd = DB.daily[today] || (DB.daily[today] = {n: 0, c: 0});
+  dd.n++; if (ok) dd.c++;
   markDay();
   if (SES && !ok) SES.missed[ch] = (SES.missed[ch] || 0) + 1;
+}
+// Ghi lại cặp nhầm lẫn: cần ký tự "exp" nhưng người dùng nghe/gõ thành "got"
+function recordConf(exp, got) {
+  if (!MORSE[exp] || !MORSE[got] || exp === got) return;
+  DB.conf[exp + got] = (DB.conf[exp + got] || 0) + 1;
+}
+// Nhật ký bài nghe (cho biểu đồ tốc độ) + tự tăng / giảm tốc
+function logListen(kind, acc, o = {}) {
+  const s = DB.settings, w = o.wpm || s.wpm, f = o.fwpm || Math.min(s.fwpm, s.wpm);
+  DB.log.push({d: dayKey(), t: Date.now(), k: kind, a: Math.round(acc * 100) / 100, w, f, b: s.band});
+  if (DB.log.length > 800) DB.log = DB.log.slice(-800);
+  if (o.auto !== false) autoSpeedCheck(acc);
+  save();
+}
+function autoSpeedCheck(acc) {
+  const s = DB.settings, A = DB.auto;
+  if (!s.autoSpeed) return;
+  if (acc >= .9) { A.up++; A.down = 0; } else if (acc < .6) { A.down++; A.up = 0; } else { A.up = 0; A.down = 0; }
+  if (A.up >= 3) {
+    A.up = 0;
+    if (s.fwpm < s.wpm) s.fwpm++;
+    else if (s.wpm < 35) { s.wpm++; s.fwpm = s.wpm; }
+    else return;
+    toast(`Tự tăng tốc → ${speedLabel()} · bạn đang nghe rất tốt!`);
+  } else if (A.down >= 2) {
+    A.down = 0;
+    if (s.fwpm > 5) { s.fwpm--; toast(`Tự giảm tốc → ${speedLabel()} để dễ nghe hơn`); }
+  }
 }
 function recordItem(item, ok) {
   textToSeq(item).flat().forEach(u => { if (u.c.length === 1) record(u.c, ok); });
@@ -866,6 +1026,17 @@ function vibrate(p) { try { navigator.vibrate(p); } catch (e) {} }
 // Đầu ra hiện tại: âm thanh và/hoặc rung (chế độ im lặng)
 function outMode() { const o = DB.settings.output; return {sound: o !== 'vibrate', vib: o !== 'sound' && canVibrate()}; }
 
+// Điều kiện sóng (mô phỏng). Mức 0–1.
+const BANDS = {clean: null, light: {noise: .25, qsb: .25, qrm: 0, drift: 0}, medium: {noise: .5, qsb: .45, qrm: .3, drift: 10}, hard: {noise: .8, qsb: .7, qrm: .5, drift: 25}};
+const BAND_NAMES = {clean: 'Sạch', light: 'Nhẹ', medium: 'Vừa', hard: 'Khó'};
+let _noise = null;
+function noiseBuf(ctx) {
+  if (!_noise || _noise.sampleRate !== ctx.sampleRate) {
+    _noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+    const d = _noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  return _noise;
+}
 const Snd = {
   ctx: null, cur: null, kOsc: null, kGain: null, kVib: false, raf: 0,
   init() {
@@ -879,8 +1050,8 @@ const Snd = {
   },
   vol() { return Math.pow(DB.settings.vol / 100, 2) * 0.6; },
   // Thời gian theo chuẩn PARIS; Farnsworth giãn khoảng cách giữa ký tự/từ
-  timing() {
-    const c = DB.settings.wpm, s = Math.min(DB.settings.fwpm, c), dot = 1.2 / c;
+  timing(c = DB.settings.wpm, f = DB.settings.fwpm) {
+    const s = Math.min(f, c), dot = 1.2 / c;
     let cg = 3 * dot, wg = 7 * dot;
     if (s < c) { const ta = (60 * c - 37.2 * s) / (s * c); cg = 3 * ta / 19; wg = 7 * ta / 19; }
     return {dot, cg, wg};
@@ -897,8 +1068,9 @@ const Snd = {
     });
     return tones;
   },
-  playText(t) { return this.play(textToSeq(t)); },
-  play(seq) { return this.playTones(this.seqTones(seq)); },
+  // o: {wpm, fwpm (tốc độ riêng), radio: true (áp dụng mô phỏng sóng)}
+  playText(t, o) { return this.play(textToSeq(t), o); },
+  play(seq, o = {}) { return this.playTones(this.seqTones(seq, this.timing(o.wpm || DB.settings.wpm, o.fwpm || o.wpm || DB.settings.fwpm)), o); },
   // Phát danh sách tiếng qua loa và/hoặc rung, kèm đèn tín hiệu.
   // o: {delay (giây), freq, gain, lamp:false, vibrate:false}
   playTones(tones, o = {}) {
@@ -922,6 +1094,7 @@ const Snd = {
       });
       osc.start(t0 - 0.03); osc.stop(t0 + total + 0.05);
       cur.osc = osc; cur.g = g; cur.clock = () => ctx.currentTime - t0;
+      if (o.radio && BANDS[DB.settings.band]) cur.extra = this.radio(ctx, osc, g, t0, total, v, BANDS[DB.settings.band]);
     } else {
       const p0 = performance.now() + delay * 1000;
       cur.clock = () => (performance.now() - p0) / 1000;
@@ -942,6 +1115,38 @@ const Snd = {
       this._loop();
     });
   },
+  // Mô phỏng sóng vô tuyến: nhiễu nền (QRN), tín hiệu lúc mạnh lúc yếu (QSB), trạm khác chen vào (QRM), trôi tần số
+  radio(ctx, osc, g, t0, total, v, B) {
+    const nodes = [], f = osc.frequency.value, end = t0 + total;
+    const fade = ctx.createGain(); fade.gain.value = 1 - B.qsb * .5; fade.connect(ctx.destination);
+    g.disconnect(); g.connect(fade);
+    if (B.qsb) {
+      const lfo = ctx.createOscillator(), lg = ctx.createGain();
+      lfo.frequency.value = .12 + Math.random() * .3; lg.gain.value = B.qsb * .5;
+      lfo.connect(lg); lg.connect(fade.gain); lfo.start(t0 - .3); lfo.stop(end + .6); nodes.push(lfo);
+    }
+    if (B.drift) { osc.frequency.setValueAtTime(f, t0); osc.frequency.linearRampToValueAtTime(f + (Math.random() < .5 ? -1 : 1) * B.drift, end); }
+    if (B.noise) {
+      const src = ctx.createBufferSource(), bp = ctx.createBiquadFilter(), ng = ctx.createGain(), nv = v * B.noise * 3;
+      src.buffer = noiseBuf(ctx); src.loop = true; bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = .8;
+      ng.gain.setValueAtTime(0, t0 - .35); ng.gain.linearRampToValueAtTime(nv, t0 - .15);
+      ng.gain.setValueAtTime(nv, end + .15); ng.gain.linearRampToValueAtTime(0, end + .4);
+      src.connect(bp); bp.connect(ng); ng.connect(ctx.destination); src.start(t0 - .35); src.stop(end + .45); nodes.push(src);
+    }
+    if (B.qrm) {
+      const q = ctx.createOscillator(), qg = ctx.createGain(), qv = v * B.qrm, off = -Math.random();
+      q.type = DB.settings.wave; q.frequency.value = f + (Math.random() < .5 ? -1 : 1) * (140 + Math.random() * 260);
+      qg.gain.setValueAtTime(0, ctx.currentTime);
+      let qt = this.seqTones(textToSeq(pick(QSO) + ' ' + pick(QSO) + ' ' + pick(QSO)), this.timing(14 + rnd(14), 40));
+      qt.forEach(([s, e]) => {
+        const a = t0 + off + s, b = t0 + off + e;
+        if (a < t0 - .3 || b > end + .3) return;
+        qg.gain.setValueAtTime(0, a); qg.gain.linearRampToValueAtTime(qv, a + .005); qg.gain.setValueAtTime(qv, b - .005); qg.gain.linearRampToValueAtTime(0, b);
+      });
+      q.connect(qg); qg.connect(ctx.destination); q.start(Math.max(ctx.currentTime, t0 - .3)); q.stop(end + .35); nodes.push(q);
+    }
+    return nodes;
+  },
   _end(cur) {
     if (cur.done) return; cur.done = true;
     cur.timers.forEach(clearTimeout);
@@ -952,6 +1157,7 @@ const Snd = {
   stop() {
     const c = this.cur; if (!c) return;
     if (c.osc) try { c.osc.onended = null; c.g.gain.cancelScheduledValues(0); c.g.gain.setValueAtTime(0, this.ctx.currentTime); c.osc.stop(); } catch (e) {}
+    if (c.extra) c.extra.forEach(n => { try { n.stop(); } catch (e) {} });
     if (c.vib) vibrate(0);
     this._end(c);
   },
@@ -998,14 +1204,16 @@ const getKeyDot = () => keyDot || (keyDot = 1200 / DB.settings.keyWpm);
 const activeKeyers = new Set();
 // o: {onChange(K), onChar(ch, code), onWord(), stopPlayback}
 function makeKeyer(o = {}) {
-  const K = {down: false, t0: 0, buf: '', codes: [], timers: []};
+  const K = {down: false, t0: 0, buf: '', codes: [], timers: [], log: [], lastUp: 0};  // log: nhịp tay để phân tích
   const changed = () => { if (o.onChange) o.onChange(K); };
   const clearT = () => { K.timers.forEach(clearTimeout); K.timers = []; };
   K.press = () => {
     if (K.down) return;
     K.down = true; clearT();
     if (o.stopPlayback !== false) Snd.stop();
-    K.t0 = performance.now(); Snd.toneOn(); changed();
+    K.t0 = performance.now();
+    if (K.lastUp && K.t0 - K.lastUp < 3000) K.log.push({g: K.t0 - K.lastUp});
+    Snd.toneOn(); changed();
   };
   K.release = () => {
     if (!K.down) return;
@@ -1015,6 +1223,8 @@ function makeKeyer(o = {}) {
       const dot = getKeyDot(), sym = d < dot * 2 ? '.' : '-';
       if (DB.settings.keyAdapt) keyDot = clamp(sym === '.' ? dot * .8 + d * .2 : dot * .8 + d / 3 * .2, 30, 400);
       K.buf += sym;
+      K.log.push({m: d, s: sym}); if (K.log.length > 300) K.log.splice(0, K.log.length - 300);
+      K.lastUp = performance.now();
       K.timers.push(setTimeout(K.commit, getKeyDot() * 2.5));
     }
     changed();
@@ -1053,7 +1263,7 @@ function bindHold(btn, down, up) {
   ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => btn.addEventListener(t, () => { btn.classList.remove('down'); up(); }));
   btn.addEventListener('contextmenu', e => e.preventDefault());
 }
-function speedLabel() { const s = DB.settings; return `${s.wpm} WPM` + (s.fwpm < s.wpm ? ` · Farnsworth ${s.fwpm}` : ''); }
+function speedLabel() { const s = DB.settings; return `${s.wpm} WPM` + (s.fwpm < s.wpm ? ` · Farnsworth ${s.fwpm}` : '') + (BANDS[s.band] ? ` · sóng ${BAND_NAMES[s.band].toLowerCase()}` : ''); }
 
 /* =====================================================================
    SINH NỘI DUNG BÀI TẬP
@@ -1238,10 +1448,11 @@ function route() {
   freshStep(); SES = null;
   const [view, arg] = location.hash.replace(/^#\/?/, '').split('/');
   const v = view || 'lessons';
-  $$('.nav a').forEach(a => a.classList.toggle('active', a.dataset.nav === (v === 'lesson' ? 'lessons' : v)));
+  $$('.nav a').forEach(a => a.classList.toggle('active', a.dataset.nav === (v === 'lesson' ? 'lessons' : v === 'rhythm' ? 'games' : v)));
   if (v === 'lesson') viewLessonIntro(+arg || 0);
   else if (v === 'practice') viewPractice(arg);
-  else if (v === 'rhythm') viewRhythm();
+  else if (v === 'games') viewGames(arg);
+  else if (v === 'rhythm') viewGames('rhythm');
   else if (v === 'review') viewReview();
   else if (v === 'reference') viewReference();
   else if (v === 'settings') viewSettings();
@@ -1319,7 +1530,7 @@ function viewLessons() {
       <li><b>Tốc độ:</b> giữ tốc độ ký tự 15–20 WPM và dùng Farnsworth thấp (8–10) để có thời gian nghĩ. Khi đã quen, tăng dần tốc độ hiệu dụng.</li>
       <li><b>Đều đặn:</b> 15–20 phút mỗi ngày hiệu quả hơn nhiều so với học dồn. Vào mục <i>Ôn tập</i> mỗi ngày để giữ trí nhớ.</li>
       <li><b>Hoàn thành bài:</b> cần đạt từ 80% điểm. Câu sai sẽ được hỏi lại ở cuối bài.</li>
-      <li><b>Ấn giữ tín hiệu:</b> trong mỗi câu cần gõ đáp án, chọn "● Ấn giữ tín hiệu" để trả lời bằng cách tự phát Morse (giữ Space hoặc chạm giữ nút lớn). Luyện nhịp tay ở <a href="#/rhythm">Rhythm game</a>.</li>
+      <li><b>Ấn giữ tín hiệu:</b> trong mỗi câu cần gõ đáp án, chọn "● Ấn giữ tín hiệu" để trả lời bằng cách tự phát Morse (giữ Space hoặc chạm giữ nút lớn). Luyện nhịp tay ở <a href="#/games/rhythm">Rhythm game</a>.</li>
       <li><b>Im lặng:</b> bấm nút loa góc trên để chuyển sang chế độ rung (điện thoại Android) — trên máy không rung được, đèn tín hiệu sẽ nháy thay âm thanh.</li>
       <li><b>Bộ gõ:</b> hãy tắt bộ gõ tiếng Việt (Unikey/EVKey: Ctrl+Shift hoặc Alt+Z) khi làm bài để gõ chính xác.</li>
       <li><b>Offline:</b> toàn bộ ứng dụng nằm trong một file HTML. Tiến độ lưu trong trình duyệt — xuất file tiến độ ở mục Cài đặt khi đổi máy.</li>
@@ -1516,7 +1727,7 @@ function renderMC(el, st, done) {
     <div class="fb"></div>
     <div class="hint-keys">${listen ? 'Space: nghe lại · ' : ''}Phím 1–${st.opts.length}: chọn đáp án</div>
   </div>`;
-  const play = () => Snd.playText(item);
+  const play = () => Snd.playText(item, {radio: true});
   if (listen) { bindBigPlay(el, play); if (DB.settings.autoplay) later(play, 250); }
   let answered = false;
   const btns = $$('.opt', el);
@@ -1524,7 +1735,7 @@ function renderMC(el, st, done) {
     if (answered) return; answered = true;
     const ok = st.opts[i] === item;
     btns.forEach((b, j) => { b.disabled = true; if (st.opts[j] === item) b.classList.add('good'); });
-    if (!ok) btns[i].classList.add('bad');
+    if (!ok) { btns[i].classList.add('bad'); recordConf(item, st.opts[i]); }
     recordItem(item, ok);
     showFb($('.fb', el), ok, item, () => done(ok ? 1 : 0, 1, ok), {playOnOk: !listen});
   };
@@ -1609,7 +1820,7 @@ function renderType(el, st, done) {
     <div class="fb"></div>
     <div class="hint-keys">${listen ? 'Ctrl+Space: nghe lại · ' : ''}Enter: kiểm tra</div>
   </div>`;
-  const play = () => Snd.playText(item);
+  const play = () => Snd.playText(item, {radio: true});
   if (listen) { bindBigPlay(el, play); if (DB.settings.autoplay) later(play, 250); }
   let answered = false, box = null;
   const submit = () => {
@@ -1624,6 +1835,7 @@ function renderType(el, st, done) {
       if (!ok) extra = `<div class="fb-got">Bạn gõ: <span class="codes sm">${got.map(tokVis).join('<span class="cg"></span>')}</span></div>`;
     } else {
       ok = normText(v) === normText(item);
+      if (!ok && !isWord) recordConf(item, normText(v));
       if (!ok) extra = `<div class="fb-got">Bạn gõ: <b class="mono">${esc(v.toUpperCase())}</b></div>`;
     }
     recordItem(item, ok);
@@ -1675,11 +1887,12 @@ function renderPassage(el, st, done, o = {}) {
     <div class="pres"></div>
     <div class="hint-keys">${mode !== 'encode' ? 'Ctrl+Space: phát / dừng · ' : ''}Enter: kiểm tra</div>
   </div>`;
-  const play = () => Snd.cur ? Snd.stop() : Snd.play(seq);
+  const R = mode === 'listen' ? {radio: true} : {};
+  const play = () => Snd.cur ? Snd.stop() : Snd.play(seq, R);
   let hintUsed = false, answered = false, box = null;
   if (mode === 'listen') {
-    bindBigPlay(el, () => Snd.play(seq));
-    if (DB.settings.autoplay && !o.noAutoplay) later(() => Snd.play(seq), 350);
+    bindBigPlay(el, () => Snd.play(seq, R));
+    if (DB.settings.autoplay && !o.noAutoplay) later(() => Snd.play(seq, R), 350);
     $('#hintBtn', el).onclick = () => { hintUsed = true; $('#hintBox', el).hidden = false; $('#hintBtn', el).remove(); };
   }
   if (mode === 'decode') $('#pPlay', el).onclick = () => Snd.play(seq);
@@ -1698,7 +1911,8 @@ function renderPassage(el, st, done, o = {}) {
     } else {
       const a = [...normText(text)], b = [...normText(v)], al = align(a, b);
       acc = Math.max(0, 1 - al.dist / a.length);
-      al.ops.forEach(op => { if (op.op !== 'ins' && a[op.i] !== ' ') record(a[op.i], op.op === 'ok'); });
+      al.ops.forEach(op => { if (op.op !== 'ins' && a[op.i] !== ' ') record(a[op.i], op.op === 'ok'); if (op.op === 'sub') recordConf(a[op.i], b[op.j]); });
+      if (mode === 'listen') logListen('listen', hintUsed ? acc / 2 : acc);
       diff = `<div class="diff">${textDiffHTML(al, a, b)}</div><div class="legend"><span class="l1">đúng</span><span class="l2">sai / thừa (gạch ngang)</span><span class="l3">thiếu (gạch dưới)</span></div>`;
     }
     save();
@@ -1734,7 +1948,12 @@ const PMODES = [
   {id: 'decode', n: 'Đọc mã', s: 'Dịch mã Morse sang chữ'},
   {id: 'encode', n: 'Gõ mã', s: 'Chuyển đoạn văn ngẫu nhiên sang Morse'},
   {id: 'drill', n: 'Phản xạ', s: 'Nhận diện từng ký tự thật nhanh'},
-  {id: 'key', n: 'Telegraph', s: 'Tự phát Morse bằng phím, máy tự giải mã'}
+  {id: 'key', n: 'Telegraph', s: 'Tự phát Morse bằng phím, kèm phân tích tay gõ'},
+  {id: 'copy', n: 'Chép liên tục', s: 'Nghe một đoạn dài 1–5 phút, gõ theo thời gian thực'},
+  {id: 'words', n: 'Nghe từ', s: 'Nhận ra cả từ thông dụng ở tốc độ cao'},
+  {id: 'pairs', n: 'Cặp dễ nhầm', s: 'Phân biệt các ký tự bạn hay nhầm'},
+  {id: 'qso', n: 'Mô phỏng QSO', s: 'Liên lạc theo kịch bản với một trạm ảo'},
+  {id: 'mic', n: 'Giải mã micro', s: 'Nghe Morse qua micro và dịch ra chữ'}
 ];
 const SRC = [{id: 'groups', n: 'Nhóm ngẫu nhiên'}, {id: 'words', n: 'Từ tiếng Anh'}, {id: 'sentences', n: 'Câu'}, {id: 'qso', n: 'Hội thoại vô tuyến'}, {id: 'calls', n: 'Hô hiệu & số'}];
 const SETS = [{id: 'learned', n: 'Đã học'}, {id: 'letters', n: 'Chữ cái'}, {id: 'alnum', n: 'Chữ + số'}, {id: 'all', n: 'Tất cả'}, {id: 'custom', n: 'Tự chọn'}];
@@ -1765,10 +1984,18 @@ function viewPractice(arg) {
   <h1 class="h1">Luyện tập</h1>
   <p class="sub">Luyện tự do không giới hạn. Mọi câu trả lời đều được ghi vào thống kê và lịch ôn tập của từng ký tự.</p>
   <div class="pmodes">${PMODES.map(m => `<a href="#/practice/${m.id}" class="${m.id === mode ? 'on' : ''}"><b>${m.n}</b><small>${m.s}</small></a>`).join('')}</div>
+  ${['key', 'mic'].includes(mode) ? '' : `<div class="sndbar"><span class="lbl">Điều kiện sóng</span><div class="chips">${Object.keys(BANDS).map(b => `<button type="button" class="chip-btn ${DB.settings.band === b ? 'on' : ''}" data-setv="band" data-v="${b}">${BAND_NAMES[b]}</button>`).join('')}</div>
+    <span class="muted small">${DB.settings.wpm} WPM${DB.settings.fwpm < DB.settings.wpm ? ' · Farnsworth ' + DB.settings.fwpm : ''}${DB.settings.autoSpeed ? ' · tự tăng tốc' : ''} · <a href="#/settings">chỉnh</a></span></div>`}
   <div id="pbody"></div>`;
+  bindSettings(app);
   const body = $('#pbody');
   if (mode === 'drill') practiceDrill(body);
   else if (mode === 'key') practiceKey(body);
+  else if (mode === 'copy') practiceCopy(body);
+  else if (mode === 'words') practiceWords(body);
+  else if (mode === 'pairs') practicePairs(body);
+  else if (mode === 'qso') practiceQSO(body);
+  else if (mode === 'mic') practiceMic(body);
   else practicePassage(body, mode);
 }
 function practicePassage(el, mode) {
@@ -1834,7 +2061,7 @@ async function runDrill(box, cs, N, again) {
     const v = inp.value; inp.value = '';
     if (!v) return;
     const ch = v.slice(-1);
-    if (ch === ' ') { if (cur) Snd.playText(cur); return; }
+    if (ch === ' ') { if (cur) Snd.playText(cur, {radio: true}); return; }
     if (resolver) { const r = resolver; resolver = null; r(ch); }
   });
   keyHandler = e => { if (e.key === 'Escape') { stopped = true; if (resolver) { const r = resolver; resolver = null; r(null); } } };
@@ -1847,14 +2074,14 @@ async function runDrill(box, cs, N, again) {
     $('#dCount', box).textContent = `${i + 1}/${N}`;
     cEl.className = 'drill-char'; cEl.textContent = '?'; codeEl.innerHTML = '';
     let audioEnd = 0;
-    Snd.playText(item).then(() => { if (!audioEnd) audioEnd = performance.now(); });
+    Snd.playText(item, {radio: true}).then(() => { if (!audioEnd) audioEnd = performance.now(); });
     const ans = await new Promise(r => resolver = r);
     if (!alive()) return;
     if (ans == null) break;
     const tAns = performance.now();
     if (!audioEnd) { audioEnd = tAns; Snd.stop(); }
     const rt = tAns - audioEnd, ok = normText(ans) === item;
-    record(item, ok); if (ok) score++;
+    record(item, ok); if (ok) score++; else recordConf(item, normText(ans));
     res.push({item, ok, rt, ans});
     cEl.className = 'drill-char ' + (ok ? 'good' : 'bad'); cEl.textContent = item;
     codeEl.innerHTML = `<span class="codes">${codeVis(MORSE[item])}</span>${ok ? '' : ` <span class="small muted">(bạn gõ ${esc(ans.toUpperCase())})</span>`}`;
@@ -1866,6 +2093,7 @@ async function runDrill(box, cs, N, again) {
   save(); keyHandler = null;
   if (!res.length) { again(); return; }
   const okR = res.filter(r => r.ok), acc = Math.round(okR.length / res.length * 100);
+  if (res.length >= 5) logListen('drill', okR.length / res.length);
   const avg = okR.length ? Math.round(okR.reduce((a, r) => a + r.rt, 0) / okR.length) : null;
   const per = {}; res.forEach(r => { (per[r.item] = per[r.item] || {n: 0, bad: 0, rt: []}).n++; if (!r.ok) per[r.item].bad++; else per[r.item].rt.push(r.rt); });
   const missed = Object.entries(per).filter(([, v]) => v.bad).sort((a, b) => b[1].bad - a[1].bad);
@@ -1899,19 +2127,24 @@ function practiceKey(el) {
       <div class="k-flash" id="kFlash"></div>
       <div class="k-res" id="kRes"></div>
     </div>
+    <div class="card fist"><div class="row" style="justify-content:space-between"><h3>Phân tích tay gõ</h3><button class="btn sm" id="fReset">Đo lại từ đầu</button></div>
+      <p class="muted small" style="margin:4px 0 12px">So sánh nhịp tay của bạn với chuẩn: chấm 1 · gạch 3 · nghỉ trong ký tự 1 · giữa ký tự 3 · giữa từ 7 nhịp. Vạch đứng là mức chuẩn.</p>
+      <div id="fBody"></div></div>
     <details class="card help"><summary>Cách phát Morse bằng phím</summary>
       <ul><li>Nhấn <b>ngắn</b> = chấm (1 nhịp), nhấn <b>dài</b> = gạch (3 nhịp).</li>
       <li>Nghỉ khoảng 3 nhịp để kết thúc một ký tự, khoảng 7 nhịp để cách từ.</li>
       <li>Ở ${DB.settings.keyWpm} WPM, 1 nhịp ≈ ${Math.round(1200 / DB.settings.keyWpm)} ms. Bật "tự thích nghi" để máy tự theo nhịp của bạn.</li>
-      <li>Muốn luyện cho đều tay? Thử <a href="#/rhythm">Rhythm game</a>.</li>
+      <li>Muốn luyện cho đều tay? Thử <a href="#/games/rhythm">Rhythm game</a>.</li>
       <li>Trên điện thoại: chạm và giữ vào nút lớn.</li></ul></details>`;
     bindCfg(el, P, render);
     const kw = $('#kw', el);
     kw.oninput = () => { DB.settings.keyWpm = +kw.value; keyDot = null; $('#kwOut', el).textContent = kw.value; save(); show(); };
     $('#kAdapt', el).onchange = e => { DB.settings.keyAdapt = e.target.checked; save(); };
     $('#kHint', el).onchange = e => { P.kHint = e.target.checked; save(); showTarget(); };
-    K = makeKeyer({onChange: show, onChar, onWord: () => { if (P.kt === 'word' || P.kt === 'sentence') autoCheck(); }});
+    K = makeKeyer({onChange: show, onChar: (ch, code) => { onChar(ch, code); fist(); }, onWord: () => { fist(); if (P.kt === 'word' || P.kt === 'sentence') autoCheck(); }});
     K.bind($('#kBtn', el));
+    $('#fReset', el).onclick = () => { K.log = []; K.lastUp = 0; fist(); };
+    fist();
     $('#kBk', el).onclick = () => K.back();
     $('#kClr', el).onclick = () => { K.clear(); $('#kRes', el).innerHTML = ''; };
     if ($('#kNew', el)) $('#kNew', el).onclick = newTarget;
@@ -1943,6 +2176,7 @@ function practiceKey(el) {
     const f = $('#kFlash', el); if (f) { f.textContent = ''; f.className = 'k-flash'; }
     showTarget(); show();
   }
+  function fist() { const b = $('#fBody', el); if (b && K) b.innerHTML = fistHTML(K.log); }
   function onChar(ch, code) {
     if (P.kt !== 'char') return;
     const f = $('#kFlash', el), ok = ch === target;
@@ -1966,6 +2200,877 @@ function practiceKey(el) {
 }
 
 /* =====================================================================
+   LUYỆN TẬP NÂNG CAO: chép liên tục · nghe từ · cặp dễ nhầm · QSO · micro
+   ===================================================================== */
+const fmtTime = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+const avgOf = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0;
+const sdOf = a => { const m = avgOf(a); return Math.sqrt(avgOf(a.map(v => (v - m) ** 2))); };
+// Chấm điểm văn bản: căn chỉnh, ghi thống kê ký tự + cặp nhầm, trả về {acc, html, ok}
+function gradeText(expected, got) {
+  const a = [...normText(expected)], b = [...normText(got)], al = align(a, b);
+  let ok = 0;
+  al.ops.forEach(op => {
+    if (op.op === 'ins' || a[op.i] === ' ') return;
+    record(a[op.i], op.op === 'ok'); if (op.op === 'ok') ok++;
+    if (op.op === 'sub') recordConf(a[op.i], b[op.j]);
+  });
+  save();
+  return {acc: Math.max(0, 1 - al.dist / Math.max(1, a.length)), ok,
+    html: `<div class="diff">${textDiffHTML(al, a, b)}</div><div class="legend"><span class="l1">đúng</span><span class="l2">sai / thừa (gạch ngang)</span><span class="l3">thiếu (gạch dưới)</span></div>`};
+}
+const pctCls = p => p >= 90 ? 'good' : p >= 70 ? 'mid' : 'bad';
+
+/* ---------- Chép liên tục ---------- */
+function practiceCopy(el) {
+  const C = DB.prefs.copy;
+  const render = () => {
+    freshStep();
+    const cs = charset(C.set, C.custom);
+    el.innerHTML = `<div class="card cfg">
+      ${cfgRow('Thời lượng', 'min', [{id: 1, n: '1 phút'}, {id: 2, n: '2 phút'}, {id: 3, n: '3 phút'}, {id: 5, n: '5 phút'}], C.min)}
+      ${cfgRow('Nội dung', 'src', SRC, C.src)}
+      ${cfgRow('Bộ ký tự', 'set', SETS, C.set)}
+      ${customRow(C)}
+      <div class="cfg-foot"><span class="muted small">${setInfo(cs, C, C.src)}</span><button class="btn primary" id="cGo">Bắt đầu</button></div>
+    </div>
+    <div id="ex"><div class="card muted" style="text-align:center">Máy phát liên tục một đoạn dài, không dừng và không phát lại — giống bài thi chép tin. Hãy gõ ngay khi nghe; chữ nào bỏ lỡ thì bỏ qua và bắt kịp chữ sau.</div></div>`;
+    bindCfg(el, C, render);
+    $('#cGo', el).onclick = () => run($('#ex', el), cs);
+  };
+  const run = (box, cs) => {
+    freshStep();
+    const tok = stepTok, limit = C.min * 60, eff = Math.min(DB.settings.fwpm, DB.settings.wpm);
+    let seq = textToSeq(genContent(C.src, cs, Math.max(6, Math.round(eff * C.min * 1.25))));
+    let tones = Snd.seqTones(seq);
+    while (seq.length > 3 && tones[tones.length - 1][1] > limit * 1.05) { seq = seq.slice(0, -1); tones = Snd.seqTones(seq); }
+    const words = seq.map(w => w.map(u => u.c).join('')), dur = tones[tones.length - 1][1];
+    const wordEnds = seq.map((_, i) => { const t = Snd.seqTones(seq.slice(0, i + 1)); return t[t.length - 1][1]; });
+    box.innerHTML = `<div class="card q copy">
+      <div class="row" style="justify-content:space-between"><div class="prompt" style="margin:0">Chép liên tục</div><span class="chip">${speedLabel()}</span></div>
+      <div class="copy-prog"><span class="lamp big"></span><div class="pbar"><i id="cBar" style="width:0"></i></div><span class="mono small" id="cTime">0:00 / ${fmtTime(dur)}</span></div>
+      <div class="abox"><textarea class="answer" id="cIn" rows="6" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="Gõ những gì bạn nghe…" aria-label="Bản chép"></textarea><div class="ime-warn" hidden></div></div>
+      <div class="row center"><button class="btn" id="cStop">${IC.stop} Dừng phát</button><button class="btn primary" id="cGrade">Chấm điểm <kbd>Ctrl+Enter</kbd></button></div>
+      <div class="pres"></div></div>`;
+    const inp = $('#cIn', box);
+    inp.focus();
+    inp.addEventListener('input', () => imeCheck(inp, box));
+    let ended = false, heardUntil = dur;
+    const timer = setInterval(() => {
+      if (tok !== stepTok || !box.isConnected) { clearInterval(timer); return; }
+      const t = Snd.cur ? Math.max(0, Snd.cur.clock()) : (ended ? dur : 0);
+      $('#cBar', box).style.width = Math.min(100, t / dur * 100) + '%';
+      $('#cTime', box).textContent = `${fmtTime(Math.min(t, dur))} / ${fmtTime(dur)}`;
+    }, 250);
+    later(() => {
+      Snd.playTones(tones, {radio: true}).then(() => {
+        if (tok !== stepTok || ended) return;
+        ended = true; $('#cStop', box).disabled = true; toast('Đã phát xong — gõ nốt rồi bấm Chấm điểm');
+      });
+    }, 700);
+    $('#cStop', box).onclick = () => { if (Snd.cur) heardUntil = Math.max(0, Snd.cur.clock()); ended = true; Snd.stop(); $('#cStop', box).disabled = true; };
+    const grade = once(() => {
+      if (!ended && Snd.cur) heardUntil = Math.max(0, Snd.cur.clock());
+      ended = true; clearInterval(timer); Snd.stop(); inp.disabled = true;
+      $('#cStop', box).hidden = true; $('#cGrade', box).hidden = true;
+      const heard = words.filter((w, i) => wordEnds[i] <= heardUntil + .05);
+      const expected = (heard.length ? heard : words.slice(0, 1)).join(' ');
+      const r = gradeText(expected, inp.value), pct = Math.round(r.acc * 100);
+      const mins = Math.max(.1, Math.min(heardUntil, dur) / 60);
+      logListen('copy', r.acc);
+      $('.pres', box).innerHTML = `
+        <div class="pres-head ${pctCls(pct)}"><b>${pct}%</b><span>chính xác · ${r.ok} ký tự đúng · chép được ≈ ${Math.round(r.ok / 5 / mins)} WPM trong ${fmtTime(mins * 60)}</span></div>
+        ${r.html}
+        <div class="anskey"><div class="lbl">Đoạn đã phát</div><div class="ptext sm">${fmt(expected)}</div></div>
+        <div class="row center mt"><button class="btn primary" id="cAgain">Bài mới</button></div>`;
+      $('#cAgain', box).onclick = () => run(box, cs);
+      keyHandler = null;
+    });
+    $('#cGrade', box).onclick = grade;
+    keyHandler = e => { if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); grade(); } };
+  };
+  render();
+}
+
+/* ---------- Nghe từ trọn vẹn ---------- */
+const COMMON_WORDS = 'THE OF AND TO IN IS IT YOU THAT HE WAS FOR ON ARE AS WITH HIS THEY AT BE THIS HAVE FROM OR ONE HAD BY BUT NOT WHAT ALL WERE WE WHEN YOUR CAN SAID THERE USE AN EACH WHICH SHE DO HOW IF WILL UP OTHER ABOUT OUT MANY THEN THEM SO SOME HER WOULD MAKE LIKE HIM INTO TIME HAS LOOK TWO MORE GO SEE NO WAY COULD MY THAN FIRST BEEN CALL WHO NOW DAY GET COME MADE MAY'.split(' ');
+const HAM_WORDS = 'CQ DE K R TNX TU 73 88 RST QTH QSL QRZ QRS NAME HR UR ES FB OM GM GA GE PSE AGN RIG ANT WX PWR BK CUL HW CPY SOS 599 5NN'.split(' ');
+function practiceWords(el) {
+  const W = DB.prefs.words;
+  const render = () => {
+    freshStep();
+    el.innerHTML = `<div class="card cfg">
+      ${cfgRow('Bộ từ', 'set', [{id: 'common', n: 'Thông dụng'}, {id: 'ham', n: 'Vô tuyến'}, {id: 'mix', n: 'Cả hai'}], W.set)}
+      ${cfgRow('Tốc độ', 'wpm', [15, 20, 25, 30].map(v => ({id: v, n: v + ' WPM'})), W.wpm)}
+      ${cfgRow('Số lượng', 'n', [{id: 10, n: '10'}, {id: 20, n: '20'}, {id: 30, n: '30'}], W.n)}
+      <div class="cfg-foot"><span class="muted small">Từ được phát liền ở đúng tốc độ (không giãn Farnsworth) để bạn nghe cả từ như một âm thanh, thay vì ghép từng chữ.</span><button class="btn primary" id="wGo">Bắt đầu</button></div>
+    </div><div id="ex"></div>`;
+    bindCfg(el, W, render);
+    $('#wGo', el).onclick = () => run($('#ex', el));
+  };
+  const run = async box => {
+    freshStep();
+    const tok = stepTok, alive = () => tok === stepTok && box.isConnected;
+    const pool = W.set === 'ham' ? HAM_WORDS : W.set === 'mix' ? [...COMMON_WORDS, ...HAM_WORDS] : COMMON_WORDS;
+    const opt = {wpm: W.wpm, fwpm: W.wpm, radio: true};
+    box.innerHTML = `<div class="card drill">
+      <div class="drill-top"><span id="wCount">0/${W.n}</span><span class="lamp big"></span><span id="wScore">✓ 0</span></div>
+      <div class="drill-char word" id="wShow">?</div>
+      <div class="drill-code" id="wCode"></div>
+      <input class="answer" id="wIn" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="Gõ từ rồi Enter" aria-label="Từ bạn nghe">
+      <div class="ime-warn" hidden></div>
+      <div class="row center"><button class="btn sm" id="wRep">${IC.play} Nghe lại <kbd>Ctrl+Space</kbd></button></div>
+      <div class="hint-keys">Enter: trả lời · Esc: dừng</div>
+      <div class="drill-hist" id="wHist"></div></div>`;
+    const inp = $('#wIn', box), show = $('#wShow', box), code = $('#wCode', box);
+    inp.focus();
+    let resolver = null, cur = '', audioEnd = 0, stopped = false;
+    const play = () => Snd.playText(cur, opt).then(() => { audioEnd = performance.now(); });
+    $('#wRep', box).onclick = () => { play(); inp.focus(); };
+    inp.addEventListener('input', () => imeCheck(inp, box));
+    keyHandler = e => {
+      if (e.key === 'Escape') { stopped = true; Snd.stop(); if (resolver) { const r = resolver; resolver = null; r(null); } }
+      else if (e.code === 'Space' && e.ctrlKey) { e.preventDefault(); play(); }
+      else if (e.key === 'Enter' && !e.repeat && resolver && inp.value.trim()) { e.preventDefault(); const r = resolver; resolver = null; const v = inp.value; inp.value = ''; r(v); }
+    };
+    const res = []; let last = '';
+    for (let i = 0; i < W.n && !stopped; i++) {
+      if (!alive()) return;
+      do { cur = pick(pool); } while (cur === last && pool.length > 1);
+      last = cur;
+      $('#wCount', box).textContent = `${i + 1}/${W.n}`;
+      show.className = 'drill-char word'; show.textContent = '?'; code.innerHTML = '';
+      audioEnd = 0; play();
+      const v = await new Promise(r => { resolver = r; });
+      if (!alive()) return;
+      if (v == null || stopped) break;
+      const rt = audioEnd ? performance.now() - audioEnd : 0, ok = normText(v) === cur;
+      gradeText(cur, v);
+      res.push({w: cur, ok, rt});
+      show.className = 'drill-char word ' + (ok ? 'good' : 'bad'); show.textContent = cur;
+      code.innerHTML = `<span class="codes">${itemVis(cur)}</span>${ok ? '' : ` <span class="small muted">(bạn gõ ${esc(v.toUpperCase())})</span>`}`;
+      $('#wScore', box).textContent = `✓ ${res.filter(r => r.ok).length}`;
+      $('#wHist', box).insertAdjacentHTML('beforeend', `<span class="hchip wide ${ok ? 'good' : 'bad'}">${esc(cur)}</span>`);
+      if (ok) await sleep(450); else { await sleep(250); if (!alive()) return; await Snd.playText(cur, opt); await sleep(700); }
+    }
+    if (!alive()) return;
+    keyHandler = null;
+    if (!res.length) { render(); return; }
+    const okR = res.filter(r => r.ok), acc = okR.length / res.length, rts = okR.map(r => r.rt).filter(Boolean);
+    logListen('word', acc, {wpm: W.wpm, fwpm: W.wpm, auto: false});
+    const missed = [...new Set(res.filter(r => !r.ok).map(r => r.w))];
+    box.innerHTML = `<div class="card"><h2 style="font-size:20px">Kết quả nghe từ · ${W.wpm} WPM</h2>
+      <div class="sumgrid"><div><b>${Math.round(acc * 100)}%</b><span>chính xác (${okR.length}/${res.length})</span></div><div><b>${rts.length ? Math.round(avgOf(rts)) + ' ms' : '—'}</b><span>thời gian trả lời TB</span></div></div>
+      ${missed.length ? `<div class="small muted" style="font-weight:700;margin:6px 0">Từ nghe sai — bấm để nghe lại</div><div class="row">${missed.map(w => `<button class="mchip" data-play="${esc(w)}">${esc(w)}</button>`).join('')}</div>` : ''}
+      ${acc >= .9 && W.wpm < 30 ? `<p class="small">Rất tốt! Thử tăng lên ${W.wpm + 5} WPM nhé.</p>` : ''}
+      <div class="row mt"><button class="btn primary" id="wAgain">Làm lại</button></div></div>`;
+    $('#wAgain', box).onclick = () => run(box);
+  };
+  render();
+}
+
+/* ---------- Cặp dễ nhầm ---------- */
+const CONFUSABLE = [['E', 'I'], ['I', 'S'], ['S', 'H'], ['H', '5'], ['U', 'V'], ['V', '4'], ['A', 'W'], ['W', 'J'], ['N', 'D'], ['D', 'B'], ['B', '6'], ['K', 'C'], ['K', 'Y'], ['G', 'Z'], ['R', 'L'], ['R', 'F'], ['M', 'O'], ['O', '0'], ['P', 'J'], ['X', 'Y'], ['T', 'M'], ['A', 'R'], ['U', '2'], ['G', 'Q']];
+function confPairs() {
+  const m = {};
+  for (const [k, n] of Object.entries(DB.conf)) { const [a, b] = [...k]; if (!b) continue; const key = [a, b].sort().join(''); m[key] = (m[key] || 0) + n; }
+  return Object.entries(m).sort((x, y) => y[1] - x[1]).map(([k, n]) => ({a: [...k][0], b: [...k][1], n}));
+}
+function practicePairs(el) {
+  const mine = confPairs().slice(0, 8), learned = new Set(learnedChars());
+  const known = p => (learned.has(p.a) ? 1 : 0) + (learned.has(p.b) ? 1 : 0);
+  const commons = CONFUSABLE.map(([a, b]) => ({a, b, n: 0}))
+    .filter(p => !mine.some(q => (q.a === p.a && q.b === p.b) || (q.a === p.b && q.b === p.a)))
+    .sort((x, y) => known(y) - known(x));
+  const all = [...mine, ...commons], sel = new Set(all.slice(0, 3).map(p => p.a + p.b));
+  let rounds = 20;
+  const render = () => {
+    freshStep();
+    el.innerHTML = `<div class="card cfg">
+      <div class="small muted">${mine.length ? 'Các cặp <b>bạn hay nhầm</b> được xếp đầu (đếm từ mọi bài tập). Chọn các cặp muốn luyện, bấm ▶ để nghe so sánh.' : 'Chưa có dữ liệu nhầm lẫn của riêng bạn — dưới đây là các cặp mà người học Morse hay nhầm nhất. Chọn cặp muốn luyện, bấm ▶ để nghe so sánh.'}</div>
+      <div class="pairs">${all.map(p => `<div class="pair ${sel.has(p.a + p.b) ? 'on' : ''}" data-p="${esc(p.a + p.b)}">
+        <label><input type="checkbox" ${sel.has(p.a + p.b) ? 'checked' : ''}><b>${esc(p.a)}</b><span class="codes">${codeVis(MORSE[p.a])}</span><span class="vs">↔</span><b>${esc(p.b)}</b><span class="codes">${codeVis(MORSE[p.b])}</span></label>
+        ${p.n ? `<span class="chip">nhầm ×${p.n}</span>` : ''}<button class="pbtn" data-play="${esc(p.a + ' ' + p.b)}" aria-label="Nghe so sánh">${IC.play}</button></div>`).join('')}</div>
+      ${cfgRow('Số lượt', 'rounds', [{id: 20, n: '20'}, {id: 40, n: '40'}], rounds)}
+      <div class="cfg-foot"><span class="muted small" id="pSel">Đã chọn ${sel.size} cặp</span><button class="btn primary" id="pGo">Bắt đầu</button></div>
+    </div><div id="ex"></div>`;
+    $$('.pair', el).forEach(d => {
+      $('input', d).onchange = e => { const k = d.dataset.p; if (e.target.checked) sel.add(k); else sel.delete(k); d.classList.toggle('on', e.target.checked); $('#pSel', el).textContent = `Đã chọn ${sel.size} cặp`; };
+    });
+    $$('[data-k="rounds"]', el).forEach(b => b.onclick = () => { rounds = +b.dataset.v; $$('[data-k="rounds"]', el).forEach(x => x.classList.toggle('on', x === b)); });
+    $('#pGo', el).onclick = () => { if (!sel.size) { toast('Hãy chọn ít nhất một cặp'); return; } run($('#ex', el)); };
+  };
+  const run = async box => {
+    freshStep();
+    const tok = stepTok, alive = () => tok === stepTok && box.isConnected;
+    const pairs = all.filter(p => sel.has(p.a + p.b)), stat = {};
+    box.innerHTML = `<div class="card drill">
+      <div class="drill-top"><span id="pCount">0/${rounds}</span><span class="lamp big"></span><span id="pScore">✓ 0</span></div>
+      <div class="prompt" style="margin-top:14px">Ký tự vừa phát là?</div>
+      <div class="opts two" id="pOpts"></div>
+      <div class="k-flash" id="pFb"></div>
+      <div class="row center"><button class="btn sm" id="pRep">${IC.play} Nghe lại <kbd>Space</kbd></button></div>
+      <div class="hint-keys">Phím 1 / 2 hoặc gõ ký tự · Esc: dừng</div></div>`;
+    let resolver = null, cur = '', score = 0, n = 0, stopped = false;
+    const play = () => Snd.playText(cur, {radio: true});
+    $('#pRep', box).onclick = play;
+    keyHandler = e => {
+      if (e.key === 'Escape') { stopped = true; Snd.stop(); if (resolver) { const r = resolver; resolver = null; r(null); } return; }
+      if (e.key === ' ') { e.preventDefault(); play(); return; }
+      if (!resolver) return;
+      const btns = $$('.opt', box);
+      let ch = null;
+      if (e.key === '1' || e.key === '2') { const b = btns[+e.key - 1]; if (b) ch = b.dataset.c; }
+      else if (e.key.length === 1 && btns.some(b => b.dataset.c === e.key.toUpperCase())) ch = e.key.toUpperCase();
+      if (ch) { e.preventDefault(); const r = resolver; resolver = null; r(ch); }
+    };
+    for (; n < rounds && !stopped; n++) {
+      if (!alive()) return;
+      const p = pick(pairs), opts = Math.random() < .5 ? [p.a, p.b] : [p.b, p.a];
+      cur = pick([p.a, p.b]);
+      $('#pCount', box).textContent = `${n + 1}/${rounds}`;
+      $('#pFb', box).textContent = ''; $('#pFb', box).className = 'k-flash';
+      $('#pOpts', box).innerHTML = opts.map((c, i) => `<button class="opt" data-c="${esc(c)}"><kbd>${i + 1}</kbd>${esc(c)}</button>`).join('');
+      $$('.opt', box).forEach(b => b.onclick = () => { if (resolver) { const r = resolver; resolver = null; r(b.dataset.c); } });
+      play();
+      const ans = await new Promise(r => { resolver = r; });
+      if (!alive()) return;
+      if (ans == null || stopped) break;
+      const ok = ans === cur, key = p.a + p.b;
+      (stat[key] = stat[key] || {p, n: 0, ok: 0}).n++;
+      record(cur, ok);
+      $$('.opt', box).forEach(b => { b.disabled = true; if (b.dataset.c === cur) b.classList.add('good'); else if (b.dataset.c === ans) b.classList.add('bad'); });
+      const f = $('#pFb', box);
+      if (ok) { score++; stat[key].ok++; f.className = 'k-flash good'; f.textContent = `✓ ${cur}`; await sleep(450); }
+      else {
+        recordConf(cur, ans);
+        f.className = 'k-flash bad'; f.textContent = `Đây là ${cur} — còn ${ans} nghe thế này:`;
+        await sleep(200); if (!alive()) return;
+        await Snd.playText(cur); await sleep(350); if (!alive()) return;
+        await Snd.playText(ans); await sleep(600);
+      }
+      $('#pScore', box).textContent = `✓ ${score}`;
+    }
+    if (!alive()) return;
+    keyHandler = null; save();
+    const done = Object.values(stat);
+    if (!done.length) { render(); return; }
+    const total = done.reduce((s, x) => s + x.n, 0), okN = done.reduce((s, x) => s + x.ok, 0);
+    logListen('pairs', okN / total, {auto: false});
+    box.innerHTML = `<div class="card"><h2 style="font-size:20px">Kết quả phân biệt</h2>
+      <div class="sumgrid"><div><b>${Math.round(okN / total * 100)}%</b><span>chính xác (${okN}/${total})</span></div></div>
+      <table class="keys">${done.map(x => `<tr><td>${esc(x.p.a)} ↔ ${esc(x.p.b)}</td><td><b style="color:var(--${pctCls(x.ok / x.n * 100) === 'mid' ? 'warn' : pctCls(x.ok / x.n * 100)})">${Math.round(x.ok / x.n * 100)}%</b> <span class="muted">(${x.ok}/${x.n})</span> <button class="pbtn" data-play="${esc(x.p.a + ' ' + x.p.b)}">${IC.play}</button></td></tr>`).join('')}</table>
+      <div class="row mt"><button class="btn primary" id="pAgain">Luyện tiếp</button><button class="btn" id="pBack">Chọn cặp khác</button></div></div>`;
+    $('#pAgain', box).onclick = () => run(box);
+    $('#pBack', box).onclick = () => practicePairs(el);
+  };
+  render();
+}
+
+/* ---------- Mô phỏng cuộc gọi vô tuyến (QSO) ---------- */
+const DX_NAMES = ['TOM', 'BOB', 'JOHN', 'MIKE', 'ANNA', 'KEN', 'YUKI', 'HANS', 'PIET', 'LUC', 'MARIA', 'PAUL', 'JIM', 'RON', 'SAM', 'OLE', 'IVAN', 'LEE'];
+const DX_QTH = ['BOSTON', 'TOKYO', 'BERLIN', 'PARIS', 'SYDNEY', 'LONDON', 'OSAKA', 'MADRID', 'ROME', 'OSLO', 'SEOUL', 'DALLAS', 'DENVER', 'TAIPEI', 'VIENNA', 'PERTH'];
+const cleanWord = (v, def) => (normText(v).replace(/[^A-Z0-9 ]/g, '').trim() || def);
+function practiceQSO(el) {
+  const Q = DB.prefs.qso;
+  const setup = () => {
+    freshStep();
+    el.innerHTML = `<div class="card cfg">
+      <div class="cfg-row"><span class="lbl">Hô hiệu</span><input class="field-in mono" id="qCall" value="${esc(Q.call)}" maxlength="10" spellcheck="false"></div>
+      <div class="cfg-row"><span class="lbl">Tên</span><input class="field-in mono" id="qName" value="${esc(Q.name)}" maxlength="12" spellcheck="false"></div>
+      <div class="cfg-row"><span class="lbl">QTH</span><input class="field-in mono" id="qQth" value="${esc(Q.qth)}" maxlength="16" spellcheck="false"></div>
+      <div class="cfg-row"><span class="lbl">Tuỳ chọn</span><label class="chk"><input type="checkbox" id="qHint" ${Q.hint ? 'checked' : ''}> Hiện sẵn văn bản của trạm kia (dễ)</label></div>
+      <div class="cfg-foot"><span class="muted small">Bạn gọi CQ, một trạm ảo trả lời. Lượt của bạn: phát nội dung (gõ phím hoặc ấn giữ tín hiệu). Lượt của trạm kia: nghe và chép thông tin chính. Âm thanh dùng ${speedLabel()}.</span><button class="btn primary" id="qGo">Bắt đầu liên lạc</button></div>
+    </div><div id="ex"></div>`;
+    $('#qGo', el).onclick = () => {
+      Q.call = cleanWord($('#qCall', el).value, 'VN0XYZ').replace(/ /g, '');
+      Q.name = cleanWord($('#qName', el).value, 'AN').split(' ')[0];
+      Q.qth = cleanWord($('#qQth', el).value, 'HANOI').replace(/ /g, '');
+      Q.hint = $('#qHint', el).checked; save();
+      run($('#ex', el));
+    };
+  };
+  const run = box => {
+    freshStep();
+    const MY = Q.call, ME = Q.name, MQ = Q.qth;
+    const DX = callsign(), name = pick(DX_NAMES), qth = pick(DX_QTH), rst = pick(['599', '589', '579', '569', '559', '449']);
+    const pwr = pick(['5W', '50W', '100W', '500W']), wx = pick(['SUNNY', 'CLOUDY', 'RAIN', 'SNOW', 'WINDY', 'FOG']), rig = pick(['IC7300', 'FT991', 'K3', 'TS590', 'FT710']), ant = pick(['DIPOLE', 'YAGI', 'VERTICAL', 'LOOP']);
+    const steps = [
+      {who: 'me', title: 'Gọi CQ', text: `CQ CQ CQ DE ${MY} ${MY} K`, need: ['CQ', 'DE', MY]},
+      {who: 'dx', title: 'Có trạm trả lời bạn', text: `${MY} DE ${DX} ${DX} K`, fields: [{l: 'Hô hiệu trạm gọi bạn', a: DX}]},
+      {who: 'me', title: 'Chào & gửi báo cáo tín hiệu', text: `${DX} DE ${MY} GM TNX FER CALL UR RST 599 599 NAME ${ME} QTH ${MQ} HW? ${DX} DE ${MY} K`, need: [DX, MY, 'RST', 'NAME', ME, 'QTH', MQ], rst: true},
+      {who: 'dx', title: 'Báo cáo của trạm kia', text: `R R ${MY} DE ${DX} TNX FER RPT UR RST ${rst} ${rst} NAME ${name} ${name} QTH ${qth} ${qth} HW? ${MY} DE ${DX} K`, fields: [{l: 'RST bạn nhận được', a: rst}, {l: 'Tên', a: name}, {l: 'QTH', a: qth}]},
+      {who: 'me', title: 'Xác nhận đã nhận', text: `R R TNX ${name} FB ${DX} DE ${MY} K`, need: ['TNX', name, DX, MY]},
+      {who: 'dx', title: 'Thông tin máy & thời tiết', text: `${MY} DE ${DX} RIG ${rig} PWR ${pwr} ANT ${ant} WX ${wx} ${MY} DE ${DX} K`, fields: [{l: 'Công suất (PWR)', a: pwr}, {l: 'Thời tiết (WX)', a: wx}]},
+      {who: 'me', title: 'Chào kết thúc', text: `TNX FER QSO ${name} 73 ${DX} DE ${MY} <SK>`, need: ['73', DX, MY]},
+      {who: 'dx', title: 'Lời chào cuối', text: `TNX ${ME} 73 GL <SK> ${MY} DE ${DX} TU`, fields: [{l: 'Con số chào cuối', a: '73'}]}
+    ];
+    let idx = 0, fOk = 0, fTot = 0, sOk = 0, sTot = 0, replays = 0;
+    box.innerHTML = `<div class="card qso">
+      <div class="qso-head"><b class="mono">${esc(MY)}</b><span class="muted">⇄</span><b class="mono" id="qDx">?</b><span style="flex:1"></span><span class="chip">${speedLabel()}</span></div>
+      <div class="qlog" id="qLog"></div><div class="qturn" id="qTurn"></div></div>`;
+    const logEl = $('#qLog', box), turn = $('#qTurn', box);
+    const addLog = (who, txt, cls = '') => {
+      logEl.insertAdjacentHTML('beforeend', `<div class="qmsg ${who} ${cls}"><div class="qwho">${who === 'me' ? 'Bạn · ' + esc(MY) : 'Trạm kia · ' + esc(idx >= 1 ? DX : '?')}</div><div class="mono">${fmt(txt)}</div></div>`);
+      logEl.scrollTop = logEl.scrollHeight;
+    };
+    const next = () => { idx++; if (idx >= steps.length) finish(); else show(); };
+    const show = () => {
+      freshStep();
+      const st = steps[idx];
+      if (st.who === 'me') turnMe(st); else turnDx(st);
+      turn.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+    };
+    const turnMe = st => {
+      turn.innerHTML = `<div class="qt-title"><span class="tag">Lượt của bạn</span> ${esc(st.title)}</div>
+        <div class="qt-sug"><div class="lbl">Gợi ý nội dung phát</div><div class="mono">${fmt(st.text)}</div></div>
+        <div class="abox"></div><div class="qt-fb"></div>
+        <div class="row center"><button class="btn primary" id="qSend">Phát đi <kbd>Enter</kbd></button></div>`;
+      let forced = false, box2 = null;
+      function send() {
+        const v = box2.value(); if (!v.trim()) return;
+        const toks = new Set(normText(v).split(' '));
+        const miss = st.need.filter(t => !toks.has(normText(t)));
+        if (st.rst && ![...toks].some(t => /^[1-5][1-9][1-9]$|^5NN$/.test(t))) miss.push('số RST (vd 599)');
+        if (miss.length && !forced) {
+          $('.qt-fb', turn).innerHTML = `<div class="note">Còn thiếu: <b class="mono">${miss.map(esc).join(', ')}</b>. Trạm kia có thể không hiểu.
+            <button class="btn sm" id="qForce">Vẫn phát</button></div>`;
+          $('#qForce', turn).onclick = () => { forced = true; send(); };
+          return;
+        }
+        sTot++; if (!miss.length) sOk++;
+        box2.lock(); addLog('me', normText(v), miss.length ? 'warn' : ''); next();
+      }
+      box2 = answerBox($('.abox', turn), {morse: false, multi: true, autoLen: 0, placeholder: 'Gõ nội dung bạn phát…', onSubmit: send});
+      $('#qSend', turn).onclick = send;
+      keyHandler = e => { if (box2.keyDown(e)) return; if (e.key === 'Enter' && !e.shiftKey && !e.repeat) { e.preventDefault(); send(); } };
+      keyUpHandler = e => { box2.keyUp(e); };
+    };
+    const turnDx = st => {
+      let shown = Q.hint, checked = false;
+      turn.innerHTML = `<div class="qt-title"><span class="tag dx">Trạm kia đang phát</span> ${esc(st.title)}</div>
+        <div class="row center" style="margin:10px 0">${bigPlay()}</div>
+        ${Q.hint ? '' : '<button class="btn sm ghost" id="qShow">Hiện văn bản (−50% điểm lượt này)</button>'}
+        <div class="qt-sug" id="qTxt" ${Q.hint ? '' : 'hidden'}><div class="mono">${fmt(st.text)}</div></div>
+        <div class="qfields">${st.fields.map((f, i) => `<label class="qf"><span>${esc(f.l)}</span><input class="field-in mono" data-f="${i}" autocomplete="off" spellcheck="false"></label>`).join('')}</div>
+        <div class="row center"><button class="btn primary" id="qOk">Xác nhận <kbd>Enter</kbd></button></div>`;
+      const play = () => Snd.playText(st.text, {radio: true});
+      bindBigPlay(turn, () => { replays++; play(); });
+      later(play, 500);
+      if ($('#qShow', turn)) $('#qShow', turn).onclick = e => { shown = true; $('#qTxt', turn).hidden = false; e.target.remove(); };
+      setTimeout(() => { const f = $('[data-f]', turn); if (f) f.focus({preventScroll: true}); }, 50);
+      const confirm = () => {
+        if (checked) return next();
+        checked = true; Snd.stop();
+        let ok = 0;
+        st.fields.forEach((f, i) => {
+          const inp = $(`[data-f="${i}"]`, turn), good = normText(inp.value).replace(/ /g, '') === normText(f.a);
+          if (good) ok++;
+          inp.disabled = true; inp.classList.add(good ? 'good' : 'bad');
+          if (!good) inp.insertAdjacentHTML('afterend', `<small class="qans">Đúng: <b class="mono">${esc(f.a)}</b></small>`);
+        });
+        fOk += shown ? ok / 2 : ok; fTot += st.fields.length;
+        $('#qTxt', turn).hidden = false; const sb = $('#qShow', turn); if (sb) sb.remove();
+        addLog('dx', st.text);
+        if (idx === 1) $('#qDx', box).textContent = DX;
+        $('#qOk', turn).innerHTML = 'Tiếp tục <kbd>Enter</kbd>';
+      };
+      $('#qOk', turn).onclick = confirm;
+      keyHandler = e => {
+        if (e.code === 'Space' && e.ctrlKey) { e.preventDefault(); replays++; play(); }
+        else if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); confirm(); }
+      };
+    };
+    const finish = () => {
+      freshStep();
+      const acc = fTot ? fOk / fTot : 0, pct = Math.round(acc * 100);
+      logListen('qso', acc, {auto: false});
+      markDay(); DB.totals.sessions++; save();
+      turn.innerHTML = `<div class="rg-res"><div class="grade g-${pct >= 95 ? 'S' : pct >= 85 ? 'A' : pct >= 70 ? 'B' : pct >= 50 ? 'C' : 'D'}">${pct >= 95 ? 'S' : pct >= 85 ? 'A' : pct >= 70 ? 'B' : pct >= 50 ? 'C' : 'D'}</div>
+        <div style="flex:1;min-width:220px"><div class="rg-score">Liên lạc hoàn tất · 73!</div>
+        <div class="muted small">Chép đúng ${pct}% thông tin · ${sOk}/${sTot} lượt phát đủ nội dung · nghe lại ${replays} lần</div>
+        <div class="row mt"><button class="btn primary sm" id="qAgain">Liên lạc trạm khác</button><button class="btn sm" id="qSetup">Đổi thông tin của bạn</button></div></div></div>`;
+      $('#qAgain', turn).onclick = () => run(box);
+      $('#qSetup', turn).onclick = setup;
+    };
+    show();
+  };
+  setup();
+}
+
+/* ---------- Giải mã từ micro ---------- */
+function practiceMic(el) {
+  const M = DB.prefs.mic;
+  let ctx = null, proc = null, an = null, inBus = null, stream = null, srcNodes = [], uiTimer = 0, fTimer = 0, lastText = null;
+  const D = {freq: M.freq, mag: 0, floor: .0005, peak: .002, thr: 0, on: false, tEdge: 0, t: 0, dot: 1.2 / M.wpm, hist: [], buf: '', text: '', space: true};
+  el.innerHTML = `<div class="card cfg">
+      <div class="cfg-row"><span class="lbl">Tần số âm</span><label class="chk"><input type="checkbox" id="mAuto" ${M.auto ? 'checked' : ''}> Tự dò</label><input type="range" min="300" max="1300" step="10" id="mFreq" value="${M.freq}" aria-label="Tần số"><b id="mFreqOut">${M.freq} Hz</b></div>
+      <div class="cfg-row"><span class="lbl">Độ nhạy</span><input type="range" min="10" max="90" id="mSens" value="${M.sens}" aria-label="Độ nhạy"><b id="mSensOut">${M.sens}%</b></div>
+      <div class="cfg-row"><span class="lbl">Tốc độ đầu</span><input type="range" min="5" max="35" id="mWpm" value="${M.wpm}" aria-label="Tốc độ ban đầu"><b id="mWpmOut">${M.wpm} WPM</b><span class="muted small">máy tự thích nghi</span></div>
+    </div>
+    <div class="card mic">
+      <div class="row center"><button class="btn primary" id="mStart">Bật micro</button><button class="btn" id="mTest">${IC.play} Chạy thử bằng tín hiệu mẫu</button><button class="btn" id="mStop" disabled>${IC.stop} Dừng</button></div>
+      <div class="mic-status small muted" id="mStatus">Micro chưa bật. Âm thanh chỉ được xử lý ngay trên máy của bạn, không gửi đi đâu.</div>
+      <div class="meter" title="Mức tín hiệu ở tần số đang nghe; vạch đứng là ngưỡng bật"><i id="mLvl"></i><b id="mThr"></b></div>
+      <div class="row center small muted"><span class="lamp" id="mLamp"></span><span id="mInfo" class="mono">— Hz · — WPM</span></div>
+      <div class="k-out"><div class="k-text" id="mOut"><span class="caret"></span></div><div class="k-cur" id="mCur"></div></div>
+      <div class="row center"><button class="btn sm" id="mClr">Xoá văn bản</button><button class="btn sm" id="mCopy">Sao chép</button></div>
+    </div>
+    <details class="card help"><summary>Mẹo dùng</summary><ul>
+      <li>Đặt máy gần nguồn phát (loa radio, máy tạo âm Morse, một ứng dụng khác). Phòng càng yên tĩnh càng tốt.</li>
+      <li>Nếu chữ ra lộn xộn: tắt "Tự dò" rồi kéo tần số cho trùng âm, hoặc chỉnh độ nhạy.</li>
+      <li>Giải mã tốt nhất với tín hiệu đều tay, tốc độ 10–30 WPM.</li>
+      <li>Trình duyệt sẽ hỏi quyền dùng micro. Nếu mở file trực tiếp mà không được, hãy dùng Chrome hoặc Edge.</li></ul></details>`;
+  const status = (t, bad) => { const s = $('#mStatus', el); s.textContent = t; s.style.color = bad ? 'var(--bad)' : ''; };
+  const bindRange = (id, key, fmtv, after) => { const r = $('#' + id, el); r.oninput = () => { M[key] = +r.value; $('#' + id + 'Out', el).textContent = fmtv(r.value); if (after) after(); save(); }; };
+  bindRange('mFreq', 'freq', v => v + ' Hz', () => { D.freq = M.freq; M.auto = false; $('#mAuto', el).checked = false; });
+  bindRange('mSens', 'sens', v => v + '%');
+  bindRange('mWpm', 'wpm', v => v + ' WPM', () => { D.dot = 1.2 / M.wpm; D.hist = []; });
+  $('#mAuto', el).onchange = e => { M.auto = e.target.checked; save(); };
+  function ensure() {
+    ctx = Snd.init(); if (!ctx) throw new Error('Trình duyệt không hỗ trợ Web Audio');
+    if (proc) return;
+    inBus = ctx.createGain(); an = ctx.createAnalyser(); an.fftSize = 4096; an.smoothingTimeConstant = .5;
+    proc = ctx.createScriptProcessor(512, 1, 1);
+    inBus.connect(an); inBus.connect(proc); proc.connect(ctx.destination);
+    proc.onaudioprocess = onAudio;
+    uiTimer = setInterval(ui, 60); fTimer = setInterval(autoFreq, 250);
+  }
+  // Goertzel: đo cường độ đúng tần số đang nghe trên mỗi khối ~10 ms
+  function onAudio(e) {
+    const x = e.inputBuffer.getChannelData(0), N = x.length, sr = ctx.sampleRate;
+    e.outputBuffer.getChannelData(0).fill(0);
+    const k = 2 * Math.cos(2 * Math.PI * D.freq / sr); let s1 = 0, s2 = 0;
+    for (let i = 0; i < N; i++) { const s = x[i] + k * s1 - s2; s2 = s1; s1 = s; }
+    D.t += N / sr;
+    step(Math.sqrt(Math.max(0, s1 * s1 + s2 * s2 - k * s1 * s2)) / (N / 2));
+  }
+  function step(mag) {
+    D.mag = mag;
+    D.peak = Math.max(mag, D.peak * .997);
+    D.floor = mag < D.floor ? D.floor * .6 + mag * .4 : D.floor * .998 + mag * .002;
+    const s = M.sens / 100, thrOn = D.floor + (D.peak - D.floor) * (.75 - s * .5), thrOff = D.floor + (thrOn - D.floor) * .7;
+    D.thr = thrOn;
+    const valid = D.peak > D.floor * 4 && D.peak > .001;
+    const on = valid && (D.on ? mag > thrOff : mag > thrOn);
+    if (on !== D.on) {
+      const d = D.t - D.tEdge; D.tEdge = D.t; D.on = on;
+      if (!on) mark(d);
+    } else if (!on) {
+      const gap = D.t - D.tEdge;
+      if (D.buf && gap > D.dot * 2.5) commit();
+      if (!D.buf && !D.space && gap > D.dot * 6) { D.text += ' '; D.space = true; }
+    }
+  }
+  // Phân loại chấm/gạch bằng 2 cụm (k-means) trên các tín hiệu gần nhất → tự thích nghi tốc độ
+  function mark(d) {
+    if (d < .012 || d < D.dot * .3) return;
+    D.hist.push(d); if (D.hist.length > 24) D.hist.shift();
+    let thr = D.dot * 2;
+    const mn = Math.min(...D.hist), mx = Math.max(...D.hist);
+    if (D.hist.length >= 4 && mx / mn > 2) {
+      let a = mn, b = mx;
+      for (let it = 0; it < 6; it++) {
+        const A = [], B = []; D.hist.forEach(v => (Math.abs(v - a) < Math.abs(v - b) ? A : B).push(v));
+        if (A.length) a = avgOf(A); if (B.length) b = avgOf(B);
+      }
+      D.dot = (a + b / 3) / 2; thr = Math.sqrt(a * b);
+    }
+    D.buf += d < thr ? '.' : '-';
+  }
+  function commit() { D.text += REV[D.buf] || '✱'; D.buf = ''; D.space = false; if (D.text.length > 3000) D.text = D.text.slice(-2000); }
+  function autoFreq() {
+    if (!M.auto || !an || !el.isConnected) return;
+    const arr = new Float32Array(an.frequencyBinCount); an.getFloatFrequencyData(arr);
+    const binHz = ctx.sampleRate / an.fftSize, lo = Math.floor(300 / binHz), hi = Math.ceil(1300 / binHz);
+    let best = lo, bv = -Infinity;
+    for (let i = lo; i <= hi; i++) if (arr[i] > bv) { bv = arr[i]; best = i; }
+    const sorted = Array.from(arr.slice(lo, hi)).sort((x, y) => x - y), med = sorted[sorted.length >> 1];
+    if (bv - med > 25 && bv > -80) {
+      const f = Math.round(best * binHz);
+      if (Math.abs(f - D.freq) > 20) { D.freq = f; D.peak = D.floor * 2; }
+    }
+  }
+  function ui() {
+    if (!el.isConnected) { cleanup(); return; }
+    const top = Math.max(D.peak * 1.15, 1e-6);
+    $('#mLvl', el).style.width = clamp(D.mag / top, 0, 1) * 100 + '%';
+    $('#mThr', el).style.left = clamp(D.thr / top, 0, 1) * 100 + '%';
+    $('#mLamp', el).classList.toggle('on', D.on);
+    $('#mInfo', el).textContent = `${D.freq} Hz · ≈ ${Math.round(1.2 / D.dot)} WPM`;
+    if (M.auto) { $('#mFreq', el).value = D.freq; $('#mFreqOut', el).textContent = D.freq + ' Hz'; }
+    if (lastText !== D.text) { lastText = D.text; $('#mOut', el).innerHTML = esc(D.text) + '<span class="caret"></span>'; }
+    $('#mCur', el).innerHTML = D.buf ? codeVis(D.buf) : '';
+  }
+  function stopSources() {
+    srcNodes.forEach(n => { try { n.stop && n.stop(); } catch (e) {} try { n.disconnect(); } catch (e) {} });
+    srcNodes = [];
+    if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+    $('#mStop', el).disabled = true;
+  }
+  function cleanup() {
+    stopSources(); clearInterval(uiTimer); clearInterval(fTimer);
+    if (proc) { try { proc.disconnect(); inBus.disconnect(); } catch (e) {} proc.onaudioprocess = null; proc = null; }
+  }
+  $('#mStart', el).onclick = async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { status('Trình duyệt không cho dùng micro ở đây. Hãy mở file bằng Chrome hoặc Edge bản mới.', true); return; }
+    try {
+      ensure(); stopSources();
+      stream = await navigator.mediaDevices.getUserMedia({audio: {echoCancellation: false, noiseSuppression: false, autoGainControl: false}});
+      const src = ctx.createMediaStreamSource(stream); src.connect(inBus); srcNodes.push(src);
+      $('#mStop', el).disabled = false; status('Đang nghe qua micro…');
+    } catch (e) {
+      status(e && e.name === 'NotAllowedError' ? 'Bạn đã từ chối quyền dùng micro. Hãy cho phép trong cài đặt trình duyệt rồi thử lại.' : 'Không mở được micro: ' + (e && e.message || e), true);
+    }
+  };
+  $('#mTest', el).onclick = () => {
+    try { ensure(); } catch (e) { status(e.message, true); return; }
+    stopSources(); Snd.stop();
+    const text = pick(SENTENCES.filter(s => s.length < 34)), tones = Snd.seqTones(textToSeq(text)), total = tones[tones.length - 1][1];
+    const osc = ctx.createOscillator(), g = ctx.createGain(), mon = ctx.createGain();
+    osc.frequency.value = DB.settings.freq + rnd(120) - 60; g.gain.value = 0;
+    const t0 = ctx.currentTime + .3;
+    tones.forEach(([s, e]) => { g.gain.setValueAtTime(0, t0 + s); g.gain.linearRampToValueAtTime(.5, t0 + s + .004); g.gain.setValueAtTime(.5, t0 + e - .004); g.gain.linearRampToValueAtTime(0, t0 + e); });
+    const ns = ctx.createBufferSource(), ng = ctx.createGain(); ns.buffer = noiseBuf(ctx); ns.loop = true; ng.gain.value = .02;
+    osc.connect(g); g.connect(inBus); ns.connect(ng); ng.connect(inBus);
+    mon.gain.value = Snd.vol(); g.connect(mon); ng.connect(mon); mon.connect(ctx.destination);
+    osc.start(t0); osc.stop(t0 + total + .2); ns.start(); ns.stop(t0 + total + .6);
+    srcNodes.push(osc, ns, mon);
+    $('#mStop', el).disabled = false;
+    status('Đang phát tín hiệu mẫu vào bộ giải mã (có nhiễu nhẹ)…');
+    osc.onended = () => { if (el.isConnected) status('Tín hiệu mẫu là: ' + text); };
+  };
+  $('#mStop', el).onclick = () => { stopSources(); status('Đã dừng.'); };
+  $('#mClr', el).onclick = () => { D.text = ''; D.buf = ''; D.space = true; };
+  $('#mCopy', el).onclick = () => {
+    try { navigator.clipboard.writeText(D.text).then(() => toast('Đã sao chép'), () => toast('Không sao chép được')); } catch (e) { toast('Không sao chép được'); }
+  };
+  onLeave = cleanup;
+}
+
+/* =====================================================================
+   PHÂN TÍCH TAY GÕ (dùng cho Telegraph)
+   ===================================================================== */
+function fistHTML(log) {
+  const marks = log.filter(e => e.m != null), gaps = log.filter(e => e.g != null);
+  if (marks.length < 6) return '<p class="muted small" style="margin:0">Hãy phát vài ký tự (từ 6 tín hiệu trở lên) để máy phân tích nhịp tay của bạn.</p>';
+  const dots = marks.filter(e => e.s === '.').map(e => e.m), dashes = marks.filter(e => e.s === '-').map(e => e.m);
+  const u = dots.length >= 2 ? avgOf(dots) : dashes.length ? avgOf(dashes) / 3 : avgOf(marks.map(e => e.m));
+  const gi = [], gc = [], gw = [];
+  gaps.forEach(e => { const r = e.g / u; (r < 2 ? gi : r < 5 ? gc : gw).push(r); });
+  const cv = a => a.length >= 2 ? sdOf(a) / avgOf(a) : null;
+  const rows = [
+    {l: 'Chấm', v: dots.length ? 1 : null, ideal: 1, sub: dots.length ? `${Math.round(avgOf(dots))} ms · lệch ±${Math.round((cv(dots) || 0) * 100)}%` : 'chưa có'},
+    {l: 'Gạch', v: dashes.length ? avgOf(dashes) / u : null, ideal: 3, sub: dashes.length ? `${Math.round(avgOf(dashes))} ms · lệch ±${Math.round((cv(dashes) || 0) * 100)}%` : 'chưa có'},
+    {l: 'Nghỉ trong ký tự', v: gi.length ? avgOf(gi) : null, ideal: 1, sub: `${gi.length} lần`},
+    {l: 'Nghỉ giữa ký tự', v: gc.length ? avgOf(gc) : null, ideal: 3, sub: `${gc.length} lần`},
+    {l: 'Nghỉ giữa từ', v: gw.length ? avgOf(gw) : null, ideal: 7, sub: `${gw.length} lần`}
+  ];
+  const tips = [];
+  const ratio = dashes.length && dots.length ? avgOf(dashes) / avgOf(dots) : null;
+  if (ratio != null && ratio < 2.5) tips.push(`Gạch hơi ngắn so với chấm (${ratio.toFixed(1)} : 1, chuẩn 3 : 1) — giữ gạch lâu hơn.`);
+  if (ratio != null && ratio > 3.7) tips.push(`Gạch hơi dài (${ratio.toFixed(1)} : 1, chuẩn 3 : 1) — thả phím sớm hơn.`);
+  if ((cv(dots) || 0) > .25) tips.push('Độ dài các chấm chưa đều — cố giữ nhịp tay ổn định.');
+  if ((cv(dashes) || 0) > .25) tips.push('Độ dài các gạch chưa đều.');
+  if (gi.length && avgOf(gi) > 1.6) tips.push('Nghỉ giữa các tín hiệu trong cùng ký tự hơi dài — máy dễ tách thành hai ký tự.');
+  if (gc.length && avgOf(gc) < 2.6) tips.push('Nghỉ giữa các ký tự hơi ngắn — dễ bị dính chữ.');
+  if (gc.length && avgOf(gc) > 4.5) tips.push('Nghỉ giữa các ký tự hơi dài — nhịp bị rời rạc.');
+  if (gw.length && avgOf(gw) < 6) tips.push('Khoảng cách giữa các từ hơi ngắn (chuẩn 7 nhịp).');
+  if (!tips.length) tips.push('Tay gõ rất đều — tuyệt vời!');
+  const S = 9;
+  return `<div class="fist-meta mono small">≈ ${Math.round(1200 / u)} WPM · 1 nhịp = ${Math.round(u)} ms · ${marks.length} tín hiệu</div>
+    ${rows.map(r => {
+      const good = r.v != null && Math.abs(r.v - r.ideal) / r.ideal <= .2;
+      return `<div class="fist-row"><span class="fl">${r.l}</span>
+        <div class="fbar" title="Vạch đứng: chuẩn ${r.ideal} nhịp">${r.v != null ? `<i class="${good ? 'ok' : ''}" style="width:${clamp(r.v / S, 0, 1) * 100}%"></i>` : ''}<b style="left:${r.ideal / S * 100}%"></b></div>
+        <span class="fv mono">${r.v != null ? r.v.toFixed(1) : '—'}<small> / ${r.ideal}</small></span></div><div class="fsub">${r.sub}</div>`;
+    }).join('')}
+    <ul class="fist-tips">${tips.map(t => `<li>${t}</li>`).join('')}</ul>`;
+}
+
+/* =====================================================================
+   TRÒ CHƠI: Rhythm · Mưa chữ · Thử thách 60 giây
+   ===================================================================== */
+const GMODES = [
+  {id: 'rhythm', n: 'Rhythm game', s: 'Gõ đúng nhịp theo các vạch chạy'},
+  {id: 'rain', n: 'Mưa chữ', s: 'Gõ ký tự trước khi mã rơi chạm đáy'},
+  {id: 'blitz', n: 'Thử thách 60 giây', s: 'Nghe và gõ càng nhiều ký tự càng tốt'}
+];
+function viewGames(arg) {
+  const GP = DB.prefs.games;
+  const mode = GMODES.some(m => m.id === arg) ? arg : GP.mode;
+  GP.mode = mode; save();
+  app.innerHTML = `<h1 class="h1">Trò chơi</h1>
+    <p class="sub">Luyện Morse theo cách vui hơn. Kết quả trò chơi cũng được ghi vào thống kê ký tự.</p>
+    <div class="pmodes gm">${GMODES.map(m => `<a href="#/games/${m.id}" class="${m.id === mode ? 'on' : ''}"><b>${m.n}</b><small>${m.s}</small></a>`).join('')}</div>
+    <div id="gbody"></div>`;
+  const body = $('#gbody');
+  if (mode === 'rain') gameRain(body);
+  else if (mode === 'blitz') gameBlitz(body);
+  else viewRhythm(body);
+}
+
+function gameRain(el) {
+  const GP = DB.prefs.games;
+  let G = null, raf = 0;
+  const stop = () => { if (G) G.running = false; cancelAnimationFrame(raf); };
+  const render = () => {
+    freshStep(); stop();
+    const cs = charset(GP.set, GP.custom);
+    el.innerHTML = `<div class="card cfg">
+      ${cfgRow('Bộ ký tự', 'set', SETS, GP.set)}
+      ${customRow(GP)}
+      ${cfgRow('Chế độ', 'rainMode', [{id: 'see', n: 'Nhìn mã'}, {id: 'hear', n: 'Nghe âm'}], GP.rainMode)}
+      <div class="cfg-foot"><span class="muted small">${setInfo(cs, GP)} · Kỷ lục: <b>${GP.best.rain || 0}</b></span><button class="btn primary" id="rGo">Bắt đầu <kbd>Enter</kbd></button></div>
+    </div>
+    <div class="card rain-wrap">
+      <div class="rain-hud"><span>Điểm <b id="rScore">0</b></span><span>Cấp <b id="rLvl">1</b></span><span class="lives" id="rLives">♥♥♥</span></div>
+      <div class="rain" id="rain"><div class="rain-msg">${GP.rainMode === 'hear' ? 'Mỗi ký tự rơi xuống sẽ phát âm thanh. Gõ đúng ký tự đó trước khi nó chạm đáy — bấm vào ô "?" để nghe lại.' : 'Mã Morse rơi xuống — gõ ký tự tương ứng trước khi nó chạm đáy. Mỗi 10 ký tự đúng sẽ lên cấp và rơi nhanh hơn.'}</div></div>
+      <input class="answer rain-in" id="rIn" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="Gõ ký tự…" aria-label="Gõ ký tự">
+      <div class="ime-warn" hidden></div>
+    </div>`;
+    bindCfg(el, GP, render);
+    $('#rGo', el).onclick = () => start(cs);
+    keyHandler = e => { if (e.key === 'Enter' && !(G && G.running)) { e.preventDefault(); start(cs); } else if (e.key === 'Escape' && G && G.running) over(); };
+  };
+  const area = () => $('#rain', el);
+  const hud = () => { $('#rScore', el).textContent = G.score; $('#rLvl', el).textContent = G.lvl; $('#rLives', el).textContent = '♥'.repeat(G.lives) + '♡'.repeat(Math.max(0, 3 - G.lives)); };
+  function start(cs) {
+    stop(); Snd.stop();
+    area().innerHTML = '';
+    G = {cs, items: [], score: 0, lvl: 1, lives: 3, hits: 0, miss: [], last: performance.now(), acc: 1e9, running: true, combo: 0, lastCh: ''};
+    const inp = $('#rIn', el); inp.value = ''; inp.disabled = false; inp.focus();
+    inp.oninput = () => { imeCheck(inp, el); const v = inp.value; inp.value = ''; for (const ch of v) if (ch.trim()) hit(normText(ch)); };
+    hud(); raf = requestAnimationFrame(frame);
+  }
+  const spawnEvery = () => Math.max(600, 2100 - G.lvl * 140);
+  const fallTime = () => Math.max(3, 9 - G.lvl * .6);
+  function spawn() {
+    const A = area();
+    let ch, g = 0; do { ch = weightedPick(G.cs, weakW); } while (ch === G.lastCh && G.cs.length > 1 && g++ < 6);
+    G.lastCh = ch;
+    const d = document.createElement('div');
+    d.className = 'drop' + (GP.rainMode === 'hear' ? ' hear' : '');
+    d.innerHTML = GP.rainMode === 'hear' ? '<b>?</b>' : `<span class="codes">${codeVis(MORSE[ch])}</span>`;
+    A.appendChild(d);
+    const w = d.offsetWidth, h = d.offsetHeight;
+    d.style.left = (8 + Math.random() * Math.max(0, A.clientWidth - w - 16)) + 'px';
+    const it = {ch, el: d, y: -h, h, v: (A.clientHeight + h) / fallTime()};
+    G.items.push(it);
+    if (GP.rainMode === 'hear') { Snd.playText(ch, {radio: true}); d.onclick = () => Snd.playText(ch); }
+  }
+  function frame(now) {
+    if (!G || !G.running || !el.isConnected) return;
+    const dt = Math.min(.05, (now - G.last) / 1000); G.last = now;
+    G.acc += dt * 1000;
+    if (G.acc >= spawnEvery() && !(GP.rainMode === 'hear' && Snd.cur)) { G.acc = 0; spawn(); }
+    const H = area().clientHeight;
+    for (const it of G.items) {
+      if (it.dead) continue;
+      it.y += it.v * dt; it.el.style.transform = `translateY(${it.y}px)`;
+      if (it.y + it.h >= H) missItem(it);
+    }
+    G.items = G.items.filter(it => !it.gone);
+    if (G.running) raf = requestAnimationFrame(frame);
+  }
+  const removeLater = it => setTimeout(() => { it.el.remove(); it.gone = true; }, 420);
+  function hit(ch) {
+    if (!G || !G.running) return;
+    const cand = G.items.filter(it => !it.dead && it.ch === ch).sort((a, b) => b.y - a.y)[0];
+    if (!cand) {
+      G.combo = 0; const inp = $('#rIn', el); inp.classList.remove('shake'); void inp.offsetWidth; inp.classList.add('shake');
+      return;
+    }
+    cand.dead = true; cand.el.classList.add('hit'); cand.el.innerHTML = `<b>${esc(ch)}</b>`; removeLater(cand);
+    G.combo++; G.hits++; G.score += 10 * G.lvl + Math.min(G.combo, 20);
+    record(ch, true);
+    if (G.hits % 10 === 0) { G.lvl++; toast(`Lên cấp ${G.lvl}!`); }
+    hud();
+  }
+  function missItem(it) {
+    it.dead = true; it.el.classList.add('miss'); it.el.innerHTML = `<b>${esc(it.ch)}</b><span class="codes">${codeVis(MORSE[it.ch])}</span>`; removeLater(it);
+    G.lives--; G.combo = 0; G.miss.push(it.ch); record(it.ch, false);
+    hud();
+    if (G.lives <= 0) over();
+  }
+  function over() {
+    if (!G || !G.running) return;
+    stop(); save();
+    const isBest = G.score > (GP.best.rain || 0); if (isBest) GP.best.rain = G.score;
+    markDay(); DB.totals.sessions++; save();
+    const $in = $('#rIn', el); $in.disabled = true;
+    const miss = [...new Set(G.miss)];
+    area().insertAdjacentHTML('beforeend', `<div class="rain-over"><div class="rg-score">${G.score} điểm ${isBest ? '<span class="chip" style="color:var(--accent)">Kỷ lục mới!</span>' : ''}</div>
+      <div class="muted small">Cấp ${G.lvl} · ${G.hits} ký tự đúng</div>
+      ${miss.length ? `<div class="row center" style="margin-top:8px">${miss.map(c => `<button class="mchip" data-play="${esc(c)}">${esc(c)} <span class="codes" style="font-size:12px">${codeVis(MORSE[c])}</span></button>`).join('')}</div>` : ''}
+      <div class="row center mt"><button class="btn primary sm" id="rAgain">Chơi lại <kbd>Enter</kbd></button></div></div>`);
+    $('#rAgain', el).onclick = () => start(G.cs);
+  }
+  onLeave = stop;
+  render();
+}
+
+function gameBlitz(el) {
+  const GP = DB.prefs.games;
+  const render = () => {
+    freshStep();
+    const cs = charset(GP.set, GP.custom);
+    el.innerHTML = `<div class="card cfg">
+      ${cfgRow('Bộ ký tự', 'set', SETS, GP.set)}
+      ${customRow(GP)}
+      <div class="cfg-foot"><span class="muted small">${setInfo(cs, GP)} · ${speedLabel()} · Kỷ lục: <b>${GP.best.blitz || 0}</b> ký tự</span><button class="btn primary" id="bGo">Bắt đầu <kbd>Enter</kbd></button></div>
+    </div><div id="ex"><div class="card muted" style="text-align:center">60 giây: máy phát từng ký tự, bạn gõ ngay ký tự nghe được. Đúng thì sang ký tự mới liền — càng nhanh càng nhiều điểm.</div></div>`;
+    bindCfg(el, GP, render);
+    $('#bGo', el).onclick = () => run($('#ex', el), cs);
+    keyHandler = e => { if (e.key === 'Enter') { e.preventDefault(); run($('#ex', el), cs); } };
+  };
+  const run = async (box, cs) => {
+    freshStep();
+    const tok = stepTok, alive = () => tok === stepTok && box.isConnected;
+    box.innerHTML = `<div class="card drill blitz">
+      <div class="drill-top"><span class="mono" id="bTime">60.0</span><span class="lamp big"></span><span id="bScore">✓ 0</span></div>
+      <div class="pbar"><i id="bBar" style="width:100%"></i></div>
+      <div class="drill-char" id="bChar">?</div><div class="drill-code" id="bCode"></div>
+      <input class="answer" id="bIn" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" placeholder="Gõ ký tự" aria-label="Ký tự bạn nghe">
+      <div class="ime-warn" hidden></div></div>`;
+    const inp = $('#bIn', box), cEl = $('#bChar', box), codeEl = $('#bCode', box);
+    inp.focus();
+    let resolver = null, cur = '', score = 0, total = 0, last = '';
+    const end = performance.now() + 60000;
+    inp.addEventListener('input', () => {
+      imeCheck(inp, box);
+      const v = inp.value; inp.value = '';
+      const ch = v.slice(-1);
+      if (ch && ch.trim() && resolver) { const r = resolver; resolver = null; r(ch); }
+    });
+    const timer = setInterval(() => {
+      if (!alive()) { clearInterval(timer); return; }
+      const left = Math.max(0, end - performance.now());
+      $('#bTime', box).textContent = (left / 1000).toFixed(1);
+      $('#bBar', box).style.width = left / 600 + '%';
+      if (left <= 0 && resolver) { const r = resolver; resolver = null; r(null); }
+    }, 100);
+    while (performance.now() < end) {
+      if (!alive()) return;
+      let g = 0; do { cur = weightedPick(cs, weakW); } while (cur === last && cs.length > 1 && g++ < 6);
+      last = cur;
+      cEl.className = 'drill-char'; cEl.textContent = '?'; codeEl.innerHTML = '';
+      Snd.playText(cur, {radio: true});
+      const ans = await new Promise(r => { resolver = r; });
+      if (!alive()) return;
+      if (ans == null) break;
+      Snd.stop();
+      const a = normText(ans), ok = a === cur;
+      total++; if (ok) score++; else recordConf(cur, a);
+      record(cur, ok);
+      cEl.className = 'drill-char ' + (ok ? 'good' : 'bad'); cEl.textContent = cur;
+      codeEl.innerHTML = `<span class="codes">${codeVis(MORSE[cur])}</span>`;
+      $('#bScore', box).textContent = `✓ ${score}`;
+      await sleep(ok ? 120 : 650);
+    }
+    clearInterval(timer); Snd.stop();
+    if (!alive()) return;
+    save();
+    const acc = total ? score / total : 0, isBest = score > (GP.best.blitz || 0);
+    if (isBest) GP.best.blitz = score;
+    if (total >= 5) logListen('blitz', acc);
+    markDay(); DB.totals.sessions++; save();
+    box.innerHTML = `<div class="card"><h2 style="font-size:20px">Hết giờ!</h2>
+      <div class="sumgrid"><div><b>${score}</b><span>ký tự đúng / phút ${isBest ? '· kỷ lục mới!' : ''}</span></div><div><b>${Math.round(acc * 100)}%</b><span>chính xác (${score}/${total})</span></div></div>
+      <div class="row mt"><button class="btn primary" id="bAgain">Chơi lại <kbd>Enter</kbd></button></div></div>`;
+    $('#bAgain', box).onclick = () => run(box, cs);
+    keyHandler = e => { if (e.key === 'Enter') { e.preventDefault(); run(box, cs); } };
+  };
+  render();
+}
+
+/* =====================================================================
+   BIỂU ĐỒ TIẾN BỘ (SVG tự vẽ, có tooltip khi rê chuột)
+   ===================================================================== */
+function dayList(n) {
+  const out = [], d = new Date(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() - n + 1);
+  for (let i = 0; i < n; i++) { out.push(dayKey(d)); d.setDate(d.getDate() + 1); }
+  return out;
+}
+const dLabel = k => `${+k.slice(8)}/${+k.slice(5, 7)}`;
+const niceMax = v => { if (v <= 5) return 5; const p = Math.pow(10, Math.floor(Math.log10(v))), m = v / p; return (m <= 2 ? 2 : m <= 5 ? 5 : 10) * p; };
+function chartFrame(W, H, L, B, T, max, fmtY, labels) {
+  let s = '';
+  [0, .5, 1].forEach(f => {
+    const y = T + (H - T - B) * (1 - f);
+    s += `<line x1="${L}" x2="${W - 6}" y1="${y}" y2="${y}" class="cg-l"/><text x="${L - 6}" y="${y + 4}" class="cg-t" text-anchor="end">${fmtY(max * f)}</text>`;
+  });
+  labels.forEach(([x, t, anchor]) => { s += `<text x="${x}" y="${H - 6}" class="cg-t" text-anchor="${anchor}">${t}</text>`; });
+  return s;
+}
+function barChartSVG(data, o = {}) {
+  const W = 420, H = 170, L = 34, B = 22, T = 8, n = data.length, iw = W - L - 6, ih = H - T - B;
+  const max = niceMax(Math.max(1, ...data.map(d => d.v))), bw = iw / n, gap = 2, r = Math.min(4, (bw - gap) / 2);
+  let bars = '', hits = '';
+  data.forEach((d, i) => {
+    const x = L + i * bw + gap / 2, w = bw - gap, h = d.v / max * ih, y = T + ih - h;
+    if (d.v > 0) bars += `<path d="M${x},${T + ih} V${y + r} Q${x},${y} ${x + r},${y} H${x + w - r} Q${x + w},${y} ${x + w},${y + r} V${T + ih} Z" class="cg-bar"/>`;
+    hits += `<rect x="${L + i * bw}" y="${T}" width="${bw}" height="${ih}" class="cg-hit" data-tip="${esc(d.tip)}"/>`;
+  });
+  const lab = [[L + bw / 2, dLabel(data[0].x), 'start'], [L + iw / 2, dLabel(data[n >> 1].x), 'middle'], [L + iw - bw / 2, dLabel(data[n - 1].x), 'end']];
+  return `<svg viewBox="0 0 ${W} ${H}" class="cg" role="img" aria-label="${esc(o.label || '')}">${chartFrame(W, H, L, B, T, max, v => Math.round(v), lab)}${bars}${hits}</svg>`;
+}
+function lineChartSVG(data, o = {}) {
+  const W = 420, H = 170, L = 34, B = 22, T = 10, n = data.length, iw = W - L - 6, ih = H - T - B;
+  const vals = data.filter(d => d.v != null).map(d => d.v);
+  const max = o.max || niceMax(Math.max(1, ...vals)), step = iw / Math.max(1, n - 1);
+  const px = i => L + i * step, py = v => T + ih * (1 - v / max);
+  const pts = data.map((d, i) => d.v == null ? null : [px(i), py(d.v)]).filter(Boolean);
+  const path = pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+  let dots = '', hits = '';
+  data.forEach((d, i) => {
+    if (d.v != null) dots += `<circle cx="${px(i)}" cy="${py(d.v)}" r="4" class="cg-dot"/>`;
+    hits += `<rect x="${px(i) - step / 2}" y="${T}" width="${step}" height="${ih}" class="cg-hit" data-tip="${esc(d.tip)}"/>`;
+  });
+  const lab = [[L, dLabel(data[0].x), 'start'], [L + iw / 2, dLabel(data[n >> 1].x), 'middle'], [L + iw, dLabel(data[n - 1].x), 'end']];
+  return `<svg viewBox="0 0 ${W} ${H}" class="cg" role="img" aria-label="${esc(o.label || '')}">${chartFrame(W, H, L, B, T, max, o.fmtY || (v => Math.round(v)), lab)}<path d="${path}" class="cg-line"/>${dots}${hits}</svg>`;
+}
+function calendarHTML(weeks) {
+  const d = new Date(); d.setHours(12, 0, 0, 0);
+  const end = new Date(d); end.setDate(end.getDate() + (6 - ((end.getDay() + 6) % 7)));   // Chủ nhật cuối tuần này
+  const start = new Date(end); start.setDate(start.getDate() - weeks * 7 + 1);
+  const counts = [], cells = [];
+  for (let x = new Date(start); x <= end; x.setDate(x.getDate() + 1)) { const k = dayKey(x), r = DB.daily[k]; counts.push(r ? r.n : 0); cells.push({k, n: r ? r.n : 0, future: x > d}); }
+  const pos = counts.filter(n => n > 0).sort((a, b) => a - b), q = f => pos.length ? pos[Math.min(pos.length - 1, Math.floor(pos.length * f))] : 1;
+  const lv = n => n <= 0 ? 0 : n <= q(.25) ? 1 : n <= q(.5) ? 2 : n <= q(.75) ? 3 : 4;
+  return `<div class="cal" style="grid-template-columns:repeat(${weeks},1fr)">${cells.map(c => `<i class="c${c.future ? 'x' : lv(c.n)}" data-tip="${dLabel(c.k)}: ${c.n} câu"></i>`).join('')}</div>
+    <div class="cal-leg"><span>Ít</span>${[0, 1, 2, 3, 4].map(l => `<i class="c${l}"></i>`).join('')}<span>Nhiều</span></div>`;
+}
+function progressHTML() {
+  const days = dayList(30);
+  const daily = days.map(k => DB.daily[k] || {n: 0, c: 0});
+  const totalN = daily.reduce((s, r) => s + r.n, 0);
+  if (!Object.keys(DB.daily).length) return '<div class="card muted">Chưa có dữ liệu — hãy học vài bài, biểu đồ tiến bộ sẽ xuất hiện ở đây.</div>';
+  const bar = barChartSVG(days.map((k, i) => ({x: k, v: daily[i].n, tip: `${dLabel(k)}: ${daily[i].n} câu`})), {label: 'Số câu trả lời mỗi ngày'});
+  const accLine = lineChartSVG(days.map((k, i) => ({x: k, v: daily[i].n ? Math.round(daily[i].c / daily[i].n * 100) : null, tip: daily[i].n ? `${dLabel(k)}: ${Math.round(daily[i].c / daily[i].n * 100)}% đúng (${daily[i].c}/${daily[i].n})` : `${dLabel(k)}: không học`})), {max: 100, fmtY: v => v + '%', label: 'Độ chính xác theo ngày'});
+  const sp = days.map(k => {
+    const ev = DB.log.filter(e => e.d === k && e.a >= .8 && ['listen', 'copy', 'drill', 'blitz'].includes(e.k));
+    return ev.length ? Math.max(...ev.map(e => e.f)) : null;
+  });
+  const speed = sp.some(v => v != null)
+    ? lineChartSVG(days.map((k, i) => ({x: k, v: sp[i], tip: sp[i] != null ? `${dLabel(k)}: nghe đạt ${sp[i]} WPM` : `${dLabel(k)}: chưa có bài nghe đạt 80%`})), {label: 'Tốc độ nghe đạt được'})
+    : '<p class="muted small">Chưa có bài nghe nào đạt từ 80% — hãy thử Nghe & chép, Phản xạ hoặc Chép liên tục.</p>';
+  return `<div class="charts">
+    <div class="card chart"><div class="ch-t">Số câu trả lời mỗi ngày</div><div class="ch-s">30 ngày gần nhất · tổng ${totalN} câu</div>${bar}</div>
+    <div class="card chart"><div class="ch-t">Độ chính xác theo ngày</div><div class="ch-s">% câu trả lời đúng, các ngày có học</div>${accLine}</div>
+    <div class="card chart"><div class="ch-t">Tốc độ nghe đạt được</div><div class="ch-s">Tốc độ hiệu dụng cao nhất mỗi ngày với bài nghe đạt từ 80%</div>${speed}</div>
+    <div class="card chart"><div class="ch-t">Lịch học</div><div class="ch-s">18 tuần gần nhất · chuỗi hiện tại ${streak()} ngày</div>${calendarHTML(18)}</div>
+  </div>
+  <details class="card tbl"><summary>Xem bảng số liệu 30 ngày</summary><table class="keys"><tr><td>Ngày</td><td>Số câu · đúng · tỉ lệ</td></tr>${days.slice().reverse().filter((k, i) => daily[29 - i].n).map(k => { const r = DB.daily[k]; return `<tr><td>${dLabel(k)}</td><td>${r.n} · ${r.c} · ${Math.round(r.c / r.n * 100)}%</td></tr>`; }).join('')}</table></details>`;
+}
+// Tooltip dùng chung cho biểu đồ
+(function chartTip() {
+  const tip = document.createElement('div'); tip.id = 'ctip'; document.body.appendChild(tip);
+  const showTip = (e, t) => { tip.textContent = t; tip.style.opacity = 1; const x = Math.min(window.innerWidth - tip.offsetWidth - 8, e.clientX + 12); tip.style.left = Math.max(8, x) + 'px'; tip.style.top = (e.clientY - tip.offsetHeight - 10) + 'px'; };
+  document.addEventListener('pointermove', e => { const t = e.target.closest && e.target.closest('[data-tip]'); if (t) showTip(e, t.dataset.tip); else tip.style.opacity = 0; });
+  document.addEventListener('scroll', () => { tip.style.opacity = 0; }, true);
+})();
+
+/* =====================================================================
    TRANG: ÔN TẬP
    ===================================================================== */
 function viewReview() {
@@ -1974,6 +3079,8 @@ function viewReview() {
   const acc = accs.length ? Math.round(accs.reduce((a, b) => a + b, 0) / accs.length * 100) : null;
   const doneLessons = LESSONS.map((L, i) => ({L, i})).filter(x => DB.lessons[x.L.id] && DB.lessons[x.L.id].done);
   const lset = new Set(learned);
+  const weakest = learned.filter(c => accOf(c) != null).sort((a, b) => accOf(a) - accOf(b)).slice(0, 5);
+  const topConf = Object.entries(DB.conf).sort((a, b) => b[1] - a[1]).slice(0, 5);
   app.innerHTML = `
   <h1 class="h1">Ôn tập</h1>
   <p class="sub">Lặp lại ngắt quãng (hệ thống Leitner): ký tự bạn hay sai được hỏi thường xuyên hơn, ký tự đã thuộc sẽ giãn dần lịch ôn — 1, 2, 4, 7, 15 rồi 30 ngày.</p>
@@ -1987,6 +3094,14 @@ function viewReview() {
     ${learned.length ? `<p>${due.length ? `Hôm nay cần ôn: <b class="mono">${esc(due.join(' '))}</b>` : 'Không có ký tự nào đến hạn — bạn có thể luyện các ký tự yếu nhất.'}</p>
       <div class="row"><button class="btn primary" id="rvStart">${due.length ? `Ôn ${due.length} ký tự đến hạn` : 'Ôn tập tổng hợp'}</button><button class="btn" id="rvWeak">Luyện ký tự yếu</button></div>`
       : `<p>Hoàn thành <a href="#/lesson/0">Bài 1</a> để bắt đầu ôn tập.</p>`}
+  </div>
+  <h2 class="sec">Tiến bộ</h2>
+  ${progressHTML()}
+  <div class="charts">
+    <div class="card"><div class="ch-t">5 ký tự yếu nhất</div><div class="ch-s">Độ chính xác 20 lần gần nhất</div>
+      ${weakest.length ? weakest.map(c => { const a = Math.round(accOf(c) * 100); return `<div class="wk-row"><button class="mchip" data-play="${esc(c)}">${esc(c)}</button><span class="codes" style="font-size:14px;color:var(--accent)">${codeVis(MORSE[c])}</span><div class="fbar"><i class="${a >= 90 ? 'ok' : ''}" style="width:${a}%"></i></div><span class="mono small">${a}%</span></div>`; }).join('') + (learned.length ? '<div class="row mt"><button class="btn sm primary" id="rvWeak2">Luyện ngay</button></div>' : '') : '<p class="muted small">Chưa có dữ liệu.</p>'}</div>
+    <div class="card"><div class="ch-t">Cặp hay nhầm nhất</div><div class="ch-s">Ký tự đúng → ký tự bạn đã gõ nhầm</div>
+      ${topConf.length ? topConf.map(([k, n]) => `<div class="wk-row"><b class="mono">${esc([...k][0])} → ${esc([...k][1])}</b><span class="codes" style="font-size:12px;color:var(--accent)">${codeVis(MORSE[[...k][0]])}</span><span class="muted small">vs</span><span class="codes" style="font-size:12px;color:var(--muted)">${codeVis(MORSE[[...k][1]])}</span><span style="flex:1"></span><span class="chip">×${n}</span></div>`).join('') + '<div class="row mt"><a class="btn sm primary" href="#/practice/pairs">Luyện cặp dễ nhầm</a></div>' : '<p class="muted small">Chưa ghi nhận cặp nhầm nào — tuyệt!</p>'}</div>
   </div>
   <h2 class="sec">Bản đồ ký tự</h2>
   <p class="muted small" style="margin-top:-6px">Màu thể hiện độ chính xác 20 lần gần nhất · chấm nhỏ là cấp độ ghi nhớ · viền cam: đến hạn ôn · bấm để nghe.</p>
@@ -2004,6 +3119,7 @@ function viewReview() {
     startSession({title: weak ? 'Luyện ký tự yếu' : 'Ôn tập hằng ngày', steps: buildReviewSteps(pool, {focus, n: focus ? clamp(focus.length * 3, 12, 24) : 16}), restart: () => startReview(weak)});
   };
   if ($('#rvStart')) { $('#rvStart').onclick = () => startReview(false); $('#rvWeak').onclick = () => startReview(true); }
+  if ($('#rvWeak2')) $('#rvWeak2').onclick = () => startReview(true);
 }
 
 /* =====================================================================
@@ -2031,12 +3147,11 @@ const RG_PTS = {perfect: 300, great: 200, good: 100, miss: 0};
 const RG_LBL = {perfect: 'Perfect!', great: 'Great', good: 'Good', miss: 'Miss'};
 function rr(g, x, y, w, h, r) { g.beginPath(); if (g.roundRect) g.roundRect(x, y, w, h, r); else g.rect(x, y, w, h); }
 
-function viewRhythm() {
+function viewRhythm(root) {
   const R = DB.prefs.rhythm;
   let TL = null, G = null, raf = 0, text = '', curCi = -1, viewT = null, drag = null;
   const col = {};
-  app.innerHTML = `
-  <h1 class="h1">Rhythm game</h1>
+  root.innerHTML = `
   <p class="sub">Làm quen với nhịp gõ Morse: <b>giữ</b> phím khi vạch chạm đường đích và <b>thả</b> khi vạch kết thúc. Chấm dài 1 nhịp, gạch dài 3 nhịp. Hàng dưới là các lần gõ của bạn để so với nhịp chuẩn.</p>
   <div class="card cfg" id="rgCfg"></div>
   <div class="card rg">
@@ -2370,6 +3485,9 @@ function speedControlsHTML() {
   <label class="field"><span>Tốc độ hiệu dụng (Farnsworth): <b data-out="fwpm">${s.fwpm}</b> WPM</span><input type="range" min="3" max="40" data-set="fwpm" value="${s.fwpm}"></label>
   <label class="field"><span>Tần số âm: <b data-out="freq">${s.freq}</b> Hz</span><input type="range" min="300" max="1000" step="10" data-set="freq" value="${s.freq}"></label>
   <label class="field"><span>Âm lượng: <b data-out="vol">${s.vol}</b>%</span><input type="range" min="0" max="100" data-set="vol" value="${s.vol}"></label>
+  <div class="field"><span>Điều kiện sóng (mô phỏng)</span><div class="chips">${Object.keys(BANDS).map(b => `<button type="button" class="chip-btn ${s.band === b ? 'on' : ''}" data-setv="band" data-v="${b}">${BAND_NAMES[b]}</button>`).join('')}</div>
+    <small class="muted">Thêm nhiễu nền, tín hiệu lúc mạnh lúc yếu, trạm khác chen vào và trôi tần số cho các bài nghe — giống nghe trên radio thật.</small></div>
+  <label class="chk" style="margin-bottom:14px"><input type="checkbox" data-set="autoSpeed" ${s.autoSpeed ? 'checked' : ''}> Tự tăng tốc khi nghe tốt (3 bài liên tiếp ≥ 90%), tự giảm khi sai nhiều</label>
   <div class="field"><span>Phát tín hiệu bằng</span><div class="chips">${[['sound', 'Âm thanh'], ['vibrate', 'Rung (im lặng)'], ['both', 'Âm thanh + rung']].map(([v, n]) => `<button type="button" class="chip-btn ${s.output === v ? 'on' : ''}" data-setv="output" data-v="${v}">${n}</button>`).join('')}</div>
     <small class="muted">${canVibrate() ? 'Rung dễ cảm nhận nhất ở tốc độ ≤ 15 WPM. Đèn tín hiệu luôn nháy khi tắt âm thanh.' : 'Thiết bị / trình duyệt này không hỗ trợ rung (iPhone, iPad, máy tính). Ở chế độ rung, đèn tín hiệu sẽ nháy thay cho âm thanh.'}</small></div>`;
 }
