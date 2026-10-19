@@ -1038,7 +1038,7 @@ function noiseBuf(ctx) {
   return _noise;
 }
 const Snd = {
-  ctx: null, cur: null, kOsc: null, kGain: null, kVib: false, raf: 0,
+  ctx: null, cur: null, kOsc: null, kGain: null, kVib: false, kVibTimer: 0, raf: 0,
   init() {
     if (!this.ctx) {
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -1100,9 +1100,10 @@ const Snd = {
       cur.clock = () => (performance.now() - p0) / 1000;
     }
     if (vib) {
-      // Trình duyệt giới hạn độ dài mẫu rung → chia thành từng cụm 12 tiếng, hẹn giờ cho mỗi cụm
-      for (let i = 0; i < tones.length; i += 12) {
-        const chunk = tones.slice(i, i + 12), pat = [];
+      // Chia thành cụm nhỏ 3 tiếng, hẹn giờ cho mỗi cụm: vừa tránh giới hạn độ dài mẫu rung,
+      // vừa đảm bảo khi dừng thì máy hết rung ngay cả khi lệnh huỷ rung bị bỏ qua
+      for (let i = 0; i < tones.length; i += 3) {
+        const chunk = tones.slice(i, i + 3), pat = [];
         chunk.forEach(([s, e], j) => { if (j) pat.push(Math.round((s - chunk[j - 1][1]) * 1000)); pat.push(Math.max(1, Math.round((e - s) * 1000))); });
         cur.timers.push(setTimeout(() => vibrate(pat), (delay + chunk[0][0]) * 1000));
       }
@@ -1188,11 +1189,18 @@ const Snd = {
         g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(this.vol(), t + 0.005);
       }
     }
-    if (out.vib) { vibrate(10000); this.kVib = true; }
+    if (out.vib) {
+      // Không rung một lèo dài (nhiều máy Android bỏ qua lệnh huỷ rung → rung mãi):
+      // rung từng nhịp 120 ms và làm mới mỗi 80 ms khi còn giữ; thả tay là tự hết sau tối đa ~120 ms
+      clearInterval(this.kVibTimer);
+      vibrate(120); this.kVib = true;
+      this.kVibTimer = setInterval(() => vibrate(120), 80);
+    }
     if (DB.settings.flash || !out.sound) document.body.classList.add('tone');
   },
   toneOff() {
     if (this.kGain) { const t = this.ctx.currentTime, g = this.kGain.gain; g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0, t + 0.005); }
+    clearInterval(this.kVibTimer); this.kVibTimer = 0;
     if (this.kVib) { vibrate(0); this.kVib = false; }
     document.body.classList.remove('tone');
   }
@@ -1259,10 +1267,23 @@ function makeKeyer(o = {}) {
 }
 // Gắn hành vi "ấn giữ" (chuột / cảm ứng) cho một nút
 function bindHold(btn, down, up) {
-  btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} btn.classList.add('down'); down(); });
-  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => btn.addEventListener(t, () => { btn.classList.remove('down'); up(); }));
+  const release = () => { btn.classList.remove('down'); up(); };
+  btn.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    try { btn.setPointerCapture(e.pointerId); } catch (x) {}
+    btn.classList.add('down'); down();
+    // Chốt an toàn: nút có thể bị ẩn / thay mới khi đang giữ → vẫn bắt được lúc nhấc tay ở bất kỳ đâu
+    const onUp = () => { window.removeEventListener('pointerup', onUp, true); window.removeEventListener('pointercancel', onUp, true); release(); };
+    window.addEventListener('pointerup', onUp, true); window.addEventListener('pointercancel', onUp, true);
+  });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => btn.addEventListener(t, release));
   btn.addEventListener('contextmenu', e => e.preventDefault());
 }
+// Rời trang / chuyển ứng dụng khi đang giữ phím → dừng mọi âm và rung
+function stopAllSignals() { activeKeyers.forEach(k => k.release()); Snd.toneOff(); Snd.stop(); }
+document.addEventListener('visibilitychange', () => { if (document.hidden) stopAllSignals(); });
+window.addEventListener('blur', () => { activeKeyers.forEach(k => k.release()); Snd.toneOff(); });
+window.addEventListener('pagehide', stopAllSignals);
 function speedLabel() { const s = DB.settings; return `${s.wpm} WPM` + (s.fwpm < s.wpm ? ` · Farnsworth ${s.fwpm}` : '') + (BANDS[s.band] ? ` · sóng ${BAND_NAMES[s.band].toLowerCase()}` : ''); }
 
 /* =====================================================================
