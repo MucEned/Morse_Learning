@@ -276,7 +276,7 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
 .k-tt{font:800 34px/1.3 var(--mono);margin:4px 0;word-break:break-word}
 .k-out{min-height:96px;padding:14px;border-radius:14px;background:var(--bg);border:1px solid var(--line);margin-bottom:16px;text-align:left}
 .k-text{font:700 26px/1.4 var(--mono);word-break:break-word;min-height:36px}
-.k-text .caret{display:inline-block;width:2px;height:1em;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+.caret{display:inline-block;width:2px;height:1em;background:var(--accent);vertical-align:-2px;margin:0 2px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .k-cur{font:700 22px var(--mono);color:var(--accent);min-height:30px;letter-spacing:.1em}
 .keybtn{width:100%;max-width:420px;height:150px;border-radius:24px;border:2px solid var(--line);background:var(--surface2);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin:0 auto 16px;user-select:none;-webkit-user-select:none;touch-action:none;-webkit-touch-callout:none}
@@ -362,14 +362,61 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:50;max-width:calc(100vw - 32px)}
 #toast.show{opacity:1;transform:translateX(-50%)}
 
+/* Nút loa / rung */
+.nav{order:2}
+.sndbtn{order:3;width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--ink);flex:none}
+.sndbtn:hover{background:var(--surface2)}
+.sndbtn svg{width:19px;height:19px}
+.sndbtn.vib{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+
+/* Ô trả lời: gõ phím hoặc ấn giữ */
+.amode{display:inline-flex;padding:3px;border-radius:12px;background:var(--surface2);margin:0 auto 12px;gap:2px}
+.amode button{border:none;background:none;padding:6px 12px;border-radius:9px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
+.amode button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.amode button:disabled{cursor:default}
+.kbox{margin-bottom:14px}
+.k-disp{min-height:64px;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--bg);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;row-gap:8px;font:700 28px/1.3 var(--mono);margin-bottom:12px;word-break:break-word;white-space:pre-wrap}
+.k-disp.multi{justify-content:flex-start;font-size:22px;min-height:92px}
+.k-disp .codes{font-size:20px;color:var(--ink)}
+.k-disp .cg{display:inline-block;width:.7em}
+.k-disp .wg{color:var(--muted);font-size:18px;margin:0 .3em}
+.k-disp .k-buf{color:var(--accent);font-size:20px;margin-left:6px}
+.k-disp .ph{font:500 15px var(--font);color:var(--muted)}
+.keybtn.sm{height:104px;max-width:360px;margin-bottom:12px}
+
+/* Rhythm game */
+.rg{padding:20px}
+.rg-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.rg-text{font:700 22px/1.5 var(--mono);flex:1;min-width:200px;word-break:break-word}
+.rg-text span{color:var(--muted);transition:color .1s}
+.rg-text span.cur{color:var(--accent);text-decoration:underline;text-underline-offset:5px}
+.rg-text span.good{color:var(--good)}.rg-text span.bad{color:var(--bad)}
+.rg-hud{display:flex;gap:18px;text-align:center}
+.rg-hud b{display:block;font:800 22px var(--mono)}
+.rg-hud span{font-size:12px;color:var(--muted)}
+.rg-stage{position:relative;margin-bottom:14px}
+#rgCanvas{display:block;width:100%;height:140px;border-radius:14px;background:var(--bg);border:1px solid var(--line);touch-action:none;cursor:ew-resize}
+.rg-over{position:absolute;inset:0;display:grid;place-items:center;font:800 56px var(--mono);color:var(--accent);pointer-events:none}
+.rg-res{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:16px;padding:16px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}
+.grade{font:900 64px/1 var(--font);width:84px;text-align:center}
+.g-S{color:var(--lamp-on)}.g-A{color:var(--good)}.g-B{color:var(--accent)}.g-C{color:var(--warn)}.g-D{color:var(--bad)}
+.rg-score{font-size:22px;font-weight:800;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rg-counts{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font:700 13px var(--mono)}
+.rg-counts .good{color:var(--good)}.rg-counts .mid{color:var(--warn)}.rg-counts .bad{color:var(--bad)}
+
+@media (max-width:900px){
+  .top-in{flex-wrap:wrap;gap:4px;padding:8px 12px}
+  .nav{margin-left:-4px;width:calc(100% + 8px);order:3}
+  .sndbtn{order:2;margin-left:auto;width:34px;height:34px}
+}
 @media (max-width:820px){
   .pmodes{grid-template-columns:repeat(3,1fr)}
   .set-grid{grid-template-columns:1fr}
   .stat-row{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:640px){
-  .top-in{flex-wrap:wrap;gap:4px;padding:8px 12px}
-  .nav{margin-left:-4px;width:calc(100% + 8px)}
+  .rg-text{font-size:18px}
+  .rg-hud{gap:12px}.rg-hud b{font-size:18px}
   .nav a{padding:7px 10px;font-size:14px}
   main{padding:18px 16px 80px}
   .hero{grid-template-columns:1fr;padding:22px}
@@ -393,10 +440,12 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
     <nav class="nav" aria-label="Điều hướng">
       <a href="#/lessons" data-nav="lessons">Bài học</a>
       <a href="#/practice" data-nav="practice">Luyện tập</a>
+      <a href="#/rhythm" data-nav="rhythm">Rhythm game</a>
       <a href="#/review" data-nav="review">Ôn tập <span class="badge" id="dueBadge"></span></a>
       <a href="#/reference" data-nav="reference">Bảng mã</a>
       <a href="#/settings" data-nav="settings">Cài đặt</a>
     </nav>
+    <button class="sndbtn" id="sndBtn" type="button"></button>
   </div>
 </header>
 <main id="app"><noscript>Ứng dụng cần bật JavaScript.</noscript></main>
@@ -425,7 +474,9 @@ const IC = {
   sliders: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h11M19 17h1"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
   close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
   lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
-  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  speaker: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z" fill="currentColor" fill-opacity=".15"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>',
+  vibrate: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="8" height="18" rx="2"/><path d="M4.5 8v8M19.5 8v8M1.5 10.5v3M22.5 10.5v3"/></svg>'
 };
 
 /* =====================================================================
@@ -669,15 +720,19 @@ const PRAISE = ['Chính xác!', 'Tuyệt vời!', 'Đúng rồi!', 'Rất tốt!
    LƯU TRỮ
    ===================================================================== */
 const STORE_KEY = 'morse-trainer-v1';
-const DEFAULT_SETTINGS = {wpm:18, fwpm:10, freq:600, vol:60, wave:'sine', flash:true, autoplay:true, unlockAll:false, theme:'auto', keyWpm:12, keyAdapt:true};
+const DEFAULT_SETTINGS = {wpm:18, fwpm:10, freq:600, vol:60, wave:'sine', flash:true, autoplay:true, unlockAll:false, theme:'auto', keyWpm:12, keyAdapt:true, output:'sound', answerMode:'text'};
 const DEFAULT_PRACTICE = {mode:'listen', src:'words', set:'learned', custom:'', len:5, drillN:20, kt:'char', kHint:true};
+const DEFAULT_RHYTHM = {wpm:10, gap:1.5, src:'words', set:'learned', custom:'', len:4, guide:true, labels:true, best:{}};
 
 function normalizeDB(d) {
   d = d && typeof d === 'object' ? d : {};
   const prefs = d.prefs && typeof d.prefs === 'object' ? d.prefs : {};
   return {
     settings: {...DEFAULT_SETTINGS, ...(d.settings || {})},
-    prefs: {practice: {...DEFAULT_PRACTICE, ...(prefs.practice || {})}},
+    prefs: {
+      practice: {...DEFAULT_PRACTICE, ...(prefs.practice || {})},
+      rhythm: {...DEFAULT_RHYTHM, ...(prefs.rhythm || {}), best: {...((prefs.rhythm || {}).best || {})}}
+    },
     lessons: d.lessons && typeof d.lessons === 'object' ? d.lessons : {},
     stats: d.stats && typeof d.stats === 'object' ? d.stats : {},
     days: Array.isArray(d.days) ? d.days : [],
@@ -805,8 +860,14 @@ function align(a, b) {
 /* =====================================================================
    ÂM THANH (Web Audio — hoạt động offline)
    ===================================================================== */
+// Rung: chỉ coi là hỗ trợ khi có Vibration API trên thiết bị cảm ứng (máy tính có API nhưng không có mô-tơ rung)
+const canVibrate = () => typeof navigator.vibrate === 'function' && (navigator.maxTouchPoints > 0 || matchMedia('(pointer: coarse)').matches);
+function vibrate(p) { try { navigator.vibrate(p); } catch (e) {} }
+// Đầu ra hiện tại: âm thanh và/hoặc rung (chế độ im lặng)
+function outMode() { const o = DB.settings.output; return {sound: o !== 'vibrate', vib: o !== 'sound' && canVibrate()}; }
+
 const Snd = {
-  ctx: null, cur: null, kOsc: null, kGain: null, raf: 0,
+  ctx: null, cur: null, kOsc: null, kGain: null, kVib: false, raf: 0,
   init() {
     if (!this.ctx) {
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -824,79 +885,174 @@ const Snd = {
     if (s < c) { const ta = (60 * c - 37.2 * s) / (s * c); cg = 3 * ta / 19; wg = 7 * ta / 19; }
     return {dot, cg, wg};
   },
-  playText(t) { return this.play(textToSeq(t)); },
-  play(seq) {
-    this.stop();
-    const ctx = this.init();
-    if (!ctx || !seq.length) return Promise.resolve();
-    const T = this.timing(), v = this.vol(), r = Math.min(0.005, T.dot / 4);
-    const osc = ctx.createOscillator(), g = ctx.createGain();
-    osc.type = DB.settings.wave; osc.frequency.value = DB.settings.freq;
-    g.gain.setValueAtTime(0, ctx.currentTime);
-    osc.connect(g); g.connect(ctx.destination);
-    let t = ctx.currentTime + 0.06; const t0 = t, tones = [];
+  // Chuỗi ký tự → danh sách tiếng [bắt đầu, kết thúc] (giây, tính từ 0)
+  seqTones(seq, T = this.timing()) {
+    const tones = []; let t = 0;
     seq.forEach((w, wi) => {
       if (wi) t += T.wg;
       w.forEach((u, ci) => {
         if (ci) t += T.cg;
-        [...u.k].forEach((el, ei) => {
-          if (ei) t += T.dot;
-          const d = el === '-' ? 3 * T.dot : T.dot;
-          g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + r);
-          g.gain.setValueAtTime(v, t + d - r); g.gain.linearRampToValueAtTime(0, t + d);
-          tones.push([t, t + d]); t += d;
-        });
+        [...u.k].forEach((el, ei) => { if (ei) t += T.dot; const d = el === '-' ? 3 * T.dot : T.dot; tones.push([t, t + d]); t += d; });
       });
     });
-    osc.start(t0 - 0.03); osc.stop(t + 0.05);
+    return tones;
+  },
+  playText(t) { return this.play(textToSeq(t)); },
+  play(seq) { return this.playTones(this.seqTones(seq)); },
+  // Phát danh sách tiếng qua loa và/hoặc rung, kèm đèn tín hiệu.
+  // o: {delay (giây), freq, gain, lamp:false, vibrate:false}
+  playTones(tones, o = {}) {
+    this.stop();
+    if (!tones.length) return Promise.resolve();
+    const out = outMode(), sound = out.sound, vib = out.vib && o.vibrate !== false;
+    const delay = o.delay == null ? 0.06 : o.delay, total = tones[tones.length - 1][1];
+    const cur = {tones, ti: 0, done: false, timers: [], vib, lamp: o.lamp !== false, forceLamp: !sound};
+    const ctx = sound ? this.init() : null;
+    if (ctx) {
+      const v = this.vol() * (o.gain == null ? 1 : o.gain);
+      const osc = ctx.createOscillator(), g = ctx.createGain();
+      osc.type = DB.settings.wave; osc.frequency.value = o.freq || DB.settings.freq;
+      g.gain.setValueAtTime(0, ctx.currentTime);
+      osc.connect(g); g.connect(ctx.destination);
+      const t0 = ctx.currentTime + delay;
+      tones.forEach(([s, e]) => {
+        const r = Math.min(0.005, (e - s) / 4);
+        g.gain.setValueAtTime(0, t0 + s); g.gain.linearRampToValueAtTime(v, t0 + s + r);
+        g.gain.setValueAtTime(v, t0 + e - r); g.gain.linearRampToValueAtTime(0, t0 + e);
+      });
+      osc.start(t0 - 0.03); osc.stop(t0 + total + 0.05);
+      cur.osc = osc; cur.g = g; cur.clock = () => ctx.currentTime - t0;
+    } else {
+      const p0 = performance.now() + delay * 1000;
+      cur.clock = () => (performance.now() - p0) / 1000;
+    }
+    if (vib) {
+      // Trình duyệt giới hạn độ dài mẫu rung → chia thành từng cụm 12 tiếng, hẹn giờ cho mỗi cụm
+      for (let i = 0; i < tones.length; i += 12) {
+        const chunk = tones.slice(i, i + 12), pat = [];
+        chunk.forEach(([s, e], j) => { if (j) pat.push(Math.round((s - chunk[j - 1][1]) * 1000)); pat.push(Math.max(1, Math.round((e - s) * 1000))); });
+        cur.timers.push(setTimeout(() => vibrate(pat), (delay + chunk[0][0]) * 1000));
+      }
+    }
     return new Promise(res => {
-      const cur = {osc, g, tones, ti: 0, res, done: false};
-      this.cur = cur;
-      osc.onended = () => this._end(cur);
+      cur.res = res; this.cur = cur;
+      if (cur.osc) cur.osc.onended = () => this._end(cur);
+      else cur.timers.push(setTimeout(() => this._end(cur), (delay + total) * 1000 + 40));
       document.body.classList.add('playing');
       this._loop();
     });
   },
   _end(cur) {
     if (cur.done) return; cur.done = true;
-    try { cur.g.disconnect(); } catch (e) {}
+    cur.timers.forEach(clearTimeout);
+    try { if (cur.g) cur.g.disconnect(); } catch (e) {}
     if (this.cur === cur) { this.cur = null; document.body.classList.remove('playing', 'tone'); }
     cur.res();
   },
   stop() {
     const c = this.cur; if (!c) return;
-    try { c.osc.onended = null; c.g.gain.cancelScheduledValues(0); c.g.gain.setValueAtTime(0, this.ctx.currentTime); c.osc.stop(); } catch (e) {}
+    if (c.osc) try { c.osc.onended = null; c.g.gain.cancelScheduledValues(0); c.g.gain.setValueAtTime(0, this.ctx.currentTime); c.osc.stop(); } catch (e) {}
+    if (c.vib) vibrate(0);
     this._end(c);
   },
   _loop() {
     cancelAnimationFrame(this.raf);
     const step = () => {
       const c = this.cur; if (!c) return;
-      const now = this.ctx.currentTime;
+      const now = c.clock();
       while (c.ti < c.tones.length && c.tones[c.ti][1] <= now) c.ti++;
       const on = c.ti < c.tones.length && c.tones[c.ti][0] <= now;
-      document.body.classList.toggle('tone', on && DB.settings.flash);
+      if (c.lamp) document.body.classList.toggle('tone', on && (DB.settings.flash || c.forceLamp));
       this.raf = requestAnimationFrame(step);
     };
     this.raf = requestAnimationFrame(step);
   },
-  // Âm phản hồi khi tự gõ phím telegraph
+  // Âm phản hồi khi người dùng tự ấn giữ phím
   toneOn() {
-    const ctx = this.init(); if (!ctx) return;
-    if (!this.kOsc) {
-      this.kOsc = ctx.createOscillator(); this.kGain = ctx.createGain();
-      this.kGain.gain.value = 0; this.kOsc.connect(this.kGain); this.kGain.connect(ctx.destination); this.kOsc.start();
+    const out = outMode();
+    if (out.sound) {
+      const ctx = this.init();
+      if (ctx) {
+        if (!this.kOsc) {
+          this.kOsc = ctx.createOscillator(); this.kGain = ctx.createGain();
+          this.kGain.gain.value = 0; this.kOsc.connect(this.kGain); this.kGain.connect(ctx.destination); this.kOsc.start();
+        }
+        this.kOsc.type = DB.settings.wave; this.kOsc.frequency.value = DB.settings.freq;
+        const t = ctx.currentTime, g = this.kGain.gain;
+        g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(this.vol(), t + 0.005);
+      }
     }
-    this.kOsc.type = DB.settings.wave; this.kOsc.frequency.value = DB.settings.freq;
-    const t = ctx.currentTime, g = this.kGain.gain;
-    g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(this.vol(), t + 0.005);
-    if (DB.settings.flash) document.body.classList.add('tone');
+    if (out.vib) { vibrate(10000); this.kVib = true; }
+    if (DB.settings.flash || !out.sound) document.body.classList.add('tone');
   },
   toneOff() {
     if (this.kGain) { const t = this.ctx.currentTime, g = this.kGain.gain; g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0, t + 0.005); }
+    if (this.kVib) { vibrate(0); this.kVib = false; }
     document.body.classList.remove('tone');
   }
 };
+
+/* ---------- Phím telegraph dùng chung: ấn giữ để phát, máy tự giải mã ---------- */
+let keyDot = null;                                  // độ dài chấm (ms) đã thích nghi theo người dùng
+const getKeyDot = () => keyDot || (keyDot = 1200 / DB.settings.keyWpm);
+const activeKeyers = new Set();
+// o: {onChange(K), onChar(ch, code), onWord(), stopPlayback}
+function makeKeyer(o = {}) {
+  const K = {down: false, t0: 0, buf: '', codes: [], timers: []};
+  const changed = () => { if (o.onChange) o.onChange(K); };
+  const clearT = () => { K.timers.forEach(clearTimeout); K.timers = []; };
+  K.press = () => {
+    if (K.down) return;
+    K.down = true; clearT();
+    if (o.stopPlayback !== false) Snd.stop();
+    K.t0 = performance.now(); Snd.toneOn(); changed();
+  };
+  K.release = () => {
+    if (!K.down) return;
+    K.down = false; Snd.toneOff();
+    const d = performance.now() - K.t0;
+    if (d >= 15) {
+      const dot = getKeyDot(), sym = d < dot * 2 ? '.' : '-';
+      if (DB.settings.keyAdapt) keyDot = clamp(sym === '.' ? dot * .8 + d * .2 : dot * .8 + d / 3 * .2, 30, 400);
+      K.buf += sym;
+      K.timers.push(setTimeout(K.commit, getKeyDot() * 2.5));
+    }
+    changed();
+  };
+  K.commit = (gap = true) => {
+    if (!K.buf) return;
+    const code = K.buf; K.buf = ''; K.codes.push(code); changed();
+    if (o.onChar) o.onChar(REV[code] || '✱', code);
+    if (gap) K.timers.push(setTimeout(() => {
+      if (K.codes.length && K.codes[K.codes.length - 1] !== '/') { K.codes.push('/'); changed(); if (o.onWord) o.onWord(); }
+    }, getKeyDot() * 3));
+  };
+  K.flush = () => { clearT(); K.commit(false); };
+  K.chars = () => K.codes.filter(c => c !== '/').length;
+  K.rawText = () => K.codes.map(c => c === '/' ? ' ' : (REV[c] || '✱')).join('');
+  K.text = () => K.rawText().trim();
+  K.morse = () => K.codes.join(' ');
+  K.back = () => { clearT(); if (K.buf) K.buf = ''; else { while (K.codes[K.codes.length - 1] === '/') K.codes.pop(); K.codes.pop(); } changed(); };
+  K.clear = () => { clearT(); K.buf = ''; K.codes = []; changed(); };
+  K.stop = () => { clearT(); if (K.down) { K.down = false; Snd.toneOff(); } activeKeyers.delete(K); };
+  K.keyDown = e => {
+    if (e.code !== 'Space' || e.ctrlKey || e.altKey || e.metaKey || isField(e.target)) return false;
+    e.preventDefault();
+    if (document.activeElement && document.activeElement.tagName === 'BUTTON') document.activeElement.blur();
+    if (!e.repeat) K.press();
+    return true;
+  };
+  K.keyUp = e => { if (e.code !== 'Space' || isField(e.target)) return false; e.preventDefault(); K.release(); return true; };
+  K.bind = btn => bindHold(btn, K.press, K.release);
+  activeKeyers.add(K);
+  return K;
+}
+// Gắn hành vi "ấn giữ" (chuột / cảm ứng) cho một nút
+function bindHold(btn, down, up) {
+  btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} btn.classList.add('down'); down(); });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => btn.addEventListener(t, () => { btn.classList.remove('down'); up(); }));
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+}
 function speedLabel() { const s = DB.settings; return `${s.wpm} WPM` + (s.fwpm < s.wpm ? ` · Farnsworth ${s.fwpm}` : ''); }
 
 /* =====================================================================
@@ -1059,7 +1215,8 @@ function buildLesson(i) {
 const app = $('#app');
 let keyHandler = null, keyUpHandler = null, stepTok = 0, SES = null;
 function later(fn, ms) { const t = stepTok; setTimeout(() => { if (t === stepTok) fn(); }, ms); }
-function freshStep() { stepTok++; keyHandler = null; keyUpHandler = null; Snd.stop(); Snd.toneOff(); }
+let onLeave = null; // dọn dẹp riêng của trang hiện tại (vd: vòng lặp Rhythm game)
+function freshStep() { stepTok++; keyHandler = null; keyUpHandler = null; activeKeyers.forEach(k => k.stop()); Snd.stop(); Snd.toneOff(); }
 document.addEventListener('keydown', e => { if (keyHandler) keyHandler(e); });
 document.addEventListener('keyup', e => { if (keyUpHandler) keyUpHandler(e); });
 document.addEventListener('click', e => {
@@ -1077,12 +1234,14 @@ window.addEventListener('hashchange', route);
 window.addEventListener('beforeunload', e => { if (SES && SES.i > 0) { e.preventDefault(); e.returnValue = ''; } });
 
 function route() {
+  if (onLeave) { const f = onLeave; onLeave = null; try { f(); } catch (e) {} }
   freshStep(); SES = null;
   const [view, arg] = location.hash.replace(/^#\/?/, '').split('/');
   const v = view || 'lessons';
   $$('.nav a').forEach(a => a.classList.toggle('active', a.dataset.nav === (v === 'lesson' ? 'lessons' : v)));
   if (v === 'lesson') viewLessonIntro(+arg || 0);
   else if (v === 'practice') viewPractice(arg);
+  else if (v === 'rhythm') viewRhythm();
   else if (v === 'review') viewReview();
   else if (v === 'reference') viewReference();
   else if (v === 'settings') viewSettings();
@@ -1090,6 +1249,24 @@ function route() {
   updateBadge();
   window.scrollTo(0, 0);
 }
+// Nút loa / rung trên thanh tiêu đề: chuyển nhanh sang chế độ im lặng
+function updateSndBtn() {
+  const b = $('#sndBtn'), o = DB.settings.output;
+  b.innerHTML = o === 'sound' ? IC.speaker : IC.vibrate;
+  b.classList.toggle('vib', o !== 'sound');
+  b.title = o === 'sound' ? 'Đang dùng âm thanh — bấm để chuyển sang chế độ rung (im lặng)'
+    : o === 'vibrate' ? 'Chế độ rung (im lặng) — bấm để bật lại âm thanh' : 'Âm thanh + rung — bấm để chỉ dùng âm thanh';
+  b.setAttribute('aria-label', b.title);
+  $$('[data-setv="output"]').forEach(x => x.classList.toggle('on', x.dataset.v === o));
+}
+$('#sndBtn').onclick = () => {
+  const s = DB.settings;
+  s.output = s.output === 'sound' ? 'vibrate' : 'sound';
+  save(); Snd.stop(); updateSndBtn();
+  if (s.output === 'sound') toast('Đã bật lại âm thanh');
+  else if (canVibrate()) { vibrate([60, 60, 180]); toast('Chế độ im lặng: tín hiệu phát bằng rung + đèn nháy'); }
+  else toast('Chế độ im lặng: thiết bị không hỗ trợ rung — tín hiệu hiển thị bằng đèn nháy');
+};
 function updateBadge() { const n = dueChars().length; $('#dueBadge').textContent = n ? String(n) : ''; }
 function applyTheme() { const t = DB.settings.theme; if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t); }
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2400); }
@@ -1142,6 +1319,8 @@ function viewLessons() {
       <li><b>Tốc độ:</b> giữ tốc độ ký tự 15–20 WPM và dùng Farnsworth thấp (8–10) để có thời gian nghĩ. Khi đã quen, tăng dần tốc độ hiệu dụng.</li>
       <li><b>Đều đặn:</b> 15–20 phút mỗi ngày hiệu quả hơn nhiều so với học dồn. Vào mục <i>Ôn tập</i> mỗi ngày để giữ trí nhớ.</li>
       <li><b>Hoàn thành bài:</b> cần đạt từ 80% điểm. Câu sai sẽ được hỏi lại ở cuối bài.</li>
+      <li><b>Ấn giữ tín hiệu:</b> trong mỗi câu cần gõ đáp án, chọn "● Ấn giữ tín hiệu" để trả lời bằng cách tự phát Morse (giữ Space hoặc chạm giữ nút lớn). Luyện nhịp tay ở <a href="#/rhythm">Rhythm game</a>.</li>
+      <li><b>Im lặng:</b> bấm nút loa góc trên để chuyển sang chế độ rung (điện thoại Android) — trên máy không rung được, đèn tín hiệu sẽ nháy thay âm thanh.</li>
       <li><b>Bộ gõ:</b> hãy tắt bộ gõ tiếng Việt (Unikey/EVKey: Ctrl+Shift hoặc Alt+Z) khi làm bài để gõ chính xác.</li>
       <li><b>Offline:</b> toàn bộ ứng dụng nằm trong một file HTML. Tiến độ lưu trong trình duyệt — xuất file tiến độ ở mục Cài đặt khi đổi máy.</li>
     </ul>
@@ -1291,11 +1470,13 @@ function showFb(box, ok, item, next, o = {}) {
       ${o.extra || ''}</div>
     <button class="btn ${ok ? 'good' : 'bad'}" data-cont>Tiếp tục <kbd>Enter</kbd></button></div>`;
   $('[data-cont]', box).onclick = go;
+  keyUpHandler = null;
   keyHandler = e => {
     if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); go(); }
     else if (e.key === ' ' && !isField(e.target)) { e.preventDefault(); Snd.playText(item); }
   };
-  if (ok) { if (o.playOnOk) Snd.playText(item).then(() => later(go, 300)); else later(go, 700); }
+  const tok = stepTok;
+  if (ok) { if (o.playOnOk) Snd.playText(item).then(() => { if (tok === stepTok) later(go, 300); }); else later(go, 700); }
   else later(() => Snd.playText(item), 200);
 }
 
@@ -1353,31 +1534,89 @@ function renderMC(el, st, done) {
     else if (e.key === ' ' && listen) { e.preventDefault(); play(); }
   };
 }
+// Ô trả lời có 2 cách: gõ phím thông thường hoặc ấn giữ tín hiệu (máy tự giải mã).
+// o: {morse: đáp án là mã Morse, multi: đoạn văn, autoLen: số ký tự thì tự nộp (chế độ ấn giữ),
+//     autoText1: tự nộp khi gõ 1 ký tự, placeholder, onSubmit}
+function answerBox(host, o) {
+  let mode = DB.settings.answerMode === 'key' ? 'key' : 'text', locked = false, K = null, inp = null;
+  const render = () => {
+    if (K) K.stop();
+    K = null; inp = null;
+    const ac = o.morse ? 'off' : 'characters';
+    host.innerHTML = `<div class="amode" role="group" aria-label="Cách trả lời">
+        <button type="button" data-am="text" class="${mode === 'text' ? 'on' : ''}">⌨ Gõ phím</button>
+        <button type="button" data-am="key" class="${mode === 'key' ? 'on' : ''}">● Ấn giữ tín hiệu</button></div>` +
+      (mode === 'text'
+        ? (o.multi
+            ? `<textarea class="answer ${o.morse ? 'morse' : ''}" rows="3" autocomplete="off" autocorrect="off" autocapitalize="${ac}" spellcheck="false" placeholder="${esc(o.placeholder || '')}" aria-label="Đáp án"></textarea>`
+            : `<input class="answer ${o.morse ? 'morse' : ''}" autocomplete="off" autocorrect="off" autocapitalize="${ac}" spellcheck="false" ${o.autoText1 ? 'maxlength="1"' : ''} placeholder="${esc(o.placeholder || '')}" aria-label="Đáp án">`)
+          + (o.morse ? keypad(o.multi || o.autoLen > 1) : '') + '<div class="ime-warn" hidden></div>'
+        : `<div class="kbox"><div class="k-disp ${o.multi ? 'multi' : ''}" aria-live="polite"></div>
+            <button class="keybtn sm" type="button"><span class="lamp big"></span><b>GIỮ ĐỂ PHÁT</b><small>hoặc nhấn giữ phím Space</small></button>
+            <div class="row center k-ctl"><span class="chip k-wpm"></span><button type="button" class="btn sm" data-kb="back">⌫ Xoá ký tự</button><button type="button" class="btn sm" data-kb="clear">Xoá hết</button></div></div>`);
+    $$('[data-am]', host).forEach(b => b.onclick = () => {
+      if (locked || b.dataset.am === mode) return;
+      mode = b.dataset.am; DB.settings.answerMode = mode; save(); render();
+    });
+    if (mode === 'text') {
+      inp = $('.answer', host);
+      if (o.morse) bindKeypad(host, inp);
+      inp.addEventListener('input', () => { imeCheck(inp, host); if (o.autoText1 && inp.value.trim().length >= 1) o.onSubmit(); });
+      setTimeout(() => { if (inp && !locked) inp.focus({preventScroll: true}); }, 30);
+    } else {
+      const disp = $('.k-disp', host), btn = $('.keybtn', host);
+      K = makeKeyer({
+        onChange: () => {
+          if (!host.isConnected) return;
+          const val = o.morse
+            ? K.codes.map(c => c === '/' ? '<span class="wg">/</span>' : `<span class="codes">${codeVis(c)}</span>`).join('<span class="cg"></span>')
+            : esc(K.rawText());
+          disp.innerHTML = (K.codes.length || K.buf ? val : `<span class="ph">${o.morse ? 'Ấn ngắn = chấm, ấn dài = gạch' : 'Phát mã Morse — máy tự giải mã thành chữ'}</span>`)
+            + `<span class="caret"></span><span class="k-buf">${K.buf ? codeVis(K.buf) : ''}</span>`;
+          btn.classList.toggle('down', K.down);
+          $('.k-wpm', host).textContent = `≈ ${Math.round(1200 / getKeyDot())} WPM`;
+        },
+        onChar: () => { if (o.autoLen && K.chars() >= o.autoLen) setTimeout(() => { if (!locked) o.onSubmit(); }, 120); }
+      });
+      K.bind(btn);
+      $('[data-kb="back"]', host).onclick = () => K.back();
+      $('[data-kb="clear"]', host).onclick = () => K.clear();
+      K.clear();
+    }
+  };
+  render();
+  return {
+    value() { if (K) K.flush(); return mode === 'text' ? inp.value : o.morse ? K.morse() : K.text(); },
+    focus() { if (inp) inp.focus(); },
+    lock() {
+      locked = true; if (K) K.stop();
+      $$('[data-am]', host).forEach(b => { b.disabled = true; });
+      if (inp) inp.disabled = true;
+      $$('.keypad, .keybtn, .k-ctl, .k-buf, .caret', host).forEach(x => { x.hidden = true; });
+    },
+    keyDown: e => !!(K && !locked && K.keyDown(e)),
+    keyUp: e => !!(K && !locked && K.keyUp(e))
+  };
+}
 function renderType(el, st, done) {
   const item = st.item, qt = st.qt, enc = qt === 'encode', listen = qt === 'type-listen', isWord = item.length > 1;
   const prompt = {'type-listen': isWord ? 'Nghe và gõ lại từ' : 'Nghe và gõ ký tự', 'type-see': isWord ? 'Gõ từ tương ứng với mã' : 'Gõ ký tự tương ứng với mã', 'encode': 'Gõ mã Morse của'}[qt];
   el.innerHTML = `<div class="card q">
     <div class="prompt">${prompt}</div>
     <div class="q-main">${listen ? bigPlay() : enc ? `<div class="big-char" style="margin:0">${fmt(item)}</div>` : `<div class="codes ${isWord ? 'lg' : 'xl'}">${itemVis(item)}</div>`}</div>
-    <input class="answer ${enc ? 'morse' : ''}" id="ans" autocomplete="off" autocorrect="off" autocapitalize="${enc ? 'off' : 'characters'}" spellcheck="false" ${!enc && !isWord ? 'maxlength="1"' : ''}
-      placeholder="${enc ? 'dùng . và -' : isWord ? 'Gõ đáp án…' : '?'}" aria-label="Đáp án">
-    ${enc ? keypad(isWord) : ''}
-    <div class="ime-warn" hidden></div>
+    <div class="abox"></div>
     <button class="btn primary wide" id="chk">Kiểm tra <kbd>Enter</kbd></button>
     <div class="fb"></div>
-    <div class="hint-keys">${listen ? 'Ctrl+Space: nghe lại · ' : ''}${!enc && !isWord ? 'Gõ 1 ký tự là tự kiểm tra' : 'Enter: kiểm tra'}</div>
+    <div class="hint-keys">${listen ? 'Ctrl+Space: nghe lại · ' : ''}Enter: kiểm tra</div>
   </div>`;
-  const inp = $('#ans', el), play = () => Snd.playText(item);
+  const play = () => Snd.playText(item);
   if (listen) { bindBigPlay(el, play); if (DB.settings.autoplay) later(play, 250); }
-  if (enc) bindKeypad(el, inp);
-  setTimeout(() => inp.focus(), 30);
-  let answered = false;
+  let answered = false, box = null;
   const submit = () => {
     if (answered) return;
-    const v = inp.value;
-    if (!v.trim()) { inp.focus(); return; }
-    answered = true; inp.disabled = true; $('#chk', el).hidden = true;
-    const kp = $('.keypad', el); if (kp) kp.hidden = true;
+    const v = box.value();
+    if (!v.trim()) { box.focus(); return; }
+    answered = true; box.lock(); $('#chk', el).hidden = true;
     let ok, extra = '';
     if (enc) {
       const got = parseMorse(v), exp = seqTokens(textToSeq(item)).toks;
@@ -1390,12 +1629,15 @@ function renderType(el, st, done) {
     recordItem(item, ok);
     showFb($('.fb', el), ok, item, () => done(ok ? 1 : 0, 1, ok), {playOnOk: !listen, extra});
   };
+  box = answerBox($('.abox', el), {morse: enc, multi: false, autoLen: textToSeq(item).flat().length, autoText1: !enc && !isWord,
+    placeholder: enc ? 'dùng . và -' : isWord ? 'Gõ đáp án…' : '?', onSubmit: submit});
   $('#chk', el).onclick = submit;
-  inp.addEventListener('input', () => { imeCheck(inp, el); if (!enc && !isWord && inp.value.trim().length >= 1) submit(); });
   keyHandler = e => {
+    if (e.code === 'Space' && e.ctrlKey && listen) { e.preventDefault(); play(); return; }
+    if (box.keyDown(e)) return;
     if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); submit(); }
-    else if (e.code === 'Space' && e.ctrlKey && listen) { e.preventDefault(); play(); }
   };
+  keyUpHandler = e => { box.keyUp(e); };
 }
 
 function textDiffHTML(al, a, b) {
@@ -1420,7 +1662,7 @@ function encDiffHTML(al, exp, got, labels) {
 function renderPassage(el, st, done, o = {}) {
   const mode = st.mode, text = st.text, seq = textToSeq(text);
   const title = {listen: 'Nghe và chép lại đoạn văn', decode: 'Dịch đoạn mã Morse sang chữ', encode: 'Chuyển đoạn văn sang mã Morse'}[mode];
-  const sub = {listen: 'Phát lại bao nhiêu lần cũng được. Gõ những gì bạn nghe, cách nhau bằng dấu cách.', decode: 'Mỗi cụm là một ký tự, vạch chéo ngăn cách các từ.', encode: 'Dùng . và -, một dấu cách giữa các ký tự và dấu / giữa các từ.'}[mode];
+  const sub = {listen: 'Phát lại bao nhiêu lần cũng được. Gõ những gì bạn nghe, cách nhau bằng dấu cách.', decode: 'Mỗi cụm là một ký tự, vạch chéo ngăn cách các từ.', encode: 'Dùng . và -, một dấu cách giữa các ký tự và dấu / giữa các từ — hoặc ấn giữ tín hiệu.'}[mode];
   el.innerHTML = `<div class="card q passage">
     <div class="prompt">${title}</div>
     <div class="muted small">${sub}</div>
@@ -1428,40 +1670,33 @@ function renderPassage(el, st, done, o = {}) {
       mode === 'listen' ? `${bigPlay()}<div class="row center"><span class="chip">${speedLabel()}</span><button class="btn sm ghost" id="hintBtn">Hiện mã (gợi ý, −50% điểm)</button></div><div class="mtext" id="hintBox" hidden>${morseHTML(seq)}</div>`
       : mode === 'decode' ? `<div class="mtext">${morseHTML(seq)}</div><button class="btn sm" id="pPlay">${IC.play} Nghe đoạn mã</button>`
       : `<div class="ptext">${fmt(text)}</div>`}</div>
-    <textarea class="answer ${mode === 'encode' ? 'morse' : ''}" id="ans" rows="3" autocomplete="off" autocorrect="off" autocapitalize="${mode === 'encode' ? 'off' : 'characters'}" spellcheck="false"
-      placeholder="${mode === 'encode' ? 'vd: .- -... / -.-.' : 'Gõ đoạn văn…'}" aria-label="Đáp án"></textarea>
-    ${mode === 'encode' ? keypad(true) : ''}
-    <div class="ime-warn" hidden></div>
+    <div class="abox"></div>
     <button class="btn primary wide" id="chk">Kiểm tra <kbd>Enter</kbd></button>
     <div class="pres"></div>
-    <div class="hint-keys">${mode === 'listen' ? 'Ctrl+Space: phát / dừng · ' : ''}Enter: kiểm tra · Shift+Enter: xuống dòng</div>
+    <div class="hint-keys">${mode !== 'encode' ? 'Ctrl+Space: phát / dừng · ' : ''}Enter: kiểm tra</div>
   </div>`;
-  const inp = $('#ans', el), play = () => Snd.cur ? Snd.stop() : Snd.play(seq);
-  let hintUsed = false;
+  const play = () => Snd.cur ? Snd.stop() : Snd.play(seq);
+  let hintUsed = false, answered = false, box = null;
   if (mode === 'listen') {
     bindBigPlay(el, () => Snd.play(seq));
     if (DB.settings.autoplay && !o.noAutoplay) later(() => Snd.play(seq), 350);
     $('#hintBtn', el).onclick = () => { hintUsed = true; $('#hintBox', el).hidden = false; $('#hintBtn', el).remove(); };
   }
   if (mode === 'decode') $('#pPlay', el).onclick = () => Snd.play(seq);
-  if (mode === 'encode') bindKeypad(el, inp);
-  setTimeout(() => inp.focus({preventScroll: true}), 30);
-  inp.addEventListener('input', () => imeCheck(inp, el));
-  let answered = false;
   const submit = () => {
     if (answered) return;
-    if (!inp.value.trim()) { inp.focus(); return; }
-    answered = true; inp.disabled = true; $('#chk', el).hidden = true; Snd.stop();
-    const kp = $('.keypad', el); if (kp) kp.hidden = true;
+    const v = box.value();
+    if (!v.trim()) { box.focus(); return; }
+    answered = true; box.lock(); $('#chk', el).hidden = true; Snd.stop();
     const hb = $('#hintBtn', el); if (hb) hb.remove();
     let acc, diff;
     if (mode === 'encode') {
-      const {toks, labels} = seqTokens(seq), got = parseMorse(inp.value), al = align(toks, got);
+      const {toks, labels} = seqTokens(seq), got = parseMorse(v), al = align(toks, got);
       acc = Math.max(0, 1 - al.dist / toks.length);
       al.ops.forEach(op => { if (op.op !== 'ins' && toks[op.i] !== '/' && labels[op.i].length === 1) record(labels[op.i], op.op === 'ok'); });
       diff = `<div class="tks">${encDiffHTML(al, toks, got, labels)}</div>`;
     } else {
-      const a = [...normText(text)], b = [...normText(inp.value)], al = align(a, b);
+      const a = [...normText(text)], b = [...normText(v)], al = align(a, b);
       acc = Math.max(0, 1 - al.dist / a.length);
       al.ops.forEach(op => { if (op.op !== 'ins' && a[op.i] !== ' ') record(a[op.i], op.op === 'ok'); });
       diff = `<div class="diff">${textDiffHTML(al, a, b)}</div><div class="legend"><span class="l1">đúng</span><span class="l2">sai / thừa (gạch ngang)</span><span class="l3">thiếu (gạch dưới)</span></div>`;
@@ -1477,13 +1712,18 @@ function renderPassage(el, st, done, o = {}) {
     $('#rPlay', el).onclick = () => Snd.play(seq);
     $('#cont', el).onclick = go;
     keyHandler = e => { if (e.key === 'Enter' && !e.repeat) { e.preventDefault(); go(); } };
+    keyUpHandler = null;
     $('.pres', el).scrollIntoView({behavior: 'smooth', block: 'nearest'});
   };
+  box = answerBox($('.abox', el), {morse: mode === 'encode', multi: true, autoLen: 0,
+    placeholder: mode === 'encode' ? 'vd: .- -... / -.-.' : 'Gõ đoạn văn…', onSubmit: submit});
   $('#chk', el).onclick = submit;
   keyHandler = e => {
+    if (e.code === 'Space' && e.ctrlKey && mode !== 'encode') { e.preventDefault(); play(); return; }
+    if (box.keyDown(e)) return;
     if (e.key === 'Enter' && !e.shiftKey && !e.repeat) { e.preventDefault(); submit(); }
-    else if (e.code === 'Space' && e.ctrlKey && mode !== 'encode') { e.preventDefault(); play(); }
   };
+  keyUpHandler = e => { box.keyUp(e); };
 }
 
 /* =====================================================================
@@ -1642,10 +1882,9 @@ async function runDrill(box, cs, N, again) {
 /* ---------- Telegraph (tự phát bằng phím) ---------- */
 function practiceKey(el) {
   const P = DB.prefs.practice;
-  const K = {down: false, t0: 0, buf: '', out: '', dot: 1200 / DB.settings.keyWpm, timers: [], target: ''};
-  const clearT = () => { K.timers.forEach(clearTimeout); K.timers = []; };
+  let K = null, target = '';
   const render = () => {
-    freshStep(); clearT();
+    freshStep();
     el.innerHTML = `<div class="card cfg">
       ${cfgRow('Mục tiêu', 'kt', [{id: 'free', n: 'Tự do'}, {id: 'char', n: 'Từng ký tự'}, {id: 'word', n: 'Từ'}, {id: 'sentence', n: 'Câu'}], P.kt)}
       <div class="cfg-row"><span class="lbl">Tốc độ gõ</span><input type="range" min="5" max="30" id="kw" value="${DB.settings.keyWpm}" aria-label="Tốc độ gõ"><b id="kwOut">${DB.settings.keyWpm}</b><span class="muted small">WPM</span></div>
@@ -1661,88 +1900,60 @@ function practiceKey(el) {
       <div class="k-res" id="kRes"></div>
     </div>
     <details class="card help"><summary>Cách phát Morse bằng phím</summary>
-      <ul><li>Nhấn <b>ngắn</b> = chấm (1 đơn vị), nhấn <b>dài</b> = gạch (3 đơn vị).</li>
-      <li>Nghỉ khoảng 3 đơn vị để kết thúc một ký tự, khoảng 7 đơn vị để cách từ.</li>
-      <li>Ở ${DB.settings.keyWpm} WPM, 1 đơn vị ≈ ${Math.round(1200 / DB.settings.keyWpm)} ms. Bật "tự thích nghi" để máy tự theo nhịp của bạn.</li>
+      <ul><li>Nhấn <b>ngắn</b> = chấm (1 nhịp), nhấn <b>dài</b> = gạch (3 nhịp).</li>
+      <li>Nghỉ khoảng 3 nhịp để kết thúc một ký tự, khoảng 7 nhịp để cách từ.</li>
+      <li>Ở ${DB.settings.keyWpm} WPM, 1 nhịp ≈ ${Math.round(1200 / DB.settings.keyWpm)} ms. Bật "tự thích nghi" để máy tự theo nhịp của bạn.</li>
+      <li>Muốn luyện cho đều tay? Thử <a href="#/rhythm">Rhythm game</a>.</li>
       <li>Trên điện thoại: chạm và giữ vào nút lớn.</li></ul></details>`;
     bindCfg(el, P, render);
     const kw = $('#kw', el);
-    kw.oninput = () => { DB.settings.keyWpm = +kw.value; $('#kwOut', el).textContent = kw.value; K.dot = 1200 / DB.settings.keyWpm; save(); show(); };
+    kw.oninput = () => { DB.settings.keyWpm = +kw.value; keyDot = null; $('#kwOut', el).textContent = kw.value; save(); show(); };
     $('#kAdapt', el).onchange = e => { DB.settings.keyAdapt = e.target.checked; save(); };
     $('#kHint', el).onchange = e => { P.kHint = e.target.checked; save(); showTarget(); };
-    const btn = $('#kBtn', el);
-    btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch (x) {} press(); });
-    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => btn.addEventListener(t, release));
-    btn.addEventListener('contextmenu', e => e.preventDefault());
-    $('#kBk', el).onclick = () => { if (K.buf) K.buf = ''; else K.out = K.out.replace(/\s+$/, '').slice(0, -1); show(); };
-    $('#kClr', el).onclick = () => { K.buf = ''; K.out = ''; $('#kRes', el).innerHTML = ''; show(); };
+    K = makeKeyer({onChange: show, onChar, onWord: () => { if (P.kt === 'word' || P.kt === 'sentence') autoCheck(); }});
+    K.bind($('#kBtn', el));
+    $('#kBk', el).onclick = () => K.back();
+    $('#kClr', el).onclick = () => { K.clear(); $('#kRes', el).innerHTML = ''; };
     if ($('#kNew', el)) $('#kNew', el).onclick = newTarget;
     if ($('#kChk', el)) $('#kChk', el).onclick = check;
-    keyHandler = e => {
-      if (e.code !== 'Space' || isField(e.target)) return;
-      e.preventDefault();
-      if (document.activeElement && document.activeElement.tagName === 'BUTTON') document.activeElement.blur();
-      if (!e.repeat) press();
-    };
-    keyUpHandler = e => { if (e.code === 'Space' && !isField(e.target)) { e.preventDefault(); release(); } };
+    keyHandler = e => { K.keyDown(e); };
+    keyUpHandler = e => { K.keyUp(e); };
     newTarget();
   };
   const show = () => {
-    const o = $('#kOut', el); if (!o) return;
-    o.innerHTML = `${esc(K.out)}<span class="caret"></span>`;
-    $('#kCur', el).textContent = K.buf ? pretty(K.buf) : '';
-    $('#kWpm', el).textContent = `≈ ${Math.round(1200 / K.dot)} WPM`;
+    const o = $('#kOut', el); if (!o || !K) return;
+    o.innerHTML = `${esc(K.rawText())}<span class="caret"></span>`;
+    $('#kCur', el).innerHTML = K.buf ? codeVis(K.buf) : '';
+    $('#kWpm', el).textContent = `≈ ${Math.round(1200 / getKeyDot())} WPM`;
     $('#kBtn', el).classList.toggle('down', K.down);
   };
   const showTarget = () => {
     const t = $('#kT', el); if (!t) return;
     t.innerHTML = P.kt === 'free' ? '<div class="k-tl">Chế độ tự do — phát bất cứ gì bạn muốn</div>'
-      : `<div class="k-tl">Hãy phát</div><div class="k-tt">${fmt(K.target)}</div>${P.kHint ? `<div class="mtext" style="font-size:18px">${morseHTML(textToSeq(K.target))}</div>` : ''}`;
+      : `<div class="k-tl">Hãy phát</div><div class="k-tt">${fmt(target)}</div>${P.kHint ? `<div class="mtext" style="font-size:18px">${morseHTML(textToSeq(target))}</div>` : ''}`;
   };
   function newTarget() {
     const learned = charset('learned');
-    if (P.kt === 'char') K.target = weightedPick(learned, weakW);
-    else if (P.kt === 'word') { const w = wordsFor(learned.filter(c => /[A-Z]/.test(c)), 6); K.target = w.length >= 5 ? pick(w) : randGroup(learned, null, 3); }
-    else if (P.kt === 'sentence') K.target = pick(SENTENCES.filter(s => s.length <= 30));
-    else K.target = '';
-    K.buf = ''; K.out = ''; clearT();
+    if (P.kt === 'char') target = weightedPick(learned, weakW);
+    else if (P.kt === 'word') { const w = wordsFor(learned.filter(c => /[A-Z]/.test(c)), 6); target = w.length >= 5 ? pick(w) : randGroup(learned, null, 3); }
+    else if (P.kt === 'sentence') target = pick(SENTENCES.filter(s => s.length <= 30));
+    else target = '';
+    if (K) K.clear();
     const r = $('#kRes', el); if (r) r.innerHTML = '';
     const f = $('#kFlash', el); if (f) { f.textContent = ''; f.className = 'k-flash'; }
     showTarget(); show();
   }
-  function press() {
-    if (K.down) return;
-    K.down = true; clearT(); K.t0 = performance.now(); Snd.toneOn(); show();
-  }
-  function release() {
-    if (!K.down) return;
-    K.down = false; Snd.toneOff();
-    const d = performance.now() - K.t0;
-    if (d < 15) { show(); return; }
-    const sym = d < K.dot * 2 ? '.' : '-';
-    if (DB.settings.keyAdapt) K.dot = clamp(sym === '.' ? K.dot * .8 + d * .2 : K.dot * .8 + d / 3 * .2, 30, 400);
-    K.buf += sym; show();
-    K.timers.push(setTimeout(commitChar, K.dot * 2.5));
-  }
-  function commitChar() {
-    if (!K.buf) return;
-    const code = K.buf, ch = REV[code] || '✱';
-    K.buf = ''; K.out += ch; show();
-    onChar(ch, code);
-    K.timers.push(setTimeout(() => {
-      if (K.out && !K.out.endsWith(' ')) { K.out += ' '; show(); if (P.kt === 'word' || P.kt === 'sentence') autoCheck(); }
-    }, K.dot * 3));
-  }
   function onChar(ch, code) {
     if (P.kt !== 'char') return;
-    const f = $('#kFlash', el), ok = ch === K.target;
-    record(K.target, ok); save();
-    if (ok) { f.className = 'k-flash good'; f.textContent = `✓ ${K.target} — chính xác!`; setTimeout(() => { if ($('#kFlash', el) === f) newTarget(); }, 650); }
-    else { f.className = 'k-flash bad'; f.innerHTML = `✗ Bạn phát ${esc(ch)} (${pretty(code)}), cần ${esc(K.target)} (${pretty(MORSE[K.target])})`; setTimeout(() => { if ($('#kFlash', el) === f) { K.out = ''; show(); } }, 900); }
+    const f = $('#kFlash', el), ok = ch === target;
+    if (!f) return;
+    record(target, ok); save();
+    if (ok) { f.className = 'k-flash good'; f.textContent = `✓ ${target} — chính xác!`; setTimeout(() => { if ($('#kFlash', el) === f) newTarget(); }, 650); }
+    else { f.className = 'k-flash bad'; f.innerHTML = `✗ Bạn phát ${esc(ch)} (${pretty(code)}), cần ${esc(target)} (${pretty(MORSE[target])})`; setTimeout(() => { if ($('#kFlash', el) === f) K.clear(); }, 900); }
   }
-  function autoCheck() { if (normText(K.out).replace(/ /g, '').length >= normText(K.target).replace(/ /g, '').length) check(); }
+  function autoCheck() { if (normText(K.text()).replace(/ /g, '').length >= normText(target).replace(/ /g, '').length) check(); }
   function check() {
-    const a = [...normText(K.target)], b = [...normText(K.out)];
+    const a = [...normText(target)], b = [...normText(K.text())];
     if (!b.length) return;
     const al = align(a, b), acc = Math.round(Math.max(0, 1 - al.dist / a.length) * 100);
     al.ops.forEach(op => { if (op.op !== 'ins' && a[op.i] !== ' ') record(a[op.i], op.op === 'ok'); });
@@ -1793,6 +2004,299 @@ function viewReview() {
     startSession({title: weak ? 'Luyện ký tự yếu' : 'Ôn tập hằng ngày', steps: buildReviewSteps(pool, {focus, n: focus ? clamp(focus.length * 3, 12, 24) : 16}), restart: () => startReview(weak)});
   };
   if ($('#rvStart')) { $('#rvStart').onclick = () => startReview(false); $('#rvWeak').onclick = () => startReview(true); }
+}
+
+/* =====================================================================
+   TRANG: RHYTHM GAME — giữ phím đúng nhịp theo các vạch chạy
+   ===================================================================== */
+// Văn bản → danh sách nốt (ms). gapMul giãn khoảng nghỉ giữa ký tự / từ.
+function rhythmTimeline(text, wpm, gapMul) {
+  const dot = 1200 / wpm, notes = [], chars = []; let t = 0;
+  textToSeq(text).forEach((w, wi) => {
+    if (wi) t += 7 * dot * gapMul;
+    w.forEach((u, ci) => {
+      if (ci) t += 3 * dot * gapMul;
+      const ch = {label: u.c, start: t, notes: [], wi};
+      [...u.k].forEach((e, ei) => {
+        if (ei) t += dot;
+        const d = e === '-' ? 3 * dot : dot, n = {start: t, end: t + d, dur: d, type: e, ci: chars.length, state: 'pending'};
+        notes.push(n); ch.notes.push(n); t += d;
+      });
+      ch.end = t; chars.push(ch);
+    });
+  });
+  return {notes, chars, total: t, dot};
+}
+const RG_PTS = {perfect: 300, great: 200, good: 100, miss: 0};
+const RG_LBL = {perfect: 'Perfect!', great: 'Great', good: 'Good', miss: 'Miss'};
+function rr(g, x, y, w, h, r) { g.beginPath(); if (g.roundRect) g.roundRect(x, y, w, h, r); else g.rect(x, y, w, h); }
+
+function viewRhythm() {
+  const R = DB.prefs.rhythm;
+  let TL = null, G = null, raf = 0, text = '', curCi = -1, viewT = null, drag = null;
+  const col = {};
+  app.innerHTML = `
+  <h1 class="h1">Rhythm game</h1>
+  <p class="sub">Làm quen với nhịp gõ Morse: <b>giữ</b> phím khi vạch chạm đường đích và <b>thả</b> khi vạch kết thúc. Chấm dài 1 nhịp, gạch dài 3 nhịp. Hàng dưới là các lần gõ của bạn để so với nhịp chuẩn.</p>
+  <div class="card cfg" id="rgCfg"></div>
+  <div class="card rg">
+    <div class="rg-top"><div class="rg-text" id="rgText"></div>
+      <div class="rg-hud"><div><b id="rgScore">0</b><span>điểm</span></div><div><b id="rgCombo">0</b><span>combo</span></div><div><b id="rgAcc">—</b><span>chính xác</span></div></div></div>
+    <div class="rg-stage"><canvas id="rgCanvas" aria-label="Đường nhịp"></canvas><div class="rg-over" id="rgOver"></div></div>
+    <button class="keybtn sm" id="rgKey" type="button"><span class="lamp big"></span><b>GIỮ ĐỂ GÕ</b><small>hoặc nhấn giữ phím Space</small></button>
+    <div class="row center"><button class="btn primary" id="rgStart"></button><button class="btn" id="rgPrev">Nghe thử</button><button class="btn" id="rgNew">Đoạn mới</button></div>
+    <div id="rgRes"></div>
+  </div>`;
+  const cv = $('#rgCanvas'), g = cv.getContext('2d'), over = $('#rgOver');
+
+  const cfg = () => {
+    const cs = charset(R.set, R.custom);
+    $('#rgCfg').innerHTML = `
+      <div class="cfg-row"><span class="lbl">Tốc độ</span><input type="range" min="5" max="30" value="${R.wpm}" id="rgW" aria-label="Tốc độ WPM"><b id="rgWOut">${R.wpm} WPM</b><span class="muted small" id="rgUnit">1 nhịp = ${Math.round(1200 / R.wpm)} ms</span></div>
+      ${cfgRow('Khoảng nghỉ', 'gap', [{id: 1, n: 'Chuẩn'}, {id: 1.5, n: 'Giãn ×1.5'}, {id: 2, n: 'Giãn ×2'}], R.gap)}
+      ${cfgRow('Nội dung', 'src', SRC.slice(0, 3), R.src)}
+      ${cfgRow('Bộ ký tự', 'set', SETS, R.set)}
+      ${customRow(R)}
+      <div class="cfg-row"><span class="lbl">Độ dài</span><input type="range" min="1" max="10" value="${R.len}" id="rgLen" aria-label="Độ dài"><b id="rgLenOut">${R.len}</b><span class="muted small">từ / nhóm</span></div>
+      <div class="cfg-row"><span class="lbl">Tuỳ chọn</span><label class="chk"><input type="checkbox" id="rgGuide" ${R.guide ? 'checked' : ''}> Âm mẫu theo nhịp</label><label class="chk"><input type="checkbox" id="rgLabels" ${R.labels ? 'checked' : ''}> Hiện chữ dưới vạch</label></div>
+      <div class="cfg-foot"><span class="muted small">${setInfo(cs, R)}${R.best[R.wpm] ? ` · Kỷ lục ở ${R.wpm} WPM: <b>${R.best[R.wpm]}</b>` : ''}</span></div>`;
+    bindCfg($('#rgCfg'), R, () => { cfg(); newText(); });
+    const w = $('#rgW');
+    w.oninput = () => { R.wpm = +w.value; $('#rgWOut').textContent = `${R.wpm} WPM`; $('#rgUnit').textContent = `1 nhịp = ${Math.round(1200 / R.wpm)} ms`; build(); };
+    w.onchange = () => { save(); cfg(); };
+    const l = $('#rgLen');
+    l.oninput = () => { $('#rgLenOut').textContent = l.value; };
+    l.onchange = () => { R.len = +l.value; save(); newText(); };
+    $('#rgGuide').onchange = e => { R.guide = e.target.checked; save(); };
+    $('#rgLabels').onchange = e => { R.labels = e.target.checked; save(); draw(); };
+  };
+  const newText = () => { text = genContent(R.src, charset(R.set, R.custom), R.len); build(); };
+  function build() {
+    stopGame(); G = null; viewT = null;
+    TL = rhythmTimeline(text, R.wpm, R.gap);
+    let html = '', lastW = 0;
+    TL.chars.forEach((c, i) => { if (c.wi !== lastW) { html += ' '; lastW = c.wi; } html += `<span data-ci="${i}">${fmt(c.label)}</span>`; });
+    $('#rgText').innerHTML = html;
+    curCi = -1; $('#rgRes').innerHTML = ''; hud(); draw();
+  }
+
+  /* --- vẽ --- */
+  function readColors() {
+    const cs = getComputedStyle(document.documentElement);
+    ['accent', 'good', 'bad', 'warn', 'ink', 'muted', 'surface2', 'lamp-on'].forEach(k => { col[k] = cs.getPropertyValue('--' + k).trim(); });
+    col.mono = cs.getPropertyValue('--mono').trim(); col.font = cs.getPropertyValue('--font').trim();
+  }
+  function resize() {
+    if (!cv.isConnected) return;
+    const dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(cv.clientWidth * dpr); cv.height = Math.round(cv.clientHeight * dpr);
+    g.setTransform(dpr, 0, 0, dpr, 0, 0); readColors(); draw();
+  }
+  const geo = () => { const W = cv.clientWidth, unitPx = clamp(W / 32, 12, 26); return {W, H: cv.clientHeight, x0: Math.max(48, Math.round(W * .18)), ppm: unitPx / TL.dot}; };
+  const gt = () => performance.now() - G.t0;
+  const win = () => Math.max(TL.dot, 110);
+  const restT = () => -60 / geo().ppm;
+  function draw() {
+    if (!TL || !cv.isConnected) return;
+    const {W, H, x0, ppm} = geo();
+    const t = G && G.running ? gt() : (viewT == null ? restT() : viewT);
+    const LY = 26, LH = 34, TY = LY + LH + 22, UY = TY + 14, UH = 16;
+    g.clearRect(0, 0, W, H);
+    g.fillStyle = col.surface2; g.fillRect(0, LY - 6, W, LH + 12);
+    g.globalAlpha = .55; g.fillRect(0, UY - 4, W, UH + 8); g.globalAlpha = 1;
+    g.font = `700 10px ${col.font}`; g.fillStyle = col.muted; g.textAlign = 'right';
+    g.fillText('NHỊP CHUẨN', W - 8, LY - 10); g.fillText('BẠN GÕ', W - 8, UY + UH + 14);
+    for (const c of TL.chars) {
+      const xs = x0 + (c.start - t) * ppm, xe = x0 + (c.end - t) * ppm;
+      if (xe < -30) continue;
+      if (xs > W + 30) break;
+      for (const n of c.notes) {
+        const x = x0 + (n.start - t) * ppm, w = Math.max(4, n.dur * ppm);
+        g.globalAlpha = n.state === 'miss' ? .4 : 1;
+        g.fillStyle = {pending: col.accent, holding: col['lamp-on'], perfect: col.good, great: col.good, good: col.warn, miss: col.bad}[n.state];
+        rr(g, x, LY, w, LH, Math.min(8, w / 2)); g.fill();
+      }
+      g.globalAlpha = 1;
+      if (R.labels) {
+        const sts = c.notes.map(n => n.state);
+        g.fillStyle = sts.includes('miss') ? col.bad : sts.every(s => s === 'perfect' || s === 'great' || s === 'good') ? col.good : col.ink;
+        g.font = `800 15px ${col.mono}`; g.textAlign = 'center';
+        g.fillText(c.label.replace(/[<>]/g, ''), (xs + xe) / 2, TY);
+      }
+    }
+    if (G) {
+      g.fillStyle = col['lamp-on'];
+      for (const p of G.presses) {
+        const xs = x0 + (p.start - t) * ppm, xe = x0 + ((p.end == null ? t : p.end) - t) * ppm;
+        if (xe < -5 || xs > W) continue;
+        rr(g, xs, UY, Math.max(3, xe - xs), UH, 5); g.fill();
+      }
+    }
+    g.fillStyle = col.ink; g.fillRect(x0 - 1.5, LY - 12, 3, UY + UH - LY + 16);
+    g.beginPath(); g.moveTo(x0 - 6, LY - 14); g.lineTo(x0 + 6, LY - 14); g.lineTo(x0, LY - 7); g.fill();
+    if (G && G.pops.length) {
+      const now = performance.now();
+      G.pops = G.pops.filter(p => now - p.at < 700);
+      g.textAlign = 'left'; g.font = `800 14px ${col.font}`;
+      G.pops.forEach(p => {
+        const a = 1 - (now - p.at) / 700;
+        g.globalAlpha = a; g.fillStyle = p.cls === 'perfect' || p.cls === 'great' ? col.good : p.cls === 'good' ? col.warn : col.bad;
+        g.fillText(p.text, x0 + 10, LY - 8 - (1 - a) * 8);
+      });
+      g.globalAlpha = 1;
+    }
+  }
+
+  /* --- chấm điểm --- */
+  const pop = (txt, cls) => { if (G) G.pops.push({text: txt, cls, at: performance.now()}); };
+  const accNow = () => {
+    const c = G.counts, n = c.perfect + c.great + c.good + c.miss;
+    return n + c.extra ? (c.perfect + .8 * c.great + .5 * c.good) / (n + .5 * c.extra) : null;
+  };
+  function hud() {
+    if (!cv.isConnected) return;
+    $('#rgScore').textContent = G ? G.score : 0;
+    $('#rgCombo').textContent = G ? G.combo : 0;
+    const a = G ? accNow() : null;
+    $('#rgAcc').textContent = a == null ? '—' : Math.round(a * 100) + '%';
+  }
+  function judge(n, gr, why) {
+    n.state = gr; G.counts[gr]++;
+    if (gr === 'miss') G.combo = 0;
+    else { G.combo++; G.maxCombo = Math.max(G.maxCombo, G.combo); G.score += Math.round(RG_PTS[gr] * (1 + Math.min(G.combo, 50) / 50)); }
+    pop(why || RG_LBL[gr], gr);
+    const c = TL.chars[n.ci];
+    if (c.notes.every(x => x.state !== 'pending' && x.state !== 'holding')) {
+      const s = $(`#rgText [data-ci="${n.ci}"]`); if (s) s.classList.add(c.notes.some(x => x.state === 'miss') ? 'bad' : 'good');
+    }
+  }
+  function press() {
+    Snd.toneOn(); $('#rgKey').classList.add('down');
+    if (!G || !G.running || G.cur) return;
+    const t = gt(), w = win();
+    if (t < -w) return;
+    let best = null;
+    for (const n of TL.notes) {
+      if (n.start - w > t) break;
+      if (n.state !== 'pending' || t > n.end) continue;
+      const e = Math.abs(t - n.start); if (!best || e < best.e) best = {n, e};
+    }
+    G.cur = {start: t, note: best ? best.n : null};
+    if (best) best.n.state = 'holding';
+    G.presses.push(G.cur);
+  }
+  function release() {
+    Snd.toneOff(); const kb = $('#rgKey'); if (kb) kb.classList.remove('down');
+    if (!G || !G.running || !G.cur) return;
+    const p = G.cur; G.cur = null; p.end = gt();
+    if (!p.note) { G.counts.extra++; G.combo = 0; pop('Thừa', 'miss'); return; }
+    const n = p.note, held = p.end - p.start, d = TL.dot;
+    const wrong = n.type === '.' ? held > 2.2 * d : held < 1.8 * d;
+    const e = (Math.abs(p.start - n.start) + Math.abs(p.end - n.end)) / 2 / d;
+    judge(n, wrong ? 'miss' : e <= .35 ? 'perfect' : e <= .7 ? 'great' : e <= 1.2 ? 'good' : 'miss',
+      wrong ? (n.type === '.' ? 'Quá dài — đây là chấm' : 'Quá ngắn — đây là gạch') : null);
+  }
+  function markText(t) {
+    const ci = TL.chars.findIndex(c => c.end + TL.dot > t);
+    if (ci === curCi) return;
+    const old = $(`#rgText [data-ci="${curCi}"]`); if (old) old.classList.remove('cur');
+    const nw = $(`#rgText [data-ci="${ci}"]`); if (nw) nw.classList.add('cur');
+    curCi = ci;
+  }
+
+  /* --- vòng chơi --- */
+  function setStartBtn() { const b = $('#rgStart'); if (b) b.innerHTML = G && G.running ? `${IC.stop} Dừng <kbd>Esc</kbd>` : `${IC.play} Bắt đầu <kbd>Enter</kbd>`; }
+  function start() {
+    if (!TL) return;
+    stopGame(); Snd.stop(); $('#rgRes').innerHTML = ''; viewT = null;
+    TL.notes.forEach(n => { n.state = 'pending'; });
+    $$('#rgText span').forEach(s => { s.className = ''; });
+    const {W, x0, ppm} = geo(), lead = Math.max(3200, (W - x0) / ppm + 600);
+    let lat = 0;
+    if (R.guide && outMode().sound) {
+      const ctx = Snd.init();
+      if (ctx) lat = ((ctx.outputLatency || 0) + (ctx.baseLatency || 0)) * 1000;
+      Snd.playTones(TL.notes.map(n => [n.start / 1000, n.end / 1000]), {delay: lead / 1000, freq: Math.round(DB.settings.freq * .75), gain: .45, lamp: false, vibrate: false});
+    }
+    G = {t0: performance.now() + lead + lat, presses: [], cur: null, score: 0, combo: 0, maxCombo: 0, counts: {perfect: 0, great: 0, good: 0, miss: 0, extra: 0}, pops: [], running: true};
+    setStartBtn(); loop();
+  }
+  function stopGame() {
+    cancelAnimationFrame(raf);
+    if (G && G.running) { G.running = false; Snd.stop(); Snd.toneOff(); }
+    over.textContent = ''; setStartBtn();
+    const s = $(`#rgText [data-ci="${curCi}"]`); if (s) s.classList.remove('cur');
+    curCi = -1;
+  }
+  function loop() {
+    cancelAnimationFrame(raf);
+    const step = () => {
+      if (!G || !G.running || !cv.isConnected) return;
+      const t = gt(), w = win();
+      for (const n of TL.notes) { if (n.start > t) break; if (n.state === 'pending' && t > n.start + w) judge(n, 'miss'); }
+      over.textContent = t < 0 && t > -3000 ? String(Math.ceil(-t / 1000)) : '';
+      markText(t); hud(); draw();
+      if (t > TL.total + 900) { if (G.cur) release(); finish(); return; }
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+  }
+  function finish() {
+    const c = G.counts, pct = Math.round((accNow() || 0) * 100);
+    stopGame();
+    const grade = pct >= 95 ? 'S' : pct >= 85 ? 'A' : pct >= 70 ? 'B' : pct >= 50 ? 'C' : 'D';
+    const prev = R.best[R.wpm] || 0, isBest = G.score > prev;
+    if (isBest) R.best[R.wpm] = G.score;
+    markDay(); DB.totals.sessions++; save();
+    const weak = [...new Set(TL.chars.filter(ch => ch.notes.some(n => n.state === 'miss')).map(ch => ch.label))];
+    $('#rgRes').innerHTML = `<div class="rg-res">
+      <div class="grade g-${grade}">${grade}</div>
+      <div style="flex:1;min-width:220px">
+        <div class="rg-score">${G.score} điểm ${isBest ? '<span class="chip" style="color:var(--accent)">Kỷ lục mới!</span>' : `<span class="muted small">kỷ lục: ${prev}</span>`}</div>
+        <div class="muted small">${pct}% chính xác · combo cao nhất ${G.maxCombo} · ${R.wpm} WPM</div>
+        <div class="rg-counts"><span class="good">Perfect ${c.perfect}</span><span class="good">Great ${c.great}</span><span class="mid">Good ${c.good}</span><span class="bad">Miss ${c.miss}</span><span class="bad">Thừa ${c.extra}</span></div>
+        ${weak.length ? `<div class="small" style="margin-top:10px">Cần luyện nhịp: ${weak.map(l => `<button class="mchip" data-play="${esc(l)}">${fmt(l)}</button>`).join(' ')}</div>` : ''}
+        <div class="muted small" style="margin-top:8px">Kéo ngang trên đường nhịp để xem lại từng lần gõ.</div>
+        <div class="row mt"><button class="btn primary sm" id="rgAgain">Chơi lại</button><button class="btn sm" id="rgNext">Đoạn mới</button>${pct >= 90 && R.wpm < 30 ? `<button class="btn sm" id="rgUp">Tăng lên ${Math.min(30, R.wpm + 2)} WPM</button>` : ''}</div>
+      </div></div>`;
+    $('#rgAgain').onclick = start;
+    $('#rgNext').onclick = newText;
+    if ($('#rgUp')) $('#rgUp').onclick = () => { R.wpm = Math.min(30, R.wpm + 2); save(); cfg(); build(); start(); };
+    hud(); draw();
+  }
+
+  /* --- điều khiển --- */
+  $('#rgStart').onclick = () => { if (G && G.running) { stopGame(); draw(); } else start(); };
+  $('#rgPrev').onclick = () => { stopGame(); draw(); Snd.playTones(TL.notes.map(n => [n.start / 1000, n.end / 1000])); };
+  $('#rgNew').onclick = newText;
+  bindHold($('#rgKey'), press, release);
+  // Trên đường nhịp: đang chơi → ấn giữ để gõ; ngoài lúc chơi → kéo ngang để xem lại
+  cv.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    try { cv.setPointerCapture(e.pointerId); } catch (x) {}
+    if (G && G.running) press(); else drag = {x: e.clientX, t: viewT == null ? restT() : viewT};
+  });
+  cv.addEventListener('pointermove', e => {
+    if (!drag || !TL) return;
+    viewT = clamp(drag.t - (e.clientX - drag.x) / geo().ppm, restT(), TL.total);
+    draw();
+  });
+  ['pointerup', 'pointercancel'].forEach(tp => cv.addEventListener(tp, () => { if (drag) drag = null; else release(); }));
+  keyHandler = e => {
+    if (e.code === 'Space' && !isField(e.target)) {
+      e.preventDefault();
+      if (document.activeElement && document.activeElement.tagName === 'BUTTON') document.activeElement.blur();
+      if (!e.repeat) press();
+      return;
+    }
+    if (e.key === 'Enter' && !e.repeat && !isField(e.target) && !(G && G.running)) { e.preventDefault(); start(); }
+    else if (e.key === 'Escape' && G && G.running) { stopGame(); draw(); }
+  };
+  keyUpHandler = e => { if (e.code === 'Space' && !isField(e.target)) { e.preventDefault(); release(); } };
+  window.addEventListener('resize', resize);
+  onLeave = () => { stopGame(); window.removeEventListener('resize', resize); };
+
+  readColors(); cfg(); newText(); resize(); setStartBtn();
 }
 
 /* =====================================================================
@@ -1865,13 +2369,16 @@ function speedControlsHTML() {
   <label class="field"><span>Tốc độ ký tự: <b data-out="wpm">${s.wpm}</b> WPM</span><input type="range" min="5" max="40" data-set="wpm" value="${s.wpm}"></label>
   <label class="field"><span>Tốc độ hiệu dụng (Farnsworth): <b data-out="fwpm">${s.fwpm}</b> WPM</span><input type="range" min="3" max="40" data-set="fwpm" value="${s.fwpm}"></label>
   <label class="field"><span>Tần số âm: <b data-out="freq">${s.freq}</b> Hz</span><input type="range" min="300" max="1000" step="10" data-set="freq" value="${s.freq}"></label>
-  <label class="field"><span>Âm lượng: <b data-out="vol">${s.vol}</b>%</span><input type="range" min="0" max="100" data-set="vol" value="${s.vol}"></label>`;
+  <label class="field"><span>Âm lượng: <b data-out="vol">${s.vol}</b>%</span><input type="range" min="0" max="100" data-set="vol" value="${s.vol}"></label>
+  <div class="field"><span>Phát tín hiệu bằng</span><div class="chips">${[['sound', 'Âm thanh'], ['vibrate', 'Rung (im lặng)'], ['both', 'Âm thanh + rung']].map(([v, n]) => `<button type="button" class="chip-btn ${s.output === v ? 'on' : ''}" data-setv="output" data-v="${v}">${n}</button>`).join('')}</div>
+    <small class="muted">${canVibrate() ? 'Rung dễ cảm nhận nhất ở tốc độ ≤ 15 WPM. Đèn tín hiệu luôn nháy khi tắt âm thanh.' : 'Thiết bị / trình duyệt này không hỗ trợ rung (iPhone, iPad, máy tính). Ở chế độ rung, đèn tín hiệu sẽ nháy thay cho âm thanh.'}</small></div>`;
 }
 function bindSettings(root) {
   $$('[data-set]', root).forEach(inp => {
     const h = () => {
       const k = inp.dataset.set, s = DB.settings;
       s[k] = inp.type === 'checkbox' ? inp.checked : inp.type === 'range' ? +inp.value : inp.value;
+      if (k === 'keyWpm') keyDot = null;
       if (k === 'wpm' && s.fwpm > s.wpm) s.fwpm = s.wpm;
       if (k === 'fwpm' && s.fwpm > s.wpm) s.fwpm = s.wpm;
       $$('[data-out]', root).forEach(o => { o.textContent = s[o.dataset.out]; });
@@ -1880,6 +2387,11 @@ function bindSettings(root) {
     };
     inp.addEventListener(inp.type === 'range' ? 'input' : 'change', h);
   });
+  $$('[data-setv]', root).forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.setv; DB.settings[k] = b.dataset.v; save();
+    $$(`[data-setv="${k}"]`).forEach(x => x.classList.toggle('on', x.dataset.v === DB.settings[k]));
+    if (k === 'output') { Snd.stop(); updateSndBtn(); }
+  }));
 }
 function viewSettings() {
   const s = DB.settings;
@@ -1899,6 +2411,12 @@ function viewSettings() {
       <label class="chk"><input type="checkbox" data-set="autoplay" ${s.autoplay ? 'checked' : ''}> Tự động phát âm khi hiện câu hỏi nghe</label>
       <label class="chk"><input type="checkbox" data-set="unlockAll" ${s.unlockAll ? 'checked' : ''}> Mở khoá tất cả bài học</label>
     </section>
+    <section class="card"><h2>Trả lời bằng ấn giữ tín hiệu</h2>
+      <div class="field"><span>Cách trả lời mặc định</span><div class="chips">${[['text', '⌨ Gõ phím'], ['key', '● Ấn giữ tín hiệu']].map(([v, n]) => `<button type="button" class="chip-btn ${s.answerMode === v ? 'on' : ''}" data-setv="answerMode" data-v="${v}">${n}</button>`).join('')}</div></div>
+      <label class="field"><span>Tốc độ gõ dự kiến: <b data-out="keyWpm">${s.keyWpm}</b> WPM</span><input type="range" min="5" max="30" data-set="keyWpm" value="${s.keyWpm}"></label>
+      <label class="chk"><input type="checkbox" data-set="keyAdapt" ${s.keyAdapt ? 'checked' : ''}> Tự thích nghi theo nhịp gõ của bạn</label>
+      <p class="muted small">Ấn ngắn = chấm, ấn dài (từ 2 nhịp) = gạch. Nghỉ khoảng 3 nhịp để kết thúc ký tự, 7 nhịp để cách từ. Có thể đổi cách trả lời ngay trong từng câu hỏi.</p>
+    </section>
     <section class="card"><h2>Dữ liệu học tập</h2>
       <p class="muted small" style="margin-top:0">Tiến độ được lưu ngay trong trình duyệt này (localStorage) và hoạt động hoàn toàn offline. Khi đổi máy hoặc trình duyệt, hãy xuất file tiến độ rồi nhập lại ở nơi mới.</p>
       <div class="row"><button class="btn" id="exp">Xuất tiến độ</button><label class="btn" tabindex="0">Nhập tiến độ<input type="file" accept=".json,application/json" id="imp" hidden></label><button class="btn danger" id="rst">Xoá toàn bộ</button></div>
@@ -1911,7 +2429,8 @@ function viewSettings() {
         <tr><td>Space</td><td>Nghe lại (thẻ học, câu trắc nghiệm)</td></tr>
         <tr><td>Ctrl + Space</td><td>Nghe lại khi đang gõ đáp án</td></tr>
         <tr><td>Shift + Enter</td><td>Xuống dòng trong ô đoạn văn</td></tr>
-        <tr><td>Space (giữ)</td><td>Phát tín hiệu ở chế độ Telegraph</td></tr>
+        <tr><td>Space (giữ)</td><td>Phát tín hiệu: khi trả lời bằng ấn giữ, Telegraph, Rhythm game</td></tr>
+        <tr><td>Enter / Esc</td><td>Bắt đầu / dừng Rhythm game</td></tr>
         <tr><td>Esc</td><td>Dừng bài Phản xạ</td></tr>
       </table>
     </section>
@@ -1946,6 +2465,7 @@ function viewSettings() {
    KHỞI ĐỘNG
    ===================================================================== */
 applyTheme();
+updateSndBtn();
 route();
 </script>
 </body>
