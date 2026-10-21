@@ -12,6 +12,7 @@
   --accent:#d9480f;--accent-ink:#fff;--accent-soft:#fde4d3;
   --good:#2b8a3e;--good-soft:#dcf5df;--bad:#c92a2a;--bad-soft:#fde2e2;--warn:#a65800;--warn-soft:#fff1cc;
   --lamp-off:#d6cfbf;--lamp-on:#ffb31a;
+  --sea1:#cdeefb;--sea2:#2d84b5;--shark:#5d7182;--shark-belly:#edf1f4;--fish:#d9480f;
   --shadow:0 1px 2px rgba(40,30,10,.05),0 6px 20px rgba(40,30,10,.06);
   --r:16px;
   --font:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Roboto,Arial,sans-serif;
@@ -22,12 +23,12 @@
   --bg:#13120f;--surface:#1c1b17;--surface2:#272520;--ink:#efe9dc;--muted:#a19b8b;--line:#34312a;
   --accent:#ff8a3d;--accent-ink:#1b0f05;--accent-soft:#3a2416;
   --good:#5cc971;--good-soft:#173a20;--bad:#ff6b6b;--bad-soft:#3d1a1a;--warn:#ffc04d;--warn-soft:#3a2d10;
-  --lamp-off:#3a372f;--lamp-on:#ffbf3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}}
+  --lamp-off:#3a372f;--lamp-on:#ffbf3d;--sea1:#123f58;--sea2:#05121b;--shark:#8197a8;--shark-belly:#cbd5dd;--fish:#ff7a3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}}
 :root[data-theme=dark]{
   --bg:#13120f;--surface:#1c1b17;--surface2:#272520;--ink:#efe9dc;--muted:#a19b8b;--line:#34312a;
   --accent:#ff8a3d;--accent-ink:#1b0f05;--accent-soft:#3a2416;
   --good:#5cc971;--good-soft:#173a20;--bad:#ff6b6b;--bad-soft:#3d1a1a;--warn:#ffc04d;--warn-soft:#3a2d10;
-  --lamp-off:#3a372f;--lamp-on:#ffbf3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}
+  --lamp-off:#3a372f;--lamp-on:#ffbf3d;--sea1:#123f58;--sea2:#05121b;--shark:#8197a8;--shark-belly:#cbd5dd;--fish:#ff7a3d;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);color-scheme:dark}
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -407,7 +408,61 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
 /* Thanh điều kiện sóng ở trang Luyện tập */
 .sndbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-4px 0 16px;padding:10px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
 .sndbar .lbl{font-weight:700;font-size:14px}
-.pmodes.gm{grid-template-columns:repeat(3,1fr)}
+.pmodes.gm{grid-template-columns:repeat(4,1fr)}
+/* Cá mập Morse */
+.sea-wrap{padding:16px}
+.sea{position:relative;height:440px;border-radius:14px;overflow:hidden;margin-bottom:12px;border:1px solid var(--line);background:linear-gradient(180deg,var(--sea1),var(--sea2))}
+.sea.hurt{animation:hurt .45s}
+@keyframes hurt{50%{box-shadow:inset 0 0 0 6px var(--bad)}}
+.sea-msg{inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,88%);background:var(--surface);color:var(--ink);border-radius:14px;box-shadow:var(--shadow);line-height:1.6}
+.diver{position:absolute;left:6px;top:50%;transform:translateY(-50%);width:56px;height:56px;z-index:2}
+.diver svg{width:100%;height:100%}
+.dv-helm{fill:#f2b33d;stroke:#a8730f;stroke-width:2}
+.dv-glass{fill:#a9dcf2;stroke:#4c5f6e;stroke-width:2}
+.dv-shine{fill:#fff;opacity:.75}
+.bub{position:absolute;bottom:-14px;width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);animation:bub 9s linear infinite;pointer-events:none}
+.bub:nth-of-type(1){left:12%}.bub:nth-of-type(2){left:28%;animation-delay:2s;width:5px;height:5px}.bub:nth-of-type(3){left:41%;animation-delay:4.5s}
+.bub:nth-of-type(4){left:55%;animation-delay:1s;width:6px;height:6px}.bub:nth-of-type(5){left:67%;animation-delay:6s}.bub:nth-of-type(6){left:78%;animation-delay:3s;width:5px;height:5px}
+.bub:nth-of-type(7){left:88%;animation-delay:7.5s}.bub:nth-of-type(8){left:95%;animation-delay:5s;width:6px;height:6px}
+@keyframes bub{to{transform:translateY(-470px)}}
+.shark{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;will-change:transform;z-index:1}
+.sh-svg{width:108px;height:45px;display:block}
+.shark.big .sh-svg{width:150px;height:62px}
+.fi-svg{width:58px;height:33px;display:block}
+.fi-body,.fi-fin{fill:var(--fish)}
+.fi-teeth{stroke:#fff;stroke-width:1.4;fill:none}
+.shark.fast .sh-label{padding:3px 7px}
+.sea-pace{font-size:13px}.sea-pace b{font:800 16px var(--mono);color:var(--ink)}
+.sea-pop.bad{color:#ffd0d0}
+.rh-wrap{display:flex;align-items:center;gap:8px;width:100%;max-width:360px}
+.rh-bar{flex:1;height:8px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.rh-bar i{display:block;height:100%;width:0;background:var(--good);border-radius:99px}
+.rh-bar i.low{background:var(--bad)}
+.sh-body,.sh-fin{fill:var(--shark)}
+.sh-belly{fill:var(--shark-belly)}
+.sh-eye{fill:#111}
+.sh-gill,.sh-mouth{stroke:rgba(0,0,0,.45);fill:none;stroke-width:1.5}
+.sh-label{display:flex;gap:5px;padding:4px 8px;border-radius:10px;background:var(--surface);box-shadow:var(--shadow);margin-bottom:2px;white-space:nowrap}
+.sh-label>span{display:flex;flex-direction:column;align-items:center;gap:3px}
+.sh-label b{font:800 19px/1.1 var(--mono);color:var(--ink)}
+.sh-label .codes{font-size:10px;color:var(--accent)}
+.sh-label span.d b{color:var(--good);opacity:.55}.sh-label span.d .codes{opacity:.35}
+.sh-label span.n b{color:var(--accent);text-decoration:underline;text-underline-offset:4px}
+.shark.lock .sh-label{outline:3px solid var(--accent);outline-offset:1px}
+.shark.killed{transition:transform .55s ease-in,opacity .55s;opacity:0}
+.shark.bite{animation:bite .5s forwards}
+@keyframes bite{to{opacity:0}}
+.sea-pop{position:absolute;font:800 20px var(--mono);color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6);pointer-events:none;animation:rise .8s forwards;z-index:3}
+@keyframes rise{to{transform:translateY(-34px);opacity:0}}
+.sea-input{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.sea-buf{min-width:140px;min-height:42px;padding:6px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.sea-buf .codes{font-size:22px;color:var(--accent)}
+.sea-ctl{display:flex;gap:10px;align-items:stretch;justify-content:center}
+.sea-ctl .keybtn.sm{margin:0;height:84px;flex:1;max-width:300px}
+.sea-ctl .keybtn.sm{gap:4px}.sea-ctl .keybtn .lamp.big{width:16px;height:16px}
+#sDot{font-size:46px;line-height:1}
+.keyb{width:84px;height:84px;flex:none;border-radius:20px;border:2px solid var(--line);background:var(--surface2);font:800 34px var(--mono);color:var(--ink);cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.keyb:active{background:var(--accent-soft);border-color:var(--accent)}
 .opts.two{grid-template-columns:1fr 1fr;max-width:420px;margin:12px auto}
 .hchip.wide{width:auto;padding:0 8px}
 .drill-char.word{font-size:56px;min-height:64px}
@@ -524,6 +579,7 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
 }
 @media (max-width:820px){
   .pmodes{grid-template-columns:repeat(3,1fr)}
+  .pmodes.gm{grid-template-columns:repeat(2,1fr)}
   .set-grid{grid-template-columns:1fr}
   .stat-row{grid-template-columns:repeat(2,1fr)}
 }
@@ -536,6 +592,10 @@ input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px}
   .hero-r{flex-direction:row;justify-content:flex-start;gap:20px}
   .ring{width:100px;height:100px}.ring::before{width:78px;height:78px}.ring span{font-size:20px}
   .pmodes,.pmodes.gm{grid-template-columns:repeat(2,1fr)}
+  .sea{height:380px}
+  .keyb{width:64px;height:76px;font-size:28px}.sea-ctl .keybtn.sm{height:76px}
+  .sea-ctl .keybtn small{display:none}
+  .sh-label b{font-size:16px}
   .pmodes small{display:none}
   .charts{grid-template-columns:1fr}
   .fl{width:96px;font-size:13px}.fsub{margin-left:106px}
@@ -840,7 +900,7 @@ const DEFAULT_SETTINGS = {wpm:18, fwpm:10, freq:600, vol:60, wave:'sine', flash:
 const DEFAULT_COPY = {min:2, src:'words', set:'learned', custom:''};
 const DEFAULT_WORDS = {wpm:20, set:'common', n:20};
 const DEFAULT_QSO = {call:'VN0XYZ', name:'AN', qth:'HANOI', hint:false};
-const DEFAULT_GAMES = {mode:'rhythm', set:'learned', custom:'', rainMode:'see', best:{}};
+const DEFAULT_GAMES = {mode:'rhythm', set:'learned', custom:'', rainMode:'see', sharkShow:'both', sharkLvl:1, sharkPace:'level', sharkStrict:'normal', sharkSpc:2, best:{}};
 const DEFAULT_MIC = {auto:true, freq:600, sens:50, wpm:15};
 const DEFAULT_PRACTICE = {mode:'listen', src:'words', set:'learned', custom:'', len:5, drillN:20, kt:'char', kHint:true};
 const DEFAULT_RHYTHM = {wpm:10, gap:1.5, src:'words', set:'learned', custom:'', len:4, guide:true, labels:true, best:{}};
@@ -1189,13 +1249,7 @@ const Snd = {
         g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(this.vol(), t + 0.005);
       }
     }
-    if (out.vib) {
-      // Không rung một lèo dài (nhiều máy Android bỏ qua lệnh huỷ rung → rung mãi):
-      // rung từng nhịp 120 ms và làm mới mỗi 80 ms khi còn giữ; thả tay là tự hết sau tối đa ~120 ms
-      clearInterval(this.kVibTimer);
-      vibrate(120); this.kVib = true;
-      this.kVibTimer = setInterval(() => vibrate(120), 80);
-    }
+    // Người dùng tự phát mã thì không rung (chỉ rung khi máy phát đề / bài nghe) — chỉ có âm và đèn
     if (DB.settings.flash || !out.sound) document.body.classList.add('tone');
   },
   toneOff() {
@@ -1689,7 +1743,7 @@ function bindKeypad(root, inp) {
       let s = inp.selectionStart == null ? v.length : inp.selectionStart, en = inp.selectionEnd == null ? s : inp.selectionEnd;
       if (k === 'bk') { if (s === en && s > 0) s--; inp.value = v.slice(0, s) + v.slice(en); inp.setSelectionRange(s, s); }
       else { inp.value = v.slice(0, s) + k + v.slice(en); inp.setSelectionRange(s + k.length, s + k.length); }
-      if (k === '.' || k === '-') Snd.play([[{c: '', k}]]);
+      if (k === '.' || k === '-') Snd.play([[{c: '', k}]], {vibrate: false});
       inp.dispatchEvent(new Event('input'));
     });
   });
@@ -2814,7 +2868,8 @@ function fistHTML(log) {
 const GMODES = [
   {id: 'rhythm', n: 'Rhythm game', s: 'Gõ đúng nhịp theo các vạch chạy'},
   {id: 'rain', n: 'Mưa chữ', s: 'Gõ ký tự trước khi mã rơi chạm đáy'},
-  {id: 'blitz', n: 'Thử thách 60 giây', s: 'Nghe và gõ càng nhiều ký tự càng tốt'}
+  {id: 'blitz', n: 'Thử thách 60 giây', s: 'Nghe và gõ càng nhiều ký tự càng tốt'},
+  {id: 'shark', n: 'Cá mập Morse', s: 'Phát mã Morse của chữ để bắn hạ cá mập'}
 ];
 function viewGames(arg) {
   const GP = DB.prefs.games;
@@ -2827,6 +2882,7 @@ function viewGames(arg) {
   const body = $('#gbody');
   if (mode === 'rain') gameRain(body);
   else if (mode === 'blitz') gameBlitz(body);
+  else if (mode === 'shark') gameShark(body);
   else viewRhythm(body);
 }
 
@@ -3001,6 +3057,293 @@ function gameBlitz(el) {
     $('#bAgain', box).onclick = () => run(box, cs);
     keyHandler = e => { if (e.key === 'Enter') { e.preventDefault(); run(box, cs); } };
   };
+  render();
+}
+
+/* ---------- Cá mập Morse (kiểu TypeShark) ---------- */
+const SHARK_SVG = `<svg viewBox="0 0 120 50" class="sh-svg" aria-hidden="true"><path class="sh-fin" d="M48,16 L60,1 L70,15 Z"/><path class="sh-body" d="M4,29 Q28,11 74,14 L96,5 L92,22 L116,11 L109,28 L116,44 L92,35 L78,40 Q34,46 4,29 Z"/><path class="sh-belly" d="M8,31 Q40,42 78,38 L74,33 Q40,37 8,31 Z"/><circle class="sh-eye" cx="22" cy="24" r="2.6"/><path class="sh-gill" d="M36,22 q-2,6 0,11 M41,21 q-2,6 0,11"/><path class="sh-mouth" d="M8,31 Q15,34 24,32"/></svg>`;
+const FISH_SVG = `<svg viewBox="0 0 64 36" class="fi-svg" aria-hidden="true"><path class="fi-body" d="M3,18 Q18,3 40,8 L60,2 L54,18 L60,34 L40,28 Q18,33 3,18 Z"/><path class="fi-fin" d="M24,8 L32,1 L36,9 Z"/><circle class="sh-eye" cx="13" cy="15" r="2.4"/><path class="fi-teeth" d="M4,19 L7,22 L9,19 L11,22 L13,19"/></svg>`;
+const DIVER_SVG = `<svg viewBox="0 0 60 60" aria-hidden="true"><rect x="47" y="23" width="9" height="14" rx="3" class="dv-helm"/><circle cx="30" cy="30" r="22" class="dv-helm"/><circle cx="28" cy="30" r="13" class="dv-glass"/><circle cx="23" cy="25" r="3.2" class="dv-shine"/></svg>`;
+function gameShark(el) {
+  const GP = DB.prefs.games, LANES = 5;
+  let G = null, raf = 0, down = false, t0 = 0;
+  const stop = () => { if (G) { G.running = false; clearTimeout(G.pendT); } cancelAnimationFrame(raf); if (down) { down = false; Snd.toneOff(); } };
+  const sea = () => $('#sea', el);
+  const render = () => {
+    freshStep(); stop();
+    const cs = charset(GP.set, GP.custom);
+    el.innerHTML = `<div class="card cfg">
+      ${cfgRow('Hiển thị', 'sharkShow', [{id: 'both', n: 'Chữ + mã (người mới)'}, {id: 'text', n: 'Chỉ chữ'}], GP.sharkShow)}
+      ${cfgRow('Bộ ký tự', 'set', SETS, GP.set)}
+      ${customRow(GP)}
+      ${cfgRow('Bắt đầu ở', 'sharkLvl', [{id: 1, n: 'Cấp 1'}, {id: 3, n: 'Cấp 3'}, {id: 5, n: 'Cấp 5'}], GP.sharkLvl)}
+      ${cfgRow('Tốc độ cá', 'sharkPace', [{id: 'level', n: 'Theo cấp độ'}, {id: 'adapt', n: 'Theo nhịp gõ của bạn'}], GP.sharkPace)}
+      ${cfgRow('Nhịp trong từ', 'sharkStrict', [{id: 'normal', n: 'Thường'}, {id: 'hard', n: 'Khó — nghỉ lâu giữa 2 chữ là ngắt từ'}], GP.sharkStrict)}
+      <div class="small muted">${GP.sharkPace === 'adapt' ? `Cá bơi theo tốc độ gõ thực tế của bạn (hiện ≈ ${Math.round(60 / GP.sharkSpc)} chữ/phút), càng lên cấp càng ít thời gian dư. ` : ''}${GP.sharkStrict === 'hard' ? `Chế độ khó: sau mỗi chữ, nếu nghỉ quá ≈ ${Math.round(getKeyDot() * 5.5)} ms (5,5 nhịp — mức máy coi là cách từ) mới phát chữ tiếp theo thì từ bị tính là ngắt, cá về lại chữ đầu. ` : ''}Cá nhỏ màu đỏ chỉ mang 1 chữ nhưng bơi rất nhanh.</div>
+      <div class="cfg-foot"><span class="muted small">${setInfo(cs, GP)} · Kỷ lục: <b>${GP.best.shark || 0}</b></span><button class="btn primary" id="sGo">Bắt đầu <kbd>Enter</kbd></button></div>
+    </div>
+    <div class="card sea-wrap">
+      <div class="rain-hud"><span>Điểm <b id="sScore">0</b></span><span>Cấp <b id="sLvl">${GP.sharkLvl}</b></span><span>Combo <b id="sCombo">0</b></span><span class="sea-pace" id="sPace"></span><span class="lives" id="sLives">♥♥♥</span></div>
+      <div class="sea" id="sea">${'<i class="bub"></i>'.repeat(8)}<div class="diver">${DIVER_SVG}</div>
+        <div class="rain-msg sea-msg" id="sMsg"><div><b>Bảo vệ thợ lặn!</b><br>Cá mập mang chữ trên lưng bơi tới. Phát mã Morse cho từng chữ để bắn hạ nó trước khi nó tới nơi.
+        <div class="small muted" style="margin-top:8px">Giữ <kbd>Space</kbd> như phím telegraph, hoặc bấm <kbd>.</kbd> <kbd>J</kbd> <kbd>Z</kbd> = chấm, <kbd>-</kbd> <kbd>K</kbd> <kbd>X</kbd> = gạch. <kbd>Backspace</kbd>: xoá / bỏ nhắm. <kbd>Esc</kbd>: dừng.</div></div></div></div>
+      <div class="sea-input"><div class="sea-buf" id="sBuf"><span class="muted small">mã bạn đang phát</span></div><div class="sea-target small" id="sTarget"></div>
+        <div class="rh-wrap" id="sRh" hidden><span class="small muted">Nhịp</span><div class="rh-bar"><i></i></div></div></div>
+      <div class="sea-ctl"><button class="keyb" id="sDot" type="button" aria-label="Chấm">·</button>
+        <button class="keybtn sm" id="sKey" type="button"><span class="lamp big"></span><b>GIỮ ĐỂ PHÁT</b><small>hoặc giữ Space</small></button>
+        <button class="keyb" id="sDash" type="button" aria-label="Gạch">−</button></div>
+    </div>`;
+    bindCfg(el, GP, render);
+    $('#sGo', el).onclick = () => start(cs);
+    bindHold($('#sKey', el), press, release);
+    [['#sDot', '.'], ['#sDash', '-']].forEach(([id, sym]) => $(id, el).addEventListener('pointerdown', e => { e.preventDefault(); tap(sym); }));
+    keyHandler = e => {
+      if (isField(e.target)) return;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (document.activeElement && document.activeElement.tagName === 'BUTTON') document.activeElement.blur();
+        if (!e.repeat) press();
+        return;
+      }
+      if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+      const k = e.key.toLowerCase();
+      if (k === '.' || k === 'j' || k === 'z') { e.preventDefault(); tap('.'); }
+      else if (k === '-' || k === 'k' || k === 'x') { e.preventDefault(); tap('-'); }
+      else if (e.key === 'Enter' && !(G && G.running)) { e.preventDefault(); start(cs); }
+      else if (e.key === 'Escape' && G && G.running) over();
+      else if (e.key === 'Backspace' && G && G.running) { e.preventDefault(); back(); }
+    };
+    keyUpHandler = e => { if (e.code === 'Space' && !isField(e.target)) { e.preventDefault(); release(); } };
+  };
+
+  /* --- nhập mã: ấn giữ (phân loại theo thời gian) hoặc phím chấm/gạch --- */
+  function press() {
+    if (down) return;
+    down = true; t0 = performance.now(); Snd.toneOn();
+    if (G) { clearTimeout(G.pendT); clearTimeout(G.rhT); checkRhythm(); }
+  }
+  function release() {
+    if (!down) return;
+    down = false; Snd.toneOff();
+    const d = performance.now() - t0;
+    if (d < 15) return;
+    const dot = getKeyDot(), sym = d < dot * 2 ? '.' : '-';
+    if (DB.settings.keyAdapt) keyDot = clamp(sym === '.' ? dot * .8 + d * .2 : dot * .8 + d / 3 * .2, 30, 400);
+    if (G) G.lastEl = performance.now();
+    add(sym, getKeyDot() * 2.5);
+  }
+  function tap(sym) {
+    Snd.play([[{c: '', k: sym}]], {vibrate: false});
+    if (G) { clearTimeout(G.rhT); checkRhythm(); G.lastEl = performance.now(); }
+    add(sym, 700);
+  }
+  /* --- chế độ khó: nghỉ quá lâu giữa hai chữ trong cùng một từ = ngắt từ (5,5 nhịp, như mức cách từ) --- */
+  const rhLimit = () => getKeyDot() * 5.5;
+  const inWord = () => G && G.running && GP.sharkStrict === 'hard' && G.lock && !G.lock.dead && G.lock.pos > 0 && !G.buf;
+  function checkRhythm() { if (inWord() && performance.now() - G.lastEl > rhLimit()) breakWord(G.lock); }
+  function armRhythm() {
+    clearTimeout(G.rhT);
+    if (!inWord()) return;
+    G.rhT = setTimeout(() => { if (inWord() && !down) breakWord(G.lock); }, Math.max(0, rhLimit() - (performance.now() - G.lastEl)));
+  }
+  function breakWord(s) {
+    const exp = s.word[s.pos];
+    record(exp, false); G.missed.push(exp);
+    s.pos = 0; label(s);
+    G.lock = null; G.buf = ''; clearTimeout(G.pendT); clearTimeout(G.rhT);
+    G.err++; G.combo = 0; G.breaks++;
+    popup('Ngắt nhịp!', s.x + 10, s.y, 'bad');
+    const b = $('.sea-input', el); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+    syncLock(); showBuf(); hud();
+  }
+  const nextCode = s => MORSE[s.word[s.pos]];
+  const closest = list => list.reduce((a, b) => (b.x < a.x ? b : a));
+  const alive = () => G.sharks.filter(s => !s.dead);
+  function add(sym, waitMs) {
+    if (!G || !G.running) return;
+    clearTimeout(G.pendT);
+    G.buf += sym;
+    const cands = G.lock && !G.lock.dead ? [G.lock] : alive();
+    const pre = cands.filter(s => nextCode(s).startsWith(G.buf));
+    if (!pre.length) { miss(); return; }
+    const exact = pre.filter(s => nextCode(s) === G.buf);
+    // Khớp duy nhất → nhận ngay; còn mã dài hơn cũng khớp tiền tố → chờ khoảng nghỉ rồi mới quyết định
+    if (exact.length && exact.length === pre.length) { accept(closest(exact)); return; }
+    showBuf();
+    G.pendT = setTimeout(() => {
+      if (!G || !G.running) return;
+      const ex = cands.filter(s => !s.dead && nextCode(s) === G.buf);
+      if (ex.length) accept(closest(ex)); else miss();
+    }, waitMs);
+  }
+  function back() {
+    clearTimeout(G.pendT);
+    if (G.buf) G.buf = ''; else G.lock = null;
+    syncLock(); showBuf();
+  }
+  function accept(s) {
+    const ch = s.word[s.pos];
+    record(ch, true); G.ok++;
+    const now = performance.now();
+    if (G.lastOk && now - G.lastOk < 8000) G.spc = clamp(G.spc * .8 + (now - G.lastOk) / 1000 * .2, .35, 6);   // nhịp gõ thực tế (giây / chữ)
+    G.lastOk = now;
+    s.pos++; G.buf = '';
+    G.combo++; G.maxCombo = Math.max(G.maxCombo, G.combo); G.score += 5 * G.lvl;
+    if (s.pos >= s.word.length) kill(s);
+    else { G.lock = s; label(s); armRhythm(); }
+    syncLock(); showBuf(); hud();
+  }
+  function miss() {
+    const t = G.lock && !G.lock.dead ? G.lock : null;
+    if (t) {
+      const exp = t.word[t.pos], got = REV[G.buf];
+      record(exp, false); G.missed.push(exp);
+      if (got) recordConf(exp, got);
+    }
+    G.err++; G.combo = 0; G.buf = '';
+    const b = $('.sea-input', el); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+    showBuf(); hud();
+  }
+  function kill(s) {
+    s.dead = true; if (G.lock === s) G.lock = null;
+    G.kills++;
+    const pts = (s.fast ? 15 : s.word.length * 10 * (s.big ? 2 : 1)) * G.lvl + Math.min(G.combo, 30);
+    G.score += pts;
+    label(s);
+    s.el.classList.add('killed');
+    s.el.style.transform = `translateX(${s.x}px) translateY(-24px) rotate(180deg)`;
+    popup(`+${pts}`, s.x + 30, s.y);
+    setTimeout(() => { s.el.remove(); s.gone = true; }, 600);
+    if (G.kills % 8 === 0) { G.lvl++; toast(`Lên cấp ${G.lvl}! Cá mập bơi nhanh hơn`); }
+  }
+  function bite(s) {
+    s.dead = true;
+    if (G.lock === s) { G.lock = null; G.buf = ''; clearTimeout(G.pendT); }
+    const exp = s.word[s.pos]; record(exp, false); G.missed.push(exp);
+    G.lives--; G.combo = 0;
+    s.el.classList.add('bite');
+    const A = sea(); A.classList.remove('hurt'); void A.offsetWidth; A.classList.add('hurt');
+    setTimeout(() => { s.el.remove(); s.gone = true; }, 500);
+    syncLock(); showBuf(); hud();
+    if (G.lives <= 0) over();
+  }
+  function popup(txt, x, y, cls = '') {
+    const p = document.createElement('div'); p.className = 'sea-pop ' + cls; p.textContent = txt;
+    p.style.left = x + 'px'; p.style.top = y + 'px'; sea().appendChild(p);
+    setTimeout(() => p.remove(), 800);
+  }
+
+  /* --- cá mập --- */
+  function pickWord(mn, mx) {
+    const letters = G.cs.filter(c => /[A-Z]/.test(c)), words = wordsFor(letters, mx).filter(w => w.length >= mn);
+    const busy = new Set(alive().map(s => s.word[s.pos]));
+    let w = '';
+    for (let i = 0; i < 10; i++) {
+      w = words.length >= 4 && Math.random() < .8 ? pick(words) : randGroup(G.cs, null, mn + rnd(mx - mn + 1));
+      if (!busy.has(w[0])) break;          // tránh nhiều con cá bắt đầu bằng cùng một chữ
+    }
+    return w;
+  }
+  function pickChar() {
+    const busy = new Set(alive().map(s => s.word[s.pos]));
+    let c = '';
+    for (let i = 0; i < 10; i++) { c = weightedPick(G.cs, weakW); if (!busy.has(c)) break; }
+    return c;
+  }
+  function spawn() {
+    const A = sea(), W = A.clientWidth, H = A.clientHeight, lvl = G.lvl;
+    const used = new Set(alive().filter(s => s.x > W * .45).map(s => s.lane));
+    const free = [...Array(LANES).keys()].filter(i => !used.has(i));
+    if (!free.length) return false;
+    // Cá nhỏ: 1 chữ, bơi rất nhanh (tối đa 2 con cùng lúc)
+    const fast = alive().filter(s => s.fast).length < 2 && Math.random() < (lvl <= 1 ? .2 : .3);
+    const big = !fast && lvl >= 3 && Math.random() < .12;
+    const [mn, mx] = big ? [5, 8] : lvl <= 1 ? [1, 2] : lvl <= 2 ? [2, 3] : lvl <= 4 ? [2, 4] : lvl <= 6 ? [3, 5] : [3, 6];
+    const word = fast ? pickChar() : pickWord(mn, mx), lane = pick(free);
+    const d = document.createElement('div');
+    d.className = 'shark' + (big ? ' big' : '') + (fast ? ' fast' : '');
+    d.innerHTML = `<div class="sh-label"></div>${fast ? FISH_SVG : SHARK_SVG}`;
+    A.appendChild(d);
+    const both = GP.sharkShow === 'both';
+    const y = 8 + lane * ((H - (both ? 120 : 96)) / (LANES - 1));
+    // Thời gian bơi tới thợ lặn (giây)
+    let cross;
+    if (GP.sharkPace === 'adapt') {
+      // Theo nhịp gõ thực tế: thời gian cần để phát cả từ × hệ số dư (giảm dần theo cấp)
+      const slack = Math.max(1.25, 2.3 - (lvl - 1) * .12) * (both ? 1.1 : 1);
+      cross = fast ? 1.8 + G.spc * 1.6 : (2.5 + word.length * G.spc * slack) * (big ? 1.15 : 1);
+    } else {
+      cross = fast ? Math.max(3.2, 6.5 - lvl * .35) * (both ? 1.15 : 1)
+        : (Math.max(5, 14 - lvl * 1.2) + word.length * Math.max(1, 2.6 - lvl * .18) * (both ? 1.15 : 1)) * (big ? 1.25 : 1);
+    }
+    const s = {word, pos: 0, lane, big, fast, el: d, x: W + 10, y, dead: false};
+    s.v = (s.x - G.diverX) / cross;
+    d.style.top = y + 'px'; d.style.transform = `translateX(${s.x}px)`;
+    label(s); G.sharks.push(s);
+    return true;
+  }
+  function label(s) {
+    const both = GP.sharkShow === 'both';
+    $('.sh-label', s.el).innerHTML = [...s.word].map((c, i) => `<span class="${i < s.pos ? 'd' : i === s.pos ? 'n' : ''}"><b>${esc(c)}</b>${both ? `<span class="codes">${codeVis(MORSE[c])}</span>` : ''}</span>`).join('');
+  }
+  function syncLock() { G.sharks.forEach(s => s.el.classList.toggle('lock', s === G.lock)); }
+  function showBuf() {
+    $('#sBuf', el).innerHTML = G && G.buf ? `<span class="codes">${codeVis(G.buf)}</span>` : '<span class="muted small">mã bạn đang phát</span>';
+    const t = G && G.lock && !G.lock.dead ? G.lock : null;
+    $('#sTarget', el).innerHTML = t ? `Đang nhắm <b class="mono">${esc(t.word)}</b> · chữ kế tiếp <b class="mono">${esc(t.word[t.pos])}</b>` : '<span class="muted">Phát mã chữ đầu của một con cá để nhắm</span>';
+  }
+  const hud = () => {
+    $('#sScore', el).textContent = G.score; $('#sLvl', el).textContent = G.lvl; $('#sCombo', el).textContent = G.combo;
+    $('#sLives', el).textContent = '♥'.repeat(Math.max(0, G.lives)) + '♡'.repeat(Math.max(0, 3 - G.lives));
+    $('#sPace', el).innerHTML = GP.sharkPace === 'adapt' ? `Nhịp <b>${Math.round(60 / G.spc)}</b> chữ/phút` : '';
+  };
+
+  /* --- vòng chơi --- */
+  function start(cs) {
+    stop(); Snd.stop();
+    const A = sea();
+    A.querySelectorAll('.shark,.rain-over,.sea-pop,.sea-msg').forEach(n => n.remove());
+    G = {cs, sharks: [], lock: null, buf: '', score: 0, lvl: GP.sharkLvl, lives: 3, combo: 0, maxCombo: 0, kills: 0, ok: 0, err: 0, missed: [],
+      last: performance.now(), acc: 99, running: true, diverX: 64, pendT: 0, rhT: 0, lastEl: 0, lastOk: 0, spc: GP.sharkSpc, breaks: 0};
+    $('#sRh', el).hidden = GP.sharkStrict !== 'hard';
+    hud(); showBuf();
+    raf = requestAnimationFrame(frame);
+  }
+  function frame(now) {
+    if (!G || !G.running || !el.isConnected) return;
+    const dt = Math.min(.05, (now - G.last) / 1000); G.last = now;
+    G.acc += dt;
+    const live = alive(), maxN = Math.min(4, 1 + Math.floor((G.lvl + 1) / 2));
+    if (!live.length || (live.length < maxN && G.acc >= Math.max(2.2, 6 - G.lvl * .4))) { if (spawn()) G.acc = 0; }
+    for (const s of live) {
+      s.x -= s.v * dt;
+      s.el.style.transform = `translateX(${s.x}px)`;
+      if (s.x <= G.diverX) bite(s);
+      if (!G.running) return;
+    }
+    G.sharks = G.sharks.filter(s => !s.gone);
+    if (GP.sharkStrict === 'hard') {
+      const bar = $('#sRh i', el), f = inWord() && !down ? clamp(1 - (performance.now() - G.lastEl) / rhLimit(), 0, 1) : (G.lock && G.lock.pos > 0 ? 1 : 0);
+      bar.style.width = f * 100 + '%'; bar.classList.toggle('low', f < .35);
+    }
+    raf = requestAnimationFrame(frame);
+  }
+  function over() {
+    if (!G || !G.running) return;
+    stop(); clearTimeout(G.rhT);
+    GP.sharkSpc = Math.round(G.spc * 100) / 100;   // nhớ nhịp gõ cho lần chơi sau
+    const isBest = G.score > (GP.best.shark || 0);
+    if (isBest) GP.best.shark = G.score;
+    markDay(); DB.totals.sessions++; save();
+    const acc = G.ok + G.err ? Math.round(G.ok / (G.ok + G.err) * 100) : 0, miss = [...new Set(G.missed)];
+    sea().insertAdjacentHTML('beforeend', `<div class="rain-over"><div class="rg-score">${G.score} điểm ${isBest ? '<span class="chip" style="color:var(--accent)">Kỷ lục mới!</span>' : ''}</div>
+      <div class="muted small">Cấp ${G.lvl} · hạ ${G.kills} con · ${G.ok} chữ đúng · chính xác ${acc}% · combo cao nhất ${G.maxCombo} · nhịp ≈ ${Math.round(60 / G.spc)} chữ/phút${GP.sharkStrict === 'hard' ? ` · ngắt nhịp ${G.breaks} lần` : ''}</div>
+      ${miss.length ? `<div class="small" style="margin-top:8px">Chữ cần luyện:</div><div class="row center" style="margin-top:4px">${miss.map(c => `<button class="mchip" data-play="${esc(c)}">${esc(c)} <span class="codes" style="font-size:12px">${codeVis(MORSE[c])}</span></button>`).join('')}</div>` : ''}
+      <div class="row center mt"><button class="btn primary sm" id="sAgain">Chơi lại <kbd>Enter</kbd></button></div></div>`);
+    $('#sAgain', el).onclick = () => start(G.cs);
+    G.sharks.forEach(s => s.el.classList.add('frozen'));
+  }
+  onLeave = stop;
   render();
 }
 
